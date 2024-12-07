@@ -1,0 +1,125 @@
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pageTitle {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+/* Image Upload Section */
+.imageUpload {
+    border: 2px dashed #d1d5db;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.uploadIcon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.uploadText {
+    color: #6b7280;
+}
+
+.fileInput {
+    display: none;
+}
+
+/* Form Inputs */
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.formLabel {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.formInput {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}
+
+/* Product Status */
+.productStatus {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.statusLabel {
+    display: flex;
+    align-items: center;
+}
+
+.statusLabel input {
+    margin-right: 0.5rem;
+}
+
+/* Price Input */
+.priceContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.priceInput {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}
+
+/* Description */
+.descriptionTextarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    height: 8rem;
+    resize: vertical;
+}
+
+/* Submit Button */
+.submitButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+    background-color: #1d4ed8;
+}
+
+.submitButton svg {
+    margin-right: 0.5rem;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 로그인 페이지</title>
+    <link rel="stylesheet" href="/css/admin/adminLogin.css">
+</head>
+<body>
+<div class="adminLoginContainer">
+    <h2 class="adminLoginTitle">관리자 로그인</h2>
+    <form id="adminLoginForm">
+        <input
+                type="text"
+                id="adminId"
+                name="adminId"
+                placeholder="아이디"
+                class="adminLoginInput"
+                required
+        >
+        <input
+                type="password"
+                id="adminPassword"
+                name="adminPassword"
+                placeholder="비밀번호"
+                class="adminLoginInput"
+                required
+        >
+        <button
+                type="submit"
+                class="adminLoginBtn"
+        >
+            로그인하기
+        </button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const adminId = document.getElementById('adminId').value;
+        const adminPassword = document.getElementById('adminPassword').value;
+
+        // 여기에 로그인 로직 추가 가능
+        console.log('관리자 로그인 시도:', adminId);
+    });
+</script>
+</body>
+</html>

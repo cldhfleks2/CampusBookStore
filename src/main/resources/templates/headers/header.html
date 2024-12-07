@@ -3,91 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOOTER</title>
-    <style>
-        /* Header */
-        .header {
-            background-color: #2563eb;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .header-nav {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .nav-links a:hover {
-            color: #93c5fd;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .search-container {
-            position: relative;
-        }
-        .search-input {
-            padding: 0.5rem;
-            border: none;
-            border-radius: 4px;
-            width: 250px;
-        }
-        .search-button {
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            background-color: #1e40af;
-            border: none;
-            color: white;
-            padding: 0 0.75rem;
-            cursor: pointer;
-        }
-        .profile-icon, .cart-icon {
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        .profile-icon:hover, .cart-icon:hover {
-            transform: scale(1.1);
-        }
-    </style>
+    <title>HEADER</title>
 </head>
 <body>
 <!-- Header -->
 <header class="header" th:fragment="header">
     <div class="logo">CampusBookStore</div>
-
-    <div class="header-nav">
-        <div class="nav-links">
+    <div class="headerNav">
+        <div class="navLinks">
             <a href="#">카테고리</a>
             <a href="#">마이페이지</a>
         </div>
-
-        <div class="header-right">
-            <div class="search-container">
-                <input type="text" placeholder="책 제목, 저자 검색" class="search-input">
-                <button class="search-button">🔍</button>
+        <div class="headerRight">
+            <div class="searchContainer">
+                <input type="text" placeholder="책 제목, 저자 검색" class="searchInput">
+                <button class="searchButton">🔍</button>
             </div>
-            <div class="cart-icon">🛒</div>
-            <div class="profile-icon">👤</div>
+            <div class="cartIcon">🛒</div>
+            <div class="profileIcon">👤</div>
         </div>
     </div>
 </header>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 상세 페이지</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/post/detailPost.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/post/detailPost.js"></script>
+</head>
+<body>
+
+<div th:replace="~{ headers/header::header }"></div>
+
+<div class="container">
+    <div class="bookDetailWrapper" style="padding-top: 60px;">
+        <div class="bookImageSection">
+            <div class="bookImage"></div>
+            <div class="buttonGroup">
+                <button class="wishlistBtn" style="background: white; margin-right: 40px;">
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </a>
+                </button>
+                <button class="reportBtn" id="productReportBtn" style="background: white; border: none;">
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
+                            <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
+                        </svg>
+                    </a>
+                </button>
+            </div>
+        </div>
+
+        <div class="bookInfoSection">
+            <h1 class="bookTitle">자바의 정석</h1>
+            <p class="text-gray-600 mb-4">저자: 남궁성</p>
+
+            <div class="sellerInfo">
+                <div>
+                    <h3 class="font-semibold">판매자 정보</h3>
+                    <p class="text-gray-600">UserName123</p>
+                </div>
+            </div>
+
+            <div class="priceSection">
+                <div class="flex items-center mb-2">
+                    <span class="bookPrice">10,000원</span>
+                </div>
+                <p class="text-gray-600">상품 상태: 최상</p>
+            </div>
+
+            <div class="actionBtns">
+                <button class="cartBtn">
+                    장바구니 담기
+                </button>
+                <button class="buyBtn">
+                    바로 구매
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviewSection">
+        <div class="reviewHeader">
+            <h2 class="reviewIntro">리뷰 (<span class="reviewCnt">1</span>)</h2>
+        </div>
+
+        <div class="addReviewSection">
+            <div class="addReviewForm">
+                <div class="addReviewInputs">
+                    <div class="addReviewTitle">
+                        <input type="text" placeholder="리뷰 제목을 입력하세요" class="addReviewTitleInput">
+                    </div>
+                    <textarea placeholder="리뷰 내용을 입력하세요" class="addReviewContent"></textarea>
+                </div>
+                <button class="submitReviewBtn">리뷰 작성</button>
+            </div>
+        </div>
+
+        <div class="reviewList">
+            <div class="reviewItem">
+                <div class="reviewItemHeader">
+                    <div class="reviewItemInfo">
+                        <h3 class="reviewTitle">책 너무 좋아요!</h3>
+                        <span class="reviewAuthor">김*준</span>
+                    </div>
+                    <div class="reviewActions">
+                        <button class="deleteReviewBtn">삭제</button>
+                    </div>
+                </div>
+                <p class="reviewContent">
+                    자바를 처음 공부하는 사람에게 정말 좋은 책입니다. 기초부터 차근차근 설명해주어 이해하기 쉬워요.
+                </p>
+            </div>
+
+            <div class="reviewItem">
+                <div class="reviewItemHeader">
+                    <div class="reviewItemInfo">
+                        <h3 class="reviewTitle">책 너무 좋아요!</h3>
+                        <span class="reviewAuthor">김*준</span>
+                    </div>
+                    <div class="reviewActions">
+                        <div class="ownUserSettings">
+                            <a href="#">
+                                <button class="editReviewBtn">수정</button>
+                            </a>
+                            <a href="#">
+                                <button class="deleteReviewBtn" style="margin-left:10px">삭제</button>
+                            </a>
+                        </div>
+                        <button class="reportBtn" id="reviewReportBtn" style="background: white; border: none; margin-left:10px">
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
+                                    <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
+                                </svg>
+                            </a>
+                        </button>
+                    </div>
+
+                </div>
+                <p class="reviewContent">
+                    문법과 개념을 깔끔하게 정리해놓은 책이에요. 예제도 많고 설명도 detail하게 되어있어 좋습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 레이어 (모달) -->
+    <div class="overlay" id="reportOverlay">
+        <div class="modal">
+            <p class="modalMessage">신고하시겠습니까?</p>
+            <div class="modalActions">
+                <button class="modalBtn yesBtn">예</button>
+                <button class="modalBtn noBtn">아니오</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{ headers/footer::footer }"></div>
+
+</body>
+</html>

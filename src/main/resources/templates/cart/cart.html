@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/cart/cart.css">
+</head>
+<body>
+
+<div th:replace="~{ headers/header::header }"></div>
+
+<div class="cartContainer">
+    <div class="cartHeader">
+        <h1 class="cartTitle">장바구니</h1>
+    </div>
+
+    <div class="cartItemList">
+        <!-- 장바구니 아이템 예시 -->
+        <div class="cartItem">
+            <div class="checkboxContainer">
+                <div class="bookInfo">
+                    <div class="bookThumbnail"></div>
+                    <div class="bookDetails">
+                        <div class="bookTitle">자바 프로그래밍 입문</div>
+                        <div class="bookAuthor">김상형 저</div>
+                        <div class="bookPrice">20,000원</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cartItemActions">
+                <button class="deleteBtn">삭제</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="purchaseInfo">
+        <div class="totalPrice">총 상품 금액: <span class="calculatePrice">1111</span>원</div>
+        <button class="purchaseButton">구매하기</button>
+        <div class="pointInfo">
+            현재 보유 포인트: <span class="currentPoint">2222</span>P
+            <br>
+            구매 후 예상 포인트: <span class="remainPoint">333</span>P
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{ headers/footer::footer }"></div>
+
+</body>
+</html>

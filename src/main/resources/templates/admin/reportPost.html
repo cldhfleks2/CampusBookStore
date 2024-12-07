@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시물 신고</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/admin/reportPost.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/admin/report.js"></script>
+</head>
+<body>
+<div class="adminSideBar">
+    <div class="siteLogo">관리자 페이지</div>
+    <button class="adminLogoutBtn">로그아웃</button>
+    <hr>
+    <div class="navMenu">
+        <div class="menuItem active">
+            <a href="#">
+                <span>📋</span> 게시물 삭제
+            </a>
+        </div>
+        <div class="menuItem">
+            <a href="#">
+                <span>💬</span> 리뷰 삭제
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="adminMainContent">
+    <div class="contentHeader">
+        <div class="pageTitle">게시물 관리</div>
+        <div class="searchBar">
+            <input type="text" placeholder="신고 게시물 검색">
+            <button class="searchBtn">검색</button>
+        </div>
+    </div>
+
+    <table class="reportTable">
+        <thead>
+        <tr>
+            <th class="checkboxCol">
+                <input type="checkbox">
+            </th>
+            <th class="col">리뷰 제목</th>
+            <th class="col">리뷰 작성자</th>
+            <th class="col">신고 내용</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 10개의 행 예시 -->
+        <tr>
+            <td class="checkboxCol">
+                <input type="checkbox">
+            </td>
+            <td>자바 프로그래밍</td>
+            <td>홍길동</td>
+            <td>부적절한 내용</td>
+        </tr>
+        <!-- 반복 -->
+
+        </tbody>
+    </table>
+
+    <!--페이지네이션-->
+    <div class="paginationSection">
+        <div class="pagination">
+            <button class="eachPage"></button>
+        </div>
+    </div>
+
+    <button class="acceptBtn">제외</button>
+    <button class="rejectBtn" style="margin-right:20px">게시물 삭제</button>
+</div>
+</body>
+</html>

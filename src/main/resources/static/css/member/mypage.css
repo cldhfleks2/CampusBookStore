@@ -1,0 +1,143 @@
+.mypageContainer {
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+}
+
+/* Sidebar Menu */
+.mypageSidebar {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.mypageSidebarMenu {
+    display: flex;
+    flex-direction: column;
+}
+
+.mypageSidebarMenu a {
+    padding: 0.75rem;
+    text-decoration: none;
+    color: #1f2937;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s;
+}
+
+.mypageSidebarMenu a:hover {
+    background-color: #e6f2ff;
+}
+
+/* Content Area */
+.mypageContent {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+/* Personal Info Section */
+.personalInfoForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.formGroup label {
+    margin-bottom: 0.5rem;
+    color: #6b7280;
+}
+
+.formGroup input {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}
+
+.formActions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.formActions button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+/* Point Status */
+.pointStatus {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.pointChargeBtn {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+/* Table Styles */
+.mypageTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mypageTable th, .mypageTable td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.mypageTable th {
+    background-color: #f9fafb;
+}
+
+
+/* Mypage Container */
+.mypageContainer {
+    display: flex;
+
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Sidebar Menu */
+.mypageSidebar {
+    flex: 0 0 250px; /* 고정 너비 250px */
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    height: auto; /* 콘텐츠에 따라 높이 조정 */
+}
+
+/* Content Area */
+.mypageContent {
+    flex: 1; /* 나머지 공간을 차지 */
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}

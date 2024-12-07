@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    line-height: 1.6;
+}
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+
+/* 실시간 검색 섹션 */
+.realTimeSearch {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #d1d5db;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.searchWrapper {
+    display: flex;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.searchInput {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem 0 0 0.25rem;
+    font-size: 1rem;
+    height: 3rem; /* 높이를 명시적으로 설정 */
+    width: 100%;
+}
+
+.searchBtn {
+    padding: 0 1rem; /* 버튼 내 여백을 적절히 설정 */
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+    height: 45px;
+    width: 70px;
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchBtn:hover {
+    background-color: #1d4ed8;
+}
+
+
+.searchSummary {
+    background-color: #f0f4ff;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-left: 5px solid #2563eb;
+}
+.searchSummaryText {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1e3a8a;
+}
+.searchResultsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+.bookCard {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+.bookCard:hover {
+    transform: scale(1.03);
+}
+.bookImage {
+    height: 350px;
+    background-color: #e5e7eb;
+}
+.bookDetails {
+    padding: 1rem;
+}
+.bookTitle {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.bookAuthor {
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+.bookPriceSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+.bookPrice {
+    font-weight: bold;
+    color: #2563eb;
+}
+.wishlistButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.wishlistIcon {
+    color: #ef4444;
+}
+.sortSection {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+.sortSelect {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}

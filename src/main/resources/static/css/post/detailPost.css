@@ -1,0 +1,321 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+.bookDetailWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.bookImageSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bookImage {
+    width: 16rem;
+    height: 24rem;
+    background-color: #e5e7eb;
+    margin-bottom: 1rem;
+}
+.wishlistBtn {
+    background-color: #f3f4f6;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.wishlistBtn:hover {
+    background-color: #e5e7eb;
+}
+.bookInfoSection {
+    padding: 0 1rem;
+}
+.bookTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.sellerInfo {
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sellerBadge {
+    background-color: #d1fae5;
+    color: #064e3b;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+}
+.priceSection {
+    margin-bottom: 1rem;
+}
+.bookPrice {
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #2563eb;
+    margin-right: 1rem;
+}
+.discountBadge {
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+}
+.actionBtns {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.cartBtn, .buyBtn {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.cartBtn {
+    background-color: #2563eb;
+    color: white;
+}
+.cartBtn:hover {
+    background-color: #1d4ed8;
+}
+.buyBtn {
+    background-color: #16a34a;
+    color: white;
+}
+.buyBtn:hover {
+    background-color: #15803d;
+}
+.reviewSection {
+    background-color: white;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.reviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.reviewIntro {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.reviewList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.reviewItem {
+    background-color: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+.reviewItemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.reviewItemInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.reviewTitle {
+    font-weight: bold;
+    font-size: 1rem;
+}
+.reviewAuthor {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+.reviewActions {
+    display: flex;
+    gap: 0.5rem;
+}
+.editReviewBtn, .deleteReviewBtn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+.editReviewBtn:hover, .deleteReviewBtn:hover {
+    text-decoration: underline;
+}
+.reviewContent {
+    color: #374151;
+    line-height: 1.5;
+}
+
+.reviewStars {
+    color: #fbbf24;
+}
+
+.reviewStars {
+    font-size: 1.5rem;
+    color: #fbbf24; /* 별 색상 */
+}
+
+.reviewStars .filled {
+    color: #fbbf24; /* 채워진 별 색상 */
+}
+
+.reviewStars .empty {
+    color: #e5e7eb; /* 빈 별 색상 */
+}
+
+.addReviewSection {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.addReviewForm {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+}
+
+.addReviewInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.addReviewTitle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.addReviewTitleInput {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.25rem;
+}
+
+.addReviewContent {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.25rem;
+    resize: vertical;
+}
+
+.submitReviewBtn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submitReviewBtn:hover {
+    background-color: #1d4ed8;
+}
+
+/* 모달을 덮는 오버레이 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    display: none; /* 기본적으로 숨김 */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* 다른 요소보다 위에 보이게 */
+}
+
+/* 모달 창 스타일 */
+.modal {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    max-width: 90%;
+}
+
+.modalMessage {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modalBtn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.yesBtn {
+    background-color: #16a34a;
+    color: white;
+}
+
+.yesBtn:hover {
+    background-color: #15803d;
+}
+
+.noBtn {
+    background-color: #ef4444;
+    color: white;
+}
+
+.noBtn:hover {
+    background-color: #dc2626;
+}
+
+a {
+    text-decoration: none; /* 링크의 기본 밑줄 없애기 */
+    color: inherit; /* 텍스트 색상 변경 없애기 */
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit; /* 호버시 텍스트 색상 변경 없애기 */
+    background: none; /* 호버시 배경색 없애기 */
+}

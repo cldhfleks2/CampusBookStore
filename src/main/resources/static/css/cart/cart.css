@@ -1,0 +1,118 @@
+.cartContainer {
+    max-width: 1000px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+}
+
+.cartTitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.cartItemList {
+    margin-top: 20px;
+}
+
+.cartItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+}
+
+.bookInfo {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.bookThumbnail {
+    width: 80px;
+    height: 120px;
+    background-color: #e0e0e0;
+    margin-right: 15px;
+}
+
+.bookDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookTitle {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.bookAuthor {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.bookPrice {
+    font-weight: bold;
+    color: #2980b9;
+}
+
+.cartItemActions {
+    display: flex;
+    align-items: center;
+}
+
+.deleteBtn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.purchaseInfo {
+    text-align: right;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.totalPrice {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.purchaseButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.pointInfo {
+    color: #7f8c8d;
+    margin-top: 10px;
+}

@@ -1,0 +1,78 @@
+.categoryGrid {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+}
+
+.categoryItem {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.categoryItem:hover {
+    background-color: #e6f2ff;
+}
+
+/* Product Grid */
+.productSection {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.productGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.productCard {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transition: box-shadow 0.3s;
+}
+
+.productCard:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.productImage {
+    height: 12rem;
+    background-color: #e5e7eb;
+    margin-bottom: 1rem;
+}
+
+.productDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.productPrice {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.productGrid a {
+    text-decoration: none; /* 링크의 기본 밑줄 없애기 */
+    color: inherit; /* 텍스트 색상 변경 없애기 */
+}
+
+.productGrid a:hover {
+    text-decoration: none; /* 호버시 밑줄 없애기 */
+    color: inherit; /* 호버시 텍스트 색상 변경 없애기 */
+    background: none; /* 호버시 배경색 없애기 */
+}
+
+
