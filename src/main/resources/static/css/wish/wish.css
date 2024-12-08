@@ -1,4 +1,4 @@
-.cartContainer {
+.wishContainer {
     max-width: 1000px;
     margin: 30px auto;
     background-color: white;
@@ -7,7 +7,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.cartHeader {
+.wishHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,17 +15,17 @@
     padding-bottom: 15px;
 }
 
-.cartTitle {
+.wishTitle {
     font-size: 24px;
     font-weight: bold;
     color: #2c3e50;
 }
 
-.cartItemList {
+.wishItemList {
     margin-top: 20px;
 }
 
-.cartItem {
+.wishItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -72,7 +72,7 @@
     color: #2980b9;
 }
 
-.cartItemActions {
+.wishItemActions {
     display: flex;
     align-items: center;
 }

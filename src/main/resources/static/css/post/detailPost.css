@@ -16,14 +16,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    caret-color: transparent; /* 커서를 투명하게 설정 */
 }
 .bookImage {
     width: 16rem;
     height: 24rem;
-    background-color: #e5e7eb;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center; /* 가로 방향 가운데 정렬 */
+    align-items: center;    /* 세로 방향 가운데 정렬 */
 }
-.wishlistBtn {
+.likeBtn {
     background-color: #f3f4f6;
     padding: 0.5rem;
     border-radius: 0.25rem;
@@ -31,7 +34,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-.wishlistBtn:hover {
+.likeBtn:hover {
     background-color: #e5e7eb;
 }
 .bookInfoSection {
@@ -76,7 +79,7 @@
     gap: 1rem;
     margin-top: 1.5rem;
 }
-.cartBtn, .buyBtn {
+.wishBtn, .buyBtn {
     flex: 1;
     padding: 0.75rem;
     border: none;
@@ -87,11 +90,11 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-.cartBtn {
+.wishBtn {
     background-color: #2563eb;
     color: white;
 }
-.cartBtn:hover {
+.wishBtn:hover {
     background-color: #1d4ed8;
 }
 .buyBtn {
@@ -341,3 +344,50 @@ hr {
     background: white; border: none;
 }
 
+
+
+/* 슬라이드 */
+.image-slider {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slider-item {
+    flex: 0 0 100%;
+    width: 100%;
+}
+
+.slider-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.slider-prev,
+.slider-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.slider-prev {
+    left: 10px;
+    margin-left: -10px;
+}
+
+.slider-next {
+    right: 10px;
+    margin-right: -10px;
+}

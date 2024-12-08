@@ -7,6 +7,7 @@ import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -31,7 +32,19 @@ public class PostService {
     String viewAddPost () {
         return "post/addPost";
     }
-    String viewDetailPost () {
+    String viewDetailPost (Model model, Authentication auth, Long postId) {
+        Optional<Post> postObj = postRepository.findById(postId);
+        //없는 postId일때
+        if(!postObj.isPresent()) {
+            return "error";
+        }
+        //게시물과 이미지
+        Post post = postObj.get();
+        List<Image> images = imageRepository.findByPostId(postId);
+
+        model.addAttribute("post", post);
+        model.addAttribute("images", images);
+
         return "post/detailPost";
     }
     String viewEditPost () {
@@ -85,7 +98,9 @@ public class PostService {
             }
             //저장될 경로를 구함
             String fileName = uuid + ext; //새로 생성된 파일이름
-            String filePath = uploadDir + fileName; //저장될 파일 경로(파일이름과 위치)
+            //String filePath = uploadDir + fileName;
+            String filePath = fileName;
+
             //파일을 저장
             file.transferTo(new File(filePath));
 
@@ -100,13 +115,13 @@ public class PostService {
         return "redirect:/main";
     }
 
-
-    //찜한 리스트 추가 요청
-    void addWish(Long postId, Long memberId){
-
+    //???찜한 리스트 추가 요청
+    ResponseEntity<String> addLike(Long postId, Authentication auth){
+    //맴버id는 auth에서 꺼내써라
+        return ResponseEntity.ok("찜하기 성공");
     }
 
-    //헤더의 검색기능
+    //헤더의 검색 기능
     String searching(String keyword, Model model) {
         //제목과 책 저자로 검색
         List<Post> results = postRepository.findByTitleContainingAndAuthor(keyword, keyword);
@@ -117,7 +132,10 @@ public class PostService {
         return "redirect:/search";
     }
 
-
+    //???장바구니 추가 요청
+    ResponseEntity<String> addWish(Long postId, Authentication auth) {
+        return ResponseEntity.ok("장바구니 추가 성공");
+    }
 
 
 

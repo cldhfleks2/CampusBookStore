@@ -94,13 +94,13 @@ a:hover {
 }
 
 .profileIcon,
-.cartIcon {
+.wishIcon {
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
 .profileIcon:hover,
-.cartIcon:hover {
+.wishIcon:hover {
     transform: scale(1.1);
 }
 

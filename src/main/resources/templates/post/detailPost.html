@@ -15,9 +15,22 @@
 <div class="container">
     <div class="bookDetailWrapper" style="padding-top: 60px;">
         <div class="bookImageSection">
-            <div class="bookImage"></div>
+            <div class="bookImage">
+                <!-- Image Slider Container -->
+                <div class="image-slider">
+                    <div class="slider-wrapper">
+                        <!-- Images will be dynamically populated here -->
+                        <div th:each="image : ${images}" class="slider-item">
+                            <img th:src="@{/uploadImage/} + ${image.imagePath}">
+                        </div>
+                    </div>
+                    <button class="slider-prev">&#10094;</button>
+                    <button class="slider-next">&#10095;</button>
+                </div>
+            </div>
             <div class="buttonGroup">
-                <button class="wishlistBtn" th:data-postId="9999" th:data-memberId="9999" id="likeBtn" style="background: white; margin-right: 40px;">
+<!--               찜할때는 게시물의 아이디를 전송하게됨-->
+                <button class="likeBtn" th:data-postId="${post.id}" id="likeBtn" style="background: white; margin-right: 40px;">
                     <a href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" class="fill" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -35,34 +48,35 @@
         </div>
 
         <div class="bookInfoSection">
-            <h1 class="title">자바의 정석</h1>
+            <h1 class="title"  th:text="${post.title}">자바의 정석</h1>
             <hr>
             <h3 class="font-semibold" style="margin: 10px 0;">저자</h3>
-            <p class="author text-gray-600 mb-4">남궁성</p>
+            <p class="author text-gray-600 mb-4" th:text="${post.author}">남궁성</p>
             <hr style="margin-top: 15px">
             <div class="sellerInfo">
                 <div>
                     <h3 class="font-semibold" style="margin-bottom: 10px;">판매자</h3>
-                    <p class="name text-gray-600">UserName123</p>
+                    <p class="name text-gray-600"  th:text="${post.member.name}">판매자이름</p>
                 </div>
             </div>
             <hr style="margin-bottom: 15px">
             <div class="desc">
-                <p class="content">
-                    책설명dddddddddddddddddddddddddddㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ판매자 정보판매자 정보판매자 정보판매자 정보판매자 정보판매자 정보판매자 정보
+                <p class="content"  th:text="${post.content}">
+                    책설명
                 </p>
             </div>
 
             <div class="bottom">
                 <div class="priceSection">
                     <div class="flex items-center mb-2">
-                        <span class="price">10,000</span>원
+                        <span class="price" th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')}">10,000</span>원
                     </div>
                 </div>
                 <div class="actionBtn">
-                    <button class="cartBtn">
+                    <button class="wishBtn" th:data-postId="${post.id}">
                         장바구니 담기
                     </button>
+<!--                    ???-->
                     <button class="buyBtn">
                         바로 구매
                     </button>
@@ -74,7 +88,7 @@
 
     <div class="reviewSection">
         <div class="reviewHeader">
-            <h2 class="reviewIntro">리뷰 (<span class="reviewCnt">1</span>)</h2>
+            <h2 class="reviewIntro">리뷰 (<span class="reviewCnt">숫자</span>)</h2>
         </div>
 
         <div class="addReviewSection">

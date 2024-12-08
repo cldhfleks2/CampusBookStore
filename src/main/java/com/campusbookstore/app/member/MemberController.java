@@ -27,9 +27,9 @@ public class MemberController {
     String viewMyPage () {
         return memberService.viewMyPage();
     }
-    @GetMapping("/cart")
-    String viewCart() {
-        return memberService.viewCart();
+    @GetMapping("/like")
+    String viewLike() {
+        return memberService.viewLike();
     }
 
     //회원가입

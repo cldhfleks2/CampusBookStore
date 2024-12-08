@@ -26,8 +26,8 @@ public class MemberService {
     String viewMyPage () {
         return "member/myPage";
     }
-    String viewCart(){
-        return "cart/cart";
+    String viewLike(){
+        return "like/like";
     }
     
     //회원가입

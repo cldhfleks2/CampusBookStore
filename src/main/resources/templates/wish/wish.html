@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>장바구니</title>
     <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/cart/cart.css">
+    <link rel="stylesheet" href="/css/wish/wish.css">
 </head>
 <body>
 
 <div th:replace="~{ headers/header::header }"></div>
 
-<div class="cartContainer">
-    <div class="cartHeader">
-        <h1 class="cartTitle">장바구니</h1>
+<div class="wishContainer">
+    <div class="wishHeader">
+        <h1 class="wishTitle">장바구니</h1>
     </div>
 
-    <div class="cartItemList">
+    <div class="wishItemList">
         <!-- 장바구니 아이템 예시 -->
-        <div class="cartItem">
+        <div class="wishItem">
             <div class="checkboxContainer">
                 <div class="bookInfo">
                     <div class="bookThumbnail"></div>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="cartItemActions">
+            <div class="wishItemActions">
                 <button class="deleteBtn">삭제</button>
             </div>
         </div>
@@ -49,6 +49,6 @@
 
 <div th:replace="~{ headers/footer::footer }"></div>
 
-<script src="/js/cart/cart.js"></script>
+<script src="/js/wish/wish.js"></script>
 </body>
 </html>

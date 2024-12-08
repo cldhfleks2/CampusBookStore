@@ -1,10 +1,12 @@
 package com.campusbookstore.app.post;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
@@ -19,9 +21,9 @@ public class PostController {
     String viewAddPost () {
         return postService.viewAddPost();
     }
-    @GetMapping("/detailPost")
-    String viewDetailPost () {
-        return postService.viewDetailPost();
+    @GetMapping("/detailPost/{postId}")
+    String viewDetailPost (Model model, Authentication auth, @PathVariable Long postId) {
+        return postService.viewDetailPost(model, auth, postId);
     }
     @GetMapping("/editPost")
     String viewEdit () {
@@ -39,12 +41,10 @@ public class PostController {
         return postService.addPost(postDTO, auth);
     }
 
-
-
     //찜한 리스트 추가 요청
-    @PostMapping("/wish")
-    void addWish (Long postId, Long memberId) {
-        postService.addWish(postId, memberId);
+    @PostMapping("/likePlus")
+    ResponseEntity<String> addLike (Long postId, Authentication auth) {
+        return postService.addLike(postId, auth);
     }
 
     //헤더의 검색바 작성
@@ -53,4 +53,9 @@ public class PostController {
         return postService.searching(keyword, model);
     }
 
+    //장바구니 추가 요청
+    @PostMapping("/wishPlus")
+    ResponseEntity<String> addWish(Long postId, Authentication auth) {
+        return postService.addWish(postId, auth);
+    }
 }
