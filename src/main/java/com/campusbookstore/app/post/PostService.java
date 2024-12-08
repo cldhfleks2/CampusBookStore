@@ -1,6 +1,7 @@
 package com.campusbookstore.app.post;
 
 import com.campusbookstore.app.image.Image;
+import com.campusbookstore.app.image.ImageDTO;
 import com.campusbookstore.app.image.ImageRepository;
 import com.campusbookstore.app.member.AccountDetail;
 import com.campusbookstore.app.member.Member;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,13 +40,30 @@ public class PostService {
         if(!postObj.isPresent()) {
             return "error";
         }
-        //게시물과 이미지
+        //postDTO생성
         Post post = postObj.get();
+        PostDTO postDTO = PostDTO.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .author(post.getAuthor())
+                .price(post.getPrice())
+                .content(post.getContent())
+                .member(post.getMember())
+                .build();
+        
+        //imageDTO생성
         List<Image> images = imageRepository.findByPostId(postId);
-
-        model.addAttribute("post", post);
-        model.addAttribute("images", images);
-
+        List<ImageDTO> imagesDTO = new ArrayList<>();
+        for(Image image : images) {
+            ImageDTO imageDTO = ImageDTO.builder()
+                    .imagePath(image.getImagePath())
+                    .build();
+            imagesDTO.add(imageDTO);
+        }
+        
+        //DTO전달
+        model.addAttribute("postDTO", postDTO);
+        model.addAttribute("imagesDTO", imagesDTO);
         return "post/detailPost";
     }
     String viewEditPost () {
