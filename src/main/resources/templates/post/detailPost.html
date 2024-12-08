@@ -20,7 +20,7 @@
                 <div class="image-slider">
                     <div class="slider-wrapper">
                         <!-- Images will be dynamically populated here -->
-                        <div th:each="image : ${imagesDTO}" class="slider-item">
+                        <div th:each="image : ${imagesDTOs}" class="slider-item">
                             <img th:src="@{/uploadImage/} + ${image.imagePath}">
                         </div>
                     </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="buttonGroup">
 <!--               찜할때는 게시물의 아이디를 전송하게됨-->
-                <button class="likeBtn" th:data-postId="${postDTO.id}" id="likeBtn" style="background: white; margin-right: 40px;">
+                <button class="likeBtn" th:data-postId="${postDTOs.id}" id="likeBtn" style="background: white; margin-right: 40px;">
                     <a href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" class="fill" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -48,20 +48,20 @@
         </div>
 
         <div class="bookInfoSection">
-            <h1 class="title"  th:text="${postDTO.title}">자바의 정석</h1>
+            <h1 class="title"  th:text="${postDTOs.title}">자바의 정석</h1>
             <hr>
             <h3 class="font-semibold" style="margin: 10px 0;">저자</h3>
-            <p class="author text-gray-600 mb-4" th:text="${postDTO.author}">남궁성</p>
+            <p class="author text-gray-600 mb-4" th:text="${postDTOs.author}">남궁성</p>
             <hr style="margin-top: 15px">
             <div class="sellerInfo">
                 <div>
                     <h3 class="font-semibold" style="margin-bottom: 10px;">판매자</h3>
-                    <p class="name text-gray-600"  th:text="${postDTO.member.name}">판매자이름</p>
+                    <p class="name text-gray-600"  th:text="${postDTOs.member.name}">판매자이름</p>
                 </div>
             </div>
             <hr style="margin-bottom: 15px">
             <div class="desc">
-                <p class="content"  th:text="${postDTO.content}">
+                <p class="content"  th:text="${postDTOs.content}">
                     책설명
                 </p>
             </div>
@@ -69,11 +69,11 @@
             <div class="bottom">
                 <div class="priceSection">
                     <div class="flex items-center mb-2">
-                        <span class="price" th:text="${#numbers.formatInteger(postDTO.price, 0, 'COMMA')}">10,000</span>원
+                        <span class="price" th:text="${#numbers.formatInteger(postDTOs.price, 0, 'COMMA')}">10,000</span>원
                     </div>
                 </div>
                 <div class="actionBtn">
-                    <button class="wishBtn" th:data-postId="${postDTO.id}">
+                    <button class="wishBtn" th:data-postId="${postDTOs.id}">
                         장바구니 담기
                     </button>
 <!--                    ???-->
@@ -105,14 +105,19 @@
             </div>
         </div>
 
+
+
+
+
+
         <div class="reviewList">
             <br>
 <!--            이거 반복-->
-            <div class="reviewItem">
+            <div class="reviewItem" th:each="review : ${reviewDTOs}">
                 <div class="reviewItemHeader">
                     <div class="reviewItemInfo">
-                        <h3 class="reviewTitle">리뷰 제목</h3>
-                        <span class="reviewAuthor">리뷰 작성자</span>
+                        <h3 class="reviewTitle" th:text="${review.title}">리뷰 제목</h3>
+                        <span class="reviewAuthor" th:text="${review.author}">리뷰 작성자</span>
                     </div>
                     <div class="reviewActions">
                         <div class="ownUserSettings">
@@ -133,11 +138,12 @@
                     </div>
 
                 </div>
-                <p class="reviewContent">
+                <p class="reviewContent" th:text="${review.content}">
                     문법과 개념을 깔끔하게 정리해놓은 책이에요. 예제도 많고 설명도 detail하게 되어있어 좋습니다.
                 </p>
             </div>
         </div>
+
     </div>
 
     <!-- 레이어 (모달) -->

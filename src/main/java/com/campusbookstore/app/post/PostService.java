@@ -6,6 +6,10 @@ import com.campusbookstore.app.image.ImageRepository;
 import com.campusbookstore.app.member.AccountDetail;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
+import com.campusbookstore.app.member.MemberService;
+import com.campusbookstore.app.review.Review;
+import com.campusbookstore.app.review.ReviewDTO;
+import com.campusbookstore.app.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +31,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
     private final MemberRepository memberRepository;
+    private final ReviewService reviewService;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -64,10 +69,15 @@ public class PostService {
                     .build();
             imagesDTO.add(imageDTO);
         }
+
+
+        List<Review> reviewObjs = reviewService.getReviews();
+        List<ReviewDTO> reviewDTOs = reviewService.getReviewDTOs(reviewObjs);
         
         //DTO전달
-        model.addAttribute("postDTO", postDTO);
-        model.addAttribute("imagesDTO", imagesDTO);
+        model.addAttribute("postDTOs", postDTO);
+        model.addAttribute("imagesDTOs", imagesDTO);
+        model.addAttribute("reviewDTOs", reviewDTOs);
         return "post/detailPost";
     }
     String viewEditPost () {
