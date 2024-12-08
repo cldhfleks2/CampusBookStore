@@ -111,7 +111,6 @@ a:hover {
     color: white;
     text-align: center;
     padding: 1rem;
-    position: fixed; /* 고정 */
     bottom: 0; /* 화면의 아래쪽에 위치 */
     left: 0;
     width: 100%; /* 화면 전체 너비 */

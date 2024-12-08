@@ -110,7 +110,7 @@ function upload() {
         formData.append("title", $("input[name='title']").val());
         formData.append("author", $("input[name='author']").val());
         formData.append("price", $("input[name='price']").val());
-        formData.append("content", $("input[name='content']").val());
+        formData.append("content", $("textarea[name='content']").val());
 
         $(".image-wrapper input[type='file']").each(function() {
             // Check if there are actual files
@@ -126,7 +126,7 @@ function upload() {
             processData: false,
             data: formData,
             success: function (data) {
-                console.log(data)
+                window.location.href = "/main";
             },
             fail: function (err) {
                 console.log(err)

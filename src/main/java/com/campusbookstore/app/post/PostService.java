@@ -2,12 +2,11 @@ package com.campusbookstore.app.post;
 
 import com.campusbookstore.app.image.Image;
 import com.campusbookstore.app.image.ImageRepository;
-import com.campusbookstore.app.member.CustomUserDetail;
+import com.campusbookstore.app.member.AccountDetail;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -28,7 +27,6 @@ public class PostService {
 
     @Value("${file.dir}")
     private String fileDir;
-    private String uploadDir = System.getProperty("user.dir") + fileDir;
 
     String viewAddPost () {
         return "post/addPost";
@@ -48,8 +46,9 @@ public class PostService {
     //책 등록
     String addPost (PostDTO postDTO, Authentication auth) throws IOException {
         //Spring SEC로 로그인 정보를 가져옴
-        CustomUserDetail userDetail = (CustomUserDetail) auth.getPrincipal();
-        String username = userDetail.getUsername();
+        AccountDetail userDetail = (AccountDetail) auth.getPrincipal();
+        String username = userDetail.getName(); //여기 getUserName에서 바꿈.
+
 
         //Member객체 가져옴
         Optional<Member> optionalMember = memberRepository.findByName(username);
@@ -70,9 +69,12 @@ public class PostService {
         post.setMember(member);
         postRepository.save(post);
 
+        //저장경로
+        String uploadDir = System.getProperty("user.dir") + fileDir;
+
         //Image객체 생성 후 저장
         for(MultipartFile file : postDTO.getImages()) {
-            //고유값 과 확장자
+            //고유 값과 확장자
             String uuid = UUID.randomUUID().toString();
             String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             //폴더가 없으면 생성
@@ -86,12 +88,14 @@ public class PostService {
             String filePath = uploadDir + fileName; //저장될 파일 경로(파일이름과 위치)
             //파일을 저장
             file.transferTo(new File(filePath));
+
             //DB에 저장
             Image image = new Image();
             image.setImagePath(filePath);
             image.setPost(post);
             imageRepository.save(image);
         }
+        System.out.println("성공");
 
         return "redirect:/main";
     }

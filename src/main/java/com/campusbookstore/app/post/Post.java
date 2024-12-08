@@ -5,7 +5,10 @@ import com.campusbookstore.app.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,9 +19,16 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String author; //저자
+    private String author;
     private String price;
     private String content;
+
+    @Column(updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createDate;
+
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
 
     @OneToMany(mappedBy="post", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Image> images;
