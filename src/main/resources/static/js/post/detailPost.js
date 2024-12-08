@@ -4,6 +4,8 @@ $(document).ready(function() {
     modal();
     likeBtn();
     wishBtn();
+
+    addReview()
 });
 
 //책 그림 슬라이드
@@ -156,4 +158,46 @@ function wishBtn(){
     })
 }
 
+//리뷰 작성 란
+function addReview(){
+    $(".submitReviewBtn").on("click", function (){
+        var title = $("input[name='reviewTitle']").val(); //value값
+        var author =$(".myname").text(); //text값
+        var content = $("textarea[name='reviewContent']").val(); //value값
+
+
+        //리뷰 작성 -> 컨트롤러에서 DB에 저장하는 등 로직 진행
+        $.ajax({
+            url: "/reviewSubmit",
+            method: "post",
+            data: {
+                title: title,
+                author: author,
+                content: content
+            },
+            success: function (){
+                //리뷰 리스트 갱신
+                $.ajax({
+                    url:"/reviewList",
+                    method:"get",
+                    async: false,
+                    success: function (data){
+                        $(".reviewList").replaceWith(data);
+                        console.log(data);
+                        console.log("/reviewList ajax complete")
+                    },
+                    fail: function (err){
+                        console.log(err);
+                    }
+                })
+
+                console.log("/reviewSubmit ajax complete");
+            }, fail: function (err){
+                console.log(err);
+            }
+
+        })
+
+    });
+}
 

@@ -70,7 +70,6 @@ public class PostService {
             imagesDTO.add(imageDTO);
         }
 
-
         List<Review> reviewObjs = reviewService.getReviews();
         List<ReviewDTO> reviewDTOs = reviewService.getReviewDTOs(reviewObjs);
         

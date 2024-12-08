@@ -88,20 +88,22 @@
 
     <div class="reviewSection">
         <div class="reviewHeader">
-            <h2 class="reviewIntro">리뷰 (<span class="reviewCnt">숫자</span>)</h2>
+            <h2 class="reviewIntro">리뷰 (
+                <span class="reviewCnt" th:text="${reviewDTOs.size}">숫자</span>
+                )</h2>
         </div>
 
+<!--        리뷰 작성란-->
         <div class="addReviewSection">
             <div class="addReviewForm">
                 <div class="addReviewInputs">
+                    <div class="myname" sec:authentication="principal.name"></div>
                     <div class="addReviewTitle">
-                        <input type="text" placeholder="리뷰 제목을 입력하세요" class="addReviewTitleInput">
+                        <input type="text" name="reviewTitle" placeholder="리뷰 제목을 입력하세요" class="addReviewTitleInput">
                     </div>
-                    <textarea placeholder="리뷰 내용을 입력하세요" class="addReviewContent"></textarea>
+                    <textarea placeholder="리뷰 내용을 입력하세요" name="reviewContent" class="addReviewContent"></textarea>
                 </div>
-                <a href="#">
-                    <button class="submitReviewBtn">리뷰 작성</button>
-                </a>
+                <button class="submitReviewBtn">리뷰 작성</button>
             </div>
         </div>
 
