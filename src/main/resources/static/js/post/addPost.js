@@ -4,8 +4,6 @@ $(document).ready(function() {
     upload();
 });
 
-
-
 //드래그 앤 드랍 컨트롤
 function dragEvent(){
     // Drag over event
@@ -101,6 +99,7 @@ function imageRemove(){
 
 }
 
+//책 등록
 function upload() {
     $(".submitButton").on("click", function (e) {
         e.preventDefault();
@@ -113,7 +112,6 @@ function upload() {
         formData.append("content", $("textarea[name='content']").val());
 
         $(".image-wrapper input[type='file']").each(function() {
-            // Check if there are actual files
             if (this.files && this.files.length > 0) {
                 formData.append("images", this.files[0]);
             }
@@ -125,7 +123,7 @@ function upload() {
             contentType: false,
             processData: false,
             data: formData,
-            success: function (data) {
+            success: function () {
                 window.location.href = "/main";
             },
             fail: function (err) {

@@ -6,7 +6,6 @@
     <title>리뷰 신고</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/admin/reportReview.css">
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -73,6 +72,14 @@
     <button class="acceptBtn">제외</button>
     <button class="rejectBtn" style="margin-right:20px">리뷰 삭제</button>
 </div>
+<script>
+    window.onload = function() {
+        const alertMessage = "[[${alertMessage}]]";
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    };
+</script>
 <script src="/js/admin/report.js"></script>
 </body>
 </html>

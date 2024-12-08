@@ -35,6 +35,15 @@
     </form>
 </div>
 
+
+<script>
+    window.onload = function() {
+        const alertMessage = "[[${alertMessage}]]";
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    };
+</script>
 <script>
     document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
         e.preventDefault();

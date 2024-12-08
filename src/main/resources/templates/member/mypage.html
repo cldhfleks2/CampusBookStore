@@ -171,6 +171,14 @@
 </div>
 
 <div th:replace="~{ headers/footer::footer }"></div>
+<script>
+    window.onload = function() {
+        const alertMessage = "[[${alertMessage}]]";
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    };
+</script>
 <script src="/js/member/mypage.js"></script>
 </body>
 </html>

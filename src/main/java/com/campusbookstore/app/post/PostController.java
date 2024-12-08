@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 
@@ -22,8 +23,9 @@ public class PostController {
         return postService.viewAddPost();
     }
     @GetMapping("/detailPost/{postId}")
-    String viewDetailPost (Model model, Authentication auth, @PathVariable Long postId) {
-        return postService.viewDetailPost(model, auth, postId);
+    String viewDetailPost (Model model, Authentication auth, @PathVariable Long postId,
+                           RedirectAttributes redirectAttributes) {
+        return postService.viewDetailPost(model, auth, postId, redirectAttributes);
     }
     @GetMapping("/editPost")
     String viewEdit () {
@@ -37,7 +39,7 @@ public class PostController {
 
     //책 등록
     @PostMapping("/addPost")
-    String addPost (PostDTO postDTO, Authentication auth) throws IOException {
+    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
         return postService.addPost(postDTO, auth);
     }
 

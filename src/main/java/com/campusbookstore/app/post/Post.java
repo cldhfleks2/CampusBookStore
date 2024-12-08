@@ -26,10 +26,8 @@ public class Post {
     @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createDate;
-
     @UpdateTimestamp
     private LocalDateTime updateDate;
-
     @OneToMany(mappedBy="post", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Image> images;
 

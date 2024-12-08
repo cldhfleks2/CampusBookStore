@@ -125,3 +125,8 @@
 .submitButton svg {
     margin-right: 0.5rem;
 }
+
+.image-wrapper img {
+    max-width: 550px;
+
+}

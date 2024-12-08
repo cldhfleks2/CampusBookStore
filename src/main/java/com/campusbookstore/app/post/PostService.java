@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,12 +35,17 @@ public class PostService {
     String viewAddPost () {
         return "post/addPost";
     }
-    String viewDetailPost (Model model, Authentication auth, Long postId) {
+    String viewDetailPost (Model model, Authentication auth, Long postId,
+                           RedirectAttributes redirectAttributes) {
         Optional<Post> postObj = postRepository.findById(postId);
         //없는 postId일때
-        if(!postObj.isPresent()) {
-            return "error";
+        if(!postObj.isPresent()) { return "error"; }
+        //삭제된 게시물일때
+        if(postObj.get().getStatus() == 0){
+            redirectAttributes.addFlashAttribute("alertMessage", "삭제된 게시물입니다.");
+            return "redirect:/main";
         }
+
         //postDTO생성
         Post post = postObj.get();
         PostDTO postDTO = PostDTO.builder()
@@ -76,21 +82,16 @@ public class PostService {
 
 
     //책 등록
-    String addPost (PostDTO postDTO, Authentication auth) throws IOException {
+    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
         //Spring SEC로 로그인 정보를 가져옴
         AccountDetail userDetail = (AccountDetail) auth.getPrincipal();
-        String username = userDetail.getName(); //여기 getUserName에서 바꿈.
+        String name = userDetail.getName(); //getUserName에서 바꿈.
 
 
         //Member객체 가져옴
-        Optional<Member> optionalMember = memberRepository.findByName(username);
-        Member member;
-        if (optionalMember.isPresent()) {
-            member = optionalMember.get();
-        }else{
-            //다시 책등록 폼으로 리턴
-            return "redirect:/addPost";
-        }
+        Optional<Member> optionalMember = memberRepository.findByName(name);
+        if (!optionalMember.isPresent()) { return "redirect:/addPost"; }
+        Member member = optionalMember.get();
 
         //Post객체 생성 후 저장
         Post post = new Post();
@@ -117,15 +118,15 @@ public class PostService {
             }
             //저장될 경로를 구함
             String fileName = uuid + ext; //새로 생성된 파일이름
-            //String filePath = uploadDir + fileName;
-            String filePath = fileName;
+            String filePath = uploadDir + fileName;
 
             //파일을 저장
             file.transferTo(new File(filePath));
 
             //DB에 저장
             Image image = new Image();
-            image.setImagePath(filePath);
+//            image.setImagePath(filePath);
+            image.setImagePath(fileName);
             image.setPost(post);
             imageRepository.save(image);
         }
