@@ -6,9 +6,7 @@
     <title>상품 상세 페이지</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/post/detailPost.css">
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/post/detailPost.js"></script>
 </head>
 <body>
 
@@ -19,14 +17,14 @@
         <div class="bookImageSection">
             <div class="bookImage"></div>
             <div class="buttonGroup">
-                <button class="wishlistBtn" style="background: white; margin-right: 40px;">
+                <button class="wishlistBtn" th:data-postId="9999" th:data-memberId="9999" id="likeBtn" style="background: white; margin-right: 40px;">
                     <a href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="fill" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg>
                     </a>
                 </button>
-                <button class="reportBtn" id="productReportBtn" style="background: white; border: none;">
+                <button class="reportBtn" id="productReportBtn" data-name="book">
                     <a href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
                             <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
@@ -37,31 +35,40 @@
         </div>
 
         <div class="bookInfoSection">
-            <h1 class="bookTitle">자바의 정석</h1>
-            <p class="text-gray-600 mb-4">저자: 남궁성</p>
-
+            <h1 class="title">자바의 정석</h1>
+            <hr>
+            <h3 class="font-semibold" style="margin: 10px 0;">저자</h3>
+            <p class="author text-gray-600 mb-4">남궁성</p>
+            <hr style="margin-top: 15px">
             <div class="sellerInfo">
                 <div>
-                    <h3 class="font-semibold">판매자 정보</h3>
-                    <p class="text-gray-600">UserName123</p>
+                    <h3 class="font-semibold" style="margin-bottom: 10px;">판매자</h3>
+                    <p class="name text-gray-600">UserName123</p>
+                </div>
+            </div>
+            <hr style="margin-bottom: 15px">
+            <div class="desc">
+                <p class="content">
+                    책설명dddddddddddddddddddddddddddㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ판매자 정보판매자 정보판매자 정보판매자 정보판매자 정보판매자 정보판매자 정보
+                </p>
+            </div>
+
+            <div class="bottom">
+                <div class="priceSection">
+                    <div class="flex items-center mb-2">
+                        <span class="price">10,000</span>원
+                    </div>
+                </div>
+                <div class="actionBtn">
+                    <button class="cartBtn">
+                        장바구니 담기
+                    </button>
+                    <button class="buyBtn">
+                        바로 구매
+                    </button>
                 </div>
             </div>
 
-            <div class="priceSection">
-                <div class="flex items-center mb-2">
-                    <span class="bookPrice">10,000원</span>
-                </div>
-                <p class="text-gray-600">상품 상태: 최상</p>
-            </div>
-
-            <div class="actionBtns">
-                <button class="cartBtn">
-                    장바구니 담기
-                </button>
-                <button class="buyBtn">
-                    바로 구매
-                </button>
-            </div>
         </div>
     </div>
 
@@ -78,31 +85,20 @@
                     </div>
                     <textarea placeholder="리뷰 내용을 입력하세요" class="addReviewContent"></textarea>
                 </div>
-                <button class="submitReviewBtn">리뷰 작성</button>
+                <a href="#">
+                    <button class="submitReviewBtn">리뷰 작성</button>
+                </a>
             </div>
         </div>
 
         <div class="reviewList">
+            <br>
+<!--            이거 반복-->
             <div class="reviewItem">
                 <div class="reviewItemHeader">
                     <div class="reviewItemInfo">
-                        <h3 class="reviewTitle">책 너무 좋아요!</h3>
-                        <span class="reviewAuthor">김*준</span>
-                    </div>
-                    <div class="reviewActions">
-                        <button class="deleteReviewBtn">삭제</button>
-                    </div>
-                </div>
-                <p class="reviewContent">
-                    자바를 처음 공부하는 사람에게 정말 좋은 책입니다. 기초부터 차근차근 설명해주어 이해하기 쉬워요.
-                </p>
-            </div>
-
-            <div class="reviewItem">
-                <div class="reviewItemHeader">
-                    <div class="reviewItemInfo">
-                        <h3 class="reviewTitle">책 너무 좋아요!</h3>
-                        <span class="reviewAuthor">김*준</span>
+                        <h3 class="reviewTitle">리뷰 제목</h3>
+                        <span class="reviewAuthor">리뷰 작성자</span>
                     </div>
                     <div class="reviewActions">
                         <div class="ownUserSettings">
@@ -113,7 +109,7 @@
                                 <button class="deleteReviewBtn" style="margin-left:10px">삭제</button>
                             </a>
                         </div>
-                        <button class="reportBtn" id="reviewReportBtn" style="background: white; border: none; margin-left:10px">
+                        <button class="reportBtn" id="reviewReportBtn" data-name="review">
                             <a href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
                                     <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
@@ -142,7 +138,9 @@
     </div>
 </div>
 
+<div style="height:55px"></div>
 <div th:replace="~{ headers/footer::footer }"></div>
 
+<script src="/js/post/detailPost.js"></script>
 </body>
 </html>

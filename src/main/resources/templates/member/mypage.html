@@ -6,28 +6,28 @@
     <title>마이페이지</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/member/mypage.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <div th:replace="~{ headers/header::header }"></div>
 
-<!-- Mypage Container -->
-<div class="mypageContainer">
-    <!-- Sidebar Menu -->
-    <div class="mypageSidebar">
-        <div class="mypageSidebarMenu">
-            <a href="#">개인정보 수정</a>
-            <a href="#">판매 내역</a>
-            <a href="#">구매 내역</a>
+<!-- 전체 컨테이너 -->
+<div class="container">
+    <!-- 사이드 바 -->
+    <div class="sidebar">
+        <div class="sidebarMenu">
+            <a href="#" data-content="personalInfo">개인정보 수정</a>
+            <a href="#" data-content="sellContent">판매 내역</a>
+            <a href="#" data-content="buyContent">구매 내역</a>
             <a href="#">찜한 상품</a>
             <a href="#">포인트 현황</a>
         </div>
     </div>
 
-    <!-- Content Area -->
-    <div class="mypageContent">
-        <section id="personalInfo">
+<!--개인정보 컨테이너-->
+    <div id="personalInfo" class="content">
+        <section>
             <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">개인정보 수정</h2>
 
             <div class="pointStatus">
@@ -37,20 +37,70 @@
 
             <form class="personalInfoForm">
                 <div class="formGroup">
-                    <label>이름</label>
-                    <input type="text" value="홍길동">
+                    <div class="tags">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        &nbsp;
+                        <label>이름</label>
+                    </div>
+                    <input type="text" value="">
                 </div>
                 <div class="formGroup">
-                    <label>이메일</label>
-                    <input type="email" value="example@campus.com">
+                    <div class="tags">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        &nbsp;
+                        <label>이메일</label>
+                    </div>
+                    <input type="text" value="">
                 </div>
                 <div class="formGroup">
-                    <label>전화번호</label>
-                    <input type="tel" value="010-1234-5678">
+                    <div class="tags">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        &nbsp;
+                        <label>전화번호</label>
+                    </div>
+                    <input type="tel" value="">
                 </div>
                 <div class="formGroup">
-                    <label>비밀번호 변경</label>
-                    <input type="password" placeholder="새 비밀번호">
+                    <div class="tags">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        &nbsp;
+                        <label>비밀번호 변경</label>
+                    </div>
+                    <input type="password" placeholder="새 비밀번호" value="">
+                </div>
+                <div class="formGroup">
+                    <div class="tags">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                            <path d="M3 20v-9l9-4 9 4v9"></path>
+                            <path d="M9 20v-5h6v5"></path>
+                            <path d="M12 3v18"></path>
+                        </svg>
+                        &nbsp;
+                        <label>대학교</label>
+                    </div>
+                    <input type="text" value="">
+                </div>
+                <div class="formGroup">
+                    <div class="tags">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        &nbsp;
+                        <label>비밀번호 재입력</label>
+                    </div>
+                    <input type="password" placeholder="새 비밀번호 재입력" value="">
                 </div>
                 <div class="formActions">
                     <button type="submit">정보 수정</button>
@@ -58,9 +108,69 @@
             </form>
         </section>
     </div>
+
+    <!-- 판매 컨테이너 -->
+    <div id="sellContent" class="content">
+        <section>
+            <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">판매 내역</h2>
+
+            <div class="productList">
+                <div class="productItem">
+                    <div class="productImage">
+                        <img src="/images/book1.jpg" alt="책 표지">
+                    </div>
+                    <div class="productDetails">
+                        <h3>프로그래밍 심화</h3>
+                        <p>저자: 김코딩</p>
+                        <p>상품 상태: 최상</p>
+                        <p>판매 가격: 15,000원</p>
+                        <p>판매 날짜: 2024-01-15</p>
+                        <p class="productDescription">프로그래밍 기술을 한 단계 높이고 싶은 개발자를 위한 심화 책</p>
+                    </div>
+                </div>
+                <!-- More product items can be added here (total 10 max) -->
+            </div>
+
+            <div class="pagination">
+                <button>이전</button>
+                <span>1/1</span>
+                <button>다음</button>
+            </div>
+        </section>
+    </div>
+
+<!--    구매내역 컨테이너-->
+    <div id="buyContent" class="content">
+        <section>
+            <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">구매 내역</h2>
+
+            <div class="productList">
+                <div class="productItem">
+                    <div class="productImage">
+                        <img src="/images/book2.jpg" alt="책 표지">
+                    </div>
+                    <div class="productDetails">
+                        <h3>데이터 사이언스 입문</h3>
+                        <p>저자: 이데이터</p>
+                        <p>상품 상태: 양호</p>
+                        <p>구매 가격: 20,000원</p>
+                        <p>구매 날짜: 2024-01-20</p>
+                        <p class="productDescription">데이터 분석의 기초를 배우는 초급자용 책</p>
+                    </div>
+                </div>
+                <!-- More product items can be added here (total 10 max) -->
+            </div>
+
+            <div class="pagination">
+                <button>이전</button>
+                <span>1/1</span>
+                <button>다음</button>
+            </div>
+        </section>
+    </div>
 </div>
 
 <div th:replace="~{ headers/footer::footer }"></div>
-
+<script src="/js/member/mypage.js"></script>
 </body>
 </html>

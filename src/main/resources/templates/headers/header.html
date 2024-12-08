@@ -10,17 +10,20 @@
 <header class="header" th:fragment="header">
     <div class="logo">CampusBookStore</div>
     <div class="headerNav">
-        <div class="navLinks">
-            <a href="#">카테고리</a>
-            <a href="#">마이페이지</a>
-        </div>
         <div class="headerRight">
             <div class="searchContainer">
-                <input type="text" placeholder="책 제목, 저자 검색" class="searchInput">
-                <button class="searchButton">🔍</button>
+<!--                검색페이지로-->
+                <form action="/search" method="post">
+                    <input type="text" name="keyword" class="searchInput" placeholder="책 제목, 저자 검색" >
+                    <button class="searchButton" type="submit">🔍</button>
+                </form>
             </div>
-            <div class="cartIcon">🛒</div>
-            <div class="profileIcon">👤</div>
+            <a href="/cart">
+                <div class="cartIcon">🛒</div>
+            </a>
+            <a href="/mypage">
+                <div class="profileIcon">👤</div>
+            </a>
         </div>
     </div>
 </header>

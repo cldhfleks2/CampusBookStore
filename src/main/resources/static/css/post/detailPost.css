@@ -37,16 +37,13 @@
 .bookInfoSection {
     padding: 0 1rem;
 }
-.bookTitle {
+.title {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
 .sellerInfo {
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
     padding: 1rem 0;
-    margin: 1rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -61,7 +58,7 @@
 .priceSection {
     margin-bottom: 1rem;
 }
-.bookPrice {
+.price {
     font-size: 1.875rem;
     font-weight: bold;
     color: #2563eb;
@@ -74,7 +71,7 @@
     border-radius: 0.25rem;
     font-size: 0.8rem;
 }
-.actionBtns {
+.actionBtn {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
@@ -319,3 +316,28 @@ a:hover {
     color: inherit; /* 호버시 텍스트 색상 변경 없애기 */
     background: none; /* 호버시 배경색 없애기 */
 }
+
+.bottom {
+    bottom: 0; /* 화면의 아래쪽에 위치 */
+}
+
+.content {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    word-wrap: break-word; /* 단어가 길어지면 자동으로 줄바꿈 */
+    white-space: normal;  /* 공백을 무시하고 줄바꿈 허용 */
+}
+
+hr {
+    border: 1px solid #e5e7eb;
+}
+
+.reportBtn{
+    background: white; border: none; margin-left:10px;
+}
+
+.productReportBtn{
+    background: white; border: none;
+}
+

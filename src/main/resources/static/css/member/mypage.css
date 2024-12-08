@@ -1,4 +1,4 @@
-.mypageContainer {
+.container {
     margin: 2rem auto;
     padding: 0 1rem;
     display: grid;
@@ -7,19 +7,20 @@
 }
 
 /* Sidebar Menu */
-.mypageSidebar {
+.sidebar {
     background-color: white;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
 }
 
-.mypageSidebarMenu {
+.sidebarMenu {
     display: flex;
     flex-direction: column;
+    font-weight: bold;
 }
 
-.mypageSidebarMenu a {
+.sidebarMenu a {
     padding: 0.75rem;
     text-decoration: none;
     color: #1f2937;
@@ -27,16 +28,8 @@
     transition: background-color 0.3s;
 }
 
-.mypageSidebarMenu a:hover {
+.sidebarMenu a:hover {
     background-color: #e6f2ff;
-}
-
-/* Content Area */
-.mypageContent {
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
 }
 
 /* Personal Info Section */
@@ -87,6 +80,8 @@
     padding: 1rem;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
+    width: 350px;
+    margin-left: auto; /* 오른쪽 정렬 */
 }
 
 .pointChargeBtn {
@@ -98,34 +93,16 @@
     cursor: pointer;
 }
 
-/* Table Styles */
-.mypageTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.mypageTable th, .mypageTable td {
-    border: 1px solid #e5e7eb;
-    padding: 0.75rem;
-    text-align: left;
-}
-
-.mypageTable th {
-    background-color: #f9fafb;
-}
-
-
 /* Mypage Container */
-.mypageContainer {
+.container {
     display: flex;
-
     margin: 2rem auto;
     padding: 0 1rem;
 }
 
 /* Sidebar Menu */
-.mypageSidebar {
-    flex: 0 0 250px; /* 고정 너비 250px */
+.sidebar {
+    flex: 0 0 160px; /* 고정 너비 250px */
     background-color: white;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -133,11 +110,99 @@
     height: auto; /* 콘텐츠에 따라 높이 조정 */
 }
 
+/* Sidebar Menu */
+.sidebar {
+    flex: 0 0 160px;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    height: auto;
+    margin-left: 100px;
+}
+
 /* Content Area */
-.mypageContent {
-    flex: 1; /* 나머지 공간을 차지 */
+.content {
+    flex: 1;
     background-color: white;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 2rem;
+    margin-right: 100px;
+    max-width: 1000px;
+}
+
+.tags {
+    display: flex;
+}
+
+
+/*ㅇ*/
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.productItem {
+    display: flex;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    align-items: start;
+}
+
+.productImage {
+    flex: 0 0 150px;
+    margin-right: 1rem;
+}
+
+.productImage img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+}
+
+.productDetails {
+    flex: 1;
+}
+
+.productDetails h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+}
+
+.productDetails p {
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.productDescription {
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: #4b5563;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.pagination button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.sidebarMenu a.active {
+    background-color: #e6f2ff;
+    color: #2563eb;
 }

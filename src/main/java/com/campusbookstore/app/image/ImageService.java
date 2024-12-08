@@ -1,14 +1,10 @@
-package com.campusbookstore.app.cart;
+package com.campusbookstore.app.image;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CartService {
-
-    String viewCart(){
-        return "cart/cart";
-    }
+public class ImageService {
 
 }

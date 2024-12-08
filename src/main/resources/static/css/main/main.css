@@ -40,6 +40,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     transition: box-shadow 0.3s;
+    width: 280px;
 }
 
 .productCard:hover {

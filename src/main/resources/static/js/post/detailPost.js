@@ -1,17 +1,64 @@
 $(document).ready(function() {
-    // 상품신고, 리뷰신고 버튼 누르면 모달창 보여지게.
-    $("#productReportBtn, #reviewReportBtn").on("click", function() {
-        $("#reportOverlay").css("display", "flex");
-    });
+    modal();
 
-    // "아니오" 버튼 클릭 시 모달 닫기
-    $(".noBtn").on("click", function() {
-        $("#reportOverlay").css("display", "none");
-    });
-
-    // "예" 버튼 클릭 시 신고 처리 후 모달 닫기
-    $(".yesBtn").on("click", function() {
-        $("#reportOverlay").css("display", "none");
-        alert("신고가 완료되었습니다.");
-    });
+    wishlistBtn()
 });
+
+//모달창과 버튼에 할당
+function modal(){
+    $("#productReportBtn, #reviewReportBtn").on("click", function() {
+        modalON()
+    });
+    noBtn();
+    yesBtn();
+}
+
+function yesBtn(){
+    $(".yesBtn").on("click", function() {
+        modalOFF();
+        alert("신고가 완료되었습니다.");
+        report($(this).data("name"));
+    });
+}
+
+function noBtn(){
+    $(".noBtn").on("click", function() {
+        modalOFF();
+    });
+}
+
+function report(name) {
+    if(name === "book"){
+
+    }else if(name === "review"){
+
+    }
+}
+
+function wishlistBtn(){
+    $(".wishlistBtn").on("click", function () {
+        var postId = $(this).data("postId");
+        var memberId = $(this).data("memberId");
+
+        //찜한 리스트임을 서버로 전송
+        $.ajax({
+            url:"/wish",
+            method:"post",
+            data: {postId: postId, memberId:memberId },
+            success: function (data){
+                console.log("wish-ajax-complete")
+            },
+            fail: function (data){
+                console.log(data);
+            }
+        })
+    })
+}
+
+function modalON(){
+    $("#reportOverlay").css("display", "flex");
+}
+
+function modalOFF() {
+    $("#reportOverlay").css("display", "none");
+}
