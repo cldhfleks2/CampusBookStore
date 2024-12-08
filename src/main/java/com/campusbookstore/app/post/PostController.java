@@ -2,11 +2,14 @@ package com.campusbookstore.app.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,16 +36,12 @@ public class PostController {
 
 
     //책 등록
-//    @PostMapping("/addPost")
-//    String addPost (Post post) {
-//        return postService.addPost(post);
-//    }
-
     @PostMapping("/addPost")
-    @ResponseBody
-    ResponseEntity<Post> addPost (Post post) {
-        return postService.addPost(post);
+    String addPost (PostDTO postDTO, Authentication auth) throws IOException {
+        return postService.addPost(postDTO, auth);
     }
+
+
 
     //찜한 리스트 추가 요청
     @PostMapping("/wish")

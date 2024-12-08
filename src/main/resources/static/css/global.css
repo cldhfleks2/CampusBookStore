@@ -11,6 +11,18 @@ body {
     line-height: 1.6;
 }
 
+a {
+    text-decoration: none; /* 링크의 기본 밑줄 없애기 */
+    color: inherit; /* 텍스트 색상 변경 없애기 */
+}
+
+a:hover {
+    text-decoration: none; /* 호버시 밑줄 없애기 */
+    color: inherit; /* 호버시 텍스트 색상 변경 없애기 */
+    background: none; /* 호버시 배경색 없애기 */
+}
+
+
 
 /* 헤더 */
 .header {

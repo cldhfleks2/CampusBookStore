@@ -1,6 +1,7 @@
 package com.campusbookstore.app.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,12 @@ public class MemberService {
     String viewLogin () {
         return "member/login";
     }
-    String viewRegister () {
+    String viewRegister (Authentication auth) {
+        //인증정보가 없거나 로그인됬으면 메인 화면으로 이동
+        if(auth != null && auth.isAuthenticated())
+            return "redirect:/main";
+        
+        //화면 보여주기
         return "member/register";
     }
     String viewMyPage () {

@@ -1,9 +1,12 @@
 package com.campusbookstore.app.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,8 +20,8 @@ public class MemberController {
         return memberService.viewLogin();
     }
     @GetMapping("/register")
-    String viewRegister () {
-        return memberService.viewRegister();
+    String viewRegister (Authentication auth) {
+        return memberService.viewRegister(auth);
     }
     @GetMapping("/mypage")
     String viewMyPage () {
@@ -34,5 +37,7 @@ public class MemberController {
     String register(Member member) {
         return memberService.register(member);
     }
+
+
 
 }

@@ -6,48 +6,55 @@
     <title>로그인 페이지</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/member/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <div th:replace="~{ headers/header::header }"></div>
 
-<div class="loginContainer">
+<div class="loginContainer" style="margin-top: -100px;">
     <div class="loginBox">
         <h2 class="loginTitle">CampusBookStore</h2>
 
-        <div class="inputGroup">
-            <label>이메일</label>
-            <div class="inputWrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inputIcon">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <input type="email" placeholder="이메일을 입력하세요">
-            </div>
+        <div th:if="${param.error}">
+            <h4>로그인 실패 했습니다.</h4>
         </div>
 
-        <div class="inputGroup">
-            <label>비밀번호</label>
-            <div class="inputWrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inputIcon">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                <input type="password" placeholder="비밀번호를 입력하세요">
+        <form action="/login" method="post">
+            <div class="inputGroup">
+                <label>아이디</label>
+                <div class="inputWrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inputIcon">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <input name="name" placeholder="아이디를 입력하세요">
+                </div>
             </div>
-        </div>
 
-        <button class="loginButton">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                <polyline points="10 17 15 12 10 7"></polyline>
-                <line x1="15" y1="12" x2="3" y2="12"></line>
-            </svg>
-            로그인
-        </button>
+            <div class="inputGroup">
+                <label>비밀번호</label>
+                <div class="inputWrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inputIcon">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <input type="password" name="password" placeholder="비밀번호를 입력하세요">
+                </div>
+            </div>
+
+            <button class="loginBtn" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+                로그인
+            </button>
+        </form>
 
         <div class="linkGroup">
-            <a href="#">회원가입</a>
+            <a href="/register">회원가입</a>
         </div>
 
     </div>

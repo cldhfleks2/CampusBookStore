@@ -14,4 +14,6 @@ public class PostDTO {
     private String price;
     private String content;
     private List<MultipartFile> images;
+
+    private Long memberId;
 }
