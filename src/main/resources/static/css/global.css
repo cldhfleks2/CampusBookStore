@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    caret-color: transparent; /* 커서를 투명하게 설정 */
 }
 
 body {
@@ -12,8 +13,8 @@ body {
 }
 
 a {
-    text-decoration: none; /* 링크의 기본 밑줄 없애기 */
-    color: inherit; /* 텍스트 색상 변경 없애기 */
+    text-decoration: none;
+    color: inherit;
 }
 
 a:hover {

@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +34,7 @@ public class PostService {
     String viewAddPost () {
         return "post/addPost";
     }
-    String viewDetailPost (Model model, Authentication auth, Long postId,
-                           RedirectAttributes redirectAttributes) {
+    String viewDetailPost (Model model, Authentication auth, Long postId, RedirectAttributes redirectAttributes) {
         Optional<Post> postObj = postRepository.findById(postId);
         //없는 postId일때
         if(!postObj.isPresent()) { return "error"; }
@@ -78,7 +76,6 @@ public class PostService {
     String viewSearch () {
         return "search/search";
     }
-
 
 
     //책 등록
@@ -134,13 +131,11 @@ public class PostService {
 
         return "redirect:/main";
     }
-
     //???찜한 리스트 추가 요청
     ResponseEntity<String> addLike(Long postId, Authentication auth){
     //맴버id는 auth에서 꺼내써라
         return ResponseEntity.ok("찜하기 성공");
     }
-
     //헤더의 검색 기능
     String searching(String keyword, Model model) {
         //제목과 책 저자로 검색
@@ -151,12 +146,13 @@ public class PostService {
         model.addAttribute("postCnt", results.size());
         return "redirect:/search";
     }
-
     //???장바구니 추가 요청
     ResponseEntity<String> addWish(Long postId, Authentication auth) {
         return ResponseEntity.ok("장바구니 추가 성공");
     }
 
+
+    //
 
 
 
