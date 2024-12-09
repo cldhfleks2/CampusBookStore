@@ -54,7 +54,7 @@ public class ReviewService {
         List<ReviewDTO> reviewDTOs = getReviewDTOs(reviewObjs);
 
         model.addAttribute("reviewDTOs", reviewDTOs);
-        return "post/detailPost :: #reviewList"; //리뷰 리스트만 전송
+        return "post/detailPost :: #reviewSection"; //리뷰 섹션(리뷰갯ㅅ, 리뷰 리스트만 갱신)
     }
 
     //작성한 리뷰를 DB에 저장

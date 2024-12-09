@@ -182,7 +182,7 @@ function addReview(){
                     method:"get",
                     async: false,
                     success: function (data){
-                        $(".reviewList").replaceWith(data);
+                        $(".reviewSection").replaceWith(data);
                         console.log(data);
                         console.log("/reviewList ajax complete")
                     },
