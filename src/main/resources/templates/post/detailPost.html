@@ -30,7 +30,7 @@
             </div>
             <div class="buttonGroup">
 <!--               찜할때는 게시물의 아이디를 전송하게됨-->
-                <button class="likeBtn" th:data-postId="${postDTOs.id}" id="likeBtn" style="background: white; margin-right: 40px;">
+                <button class="likeBtn" th:data-post-id="${postDTOs.id}" id="likeBtn" style="background: white; margin-right: 40px;">
                     <a href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" class="fill" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="actionBtn">
-                    <button class="wishBtn" th:data-postId="${postDTOs.id}">
+                    <button class="wishBtn" th:data-post-id="${postDTOs.id}">
                         장바구니 담기
                     </button>
 <!--                    ???-->
@@ -119,17 +119,18 @@
                             <span class="reviewAuthor" th:text="${review.author}">리뷰 작성자</span>
                         </div>
                         <div class="reviewActions">
-                            <div class="ownUserSettings">
+<!--                            리뷰 작성자인지 확인-->
+                            <div class="ownUserSettings" th:if="${review.author == #authentication.principal.name}">
 <!--                                리뷰아이디로 컨트롤러 호출 하게-->
-                                <a href="#">
-                                    <button class="editReviewBtn">수정</button>
+                                <a>
+                                    <button class="editReviewBtn" th:data-review-id="${review.id}" th:data-author-name="${review.author}" th:data-current-name="${#authentication.principal.name}">수정</button>
                                 </a>
-                                <a href="#">
-                                    <button class="deleteReviewBtn" style="margin-left:10px">삭제</button>
+                                <a>
+                                    <button class="deleteReviewBtn" th:data-review-id="${review.id}" th:data-author-name="${review.author}" th:data-current-name="${#authentication.principal.name}">삭제</button>
                                 </a>
                             </div>
                             <button class="reportBtn" id="reviewReportBtn" data-name="review">
-                                <a href="#">
+                                <a>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
                                         <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
                                     </svg>

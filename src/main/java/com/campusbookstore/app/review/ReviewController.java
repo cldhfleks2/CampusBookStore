@@ -18,9 +18,15 @@ public class ReviewController {
     }
 
     @PostMapping("/reviewSubmit")
-    @ResponseBody
+    @ResponseBody //void리턴하기위함
     void reviewSubmit(ReviewDTO reviewDTO) {
         reviewService.reviewSubmit(reviewDTO);
+    }
+
+    @PostMapping("/editReview")
+    @ResponseBody
+    void editReview(ReviewDTO reviewDTO) {
+        reviewService.editReview(reviewDTO); //이미 존재하면 수정하도록 JPA가 처리
     }
 
 

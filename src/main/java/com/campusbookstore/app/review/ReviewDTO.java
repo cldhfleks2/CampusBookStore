@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ReviewDTO {
+    private Long id;
     private String title;
     private String author;
     private String content;
