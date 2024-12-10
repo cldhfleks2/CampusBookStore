@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +24,7 @@ public class ReviewController {
         reviewService.reviewSubmit(reviewDTO);
     }
 
-    @PostMapping("/editReview")
+    @PatchMapping("/editReview")
     @ResponseBody
     void editReview(ReviewDTO reviewDTO) {
         reviewService.editReview(reviewDTO); //이미 존재하면 수정하도록 JPA가 처리

@@ -18,6 +18,7 @@ public class Member {
     private String phone;
     private String campus;
     private String password;
+
     //1:회원 0:회원탈퇴
     private int status=1;
 }

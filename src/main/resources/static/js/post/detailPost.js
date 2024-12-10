@@ -3,17 +3,19 @@ $(document).ready(function() {
     initImageSlider();
 
     //책 관련 모달, 버튼
-    modal();
+    report();
     likeBtn();
     wishBtn();
     //리뷰
     addReview();
     editReviewBtn();
+    deleteReviewBtn();
 });
 
 function reBinding(){
-    addReview();
-    editReviewBtn();
+    // addReview();
+    // editReviewBtn();
+    // deleteReviewBtn();
 }
 
 //책 그림 슬라이드
@@ -37,8 +39,8 @@ function initImageSlider() {
     $wrapper.css('width', `${totalItems * 100}%`);
     $items.css('flex', `0 0 ${100 / totalItems}%`);
 
-    $nextBtn.on('click', function() {
-        // Create a smooth transition for next slide
+    //다음 이미지
+    $(document).on('click', '.slider-next', function() {
         $wrapper.css('transition', 'transform 0.5s ease');
 
         currentIndex++;
@@ -57,8 +59,9 @@ function initImageSlider() {
 
         updateSliderPosition();
     });
-
-    $prevBtn.on('click', function() {
+    
+    //이전 이미지
+    $(document).on('click', '.slider-prev', function() {
         // Create a smooth transition for previous slide
         $wrapper.css('transition', 'transform 0.5s ease');
 
@@ -95,43 +98,28 @@ function modalOFF() {
     $("#reportOverlay").css("display", "none");
 }
 
-//모달창과 버튼
-function modal(){
-    $("#productReportBtn, #reviewReportBtn").on("click", function() {
-        modalON()
+//신고하기 개발중
+function report() {
+    $(document).on("click", "#productReportBtn, #reviewReportBtn", function() {
+        modalON();
+        $("#reportOverlay .modalMessage").text("신고하시겠습니까?");
+        $("#reportOverlay").css("display", "flex");
     });
-    noBtn();
-    yesBtn();
-}
+    $(".noBtn").off("click").on("click", function() {
+        modalOFF();
+    });
 
-//모달창의 예 버튼
-function yesBtn(){
-    $(".yesBtn").on("click", function() {
+    //예 버튼 클릭
+    $(document).off("click", ".yesBtn").on("click",".yesBtn", function() {
         modalOFF();
         alert("신고가 완료되었습니다.");
         report($(this).data("name"));
     });
 }
 
-//모달창의 아니오 버튼
-function noBtn(){
-    $(".noBtn").on("click", function() {
-        modalOFF();
-    });
-}
-
-//신고하기 개발중
-function report(name) {
-    if(name === "book"){
-
-    }else if(name === "review"){
-
-    }
-}
-
 //찜하기(좋아요)추가 요청
 function likeBtn(){
-    $(".likeBtn").on("click", function () {
+    $(document).on("click", ".likeBtn", function () {
         var postId = $(this).data("post-id");
 
         //찜한 리스트임을 서버로 전송
@@ -151,7 +139,7 @@ function likeBtn(){
 
 //장바구니 추가 버튼
 function wishBtn(){
-    $(".wishBtn").on("click", function (){
+    $(document).on("click", ".wishBtn", function () {
         var postId = $(this).data("post-id");
         $.ajax({
             url: "/wishPlus",
@@ -187,7 +175,7 @@ function reviewListUpdate(){
 
 //리뷰 작성
 function addReview(){
-    $(".submitReviewBtn").on("click", function (){
+    $(document).on("click", ".submitReviewBtn", function () {
         var title = $("input[name='reviewTitle']").val(); //value값
         var author =$(".myname").text(); //text값
         var content = $("textarea[name='reviewContent']").val(); //value값
@@ -216,7 +204,7 @@ function addReview(){
 
 //리뷰 수정
 function editReviewBtn() {
-    $(".editReviewBtn").on("click", function() {
+    $(document).on("click", ".editReviewBtn", function (){
         var reviewId = $(this).data("review-id");
         var author = $(this).data("author-name");
         var reviewItem = $(this).closest(".reviewItem");
@@ -241,12 +229,12 @@ function editReviewBtn() {
         `);
 
         // 수정 취소 버튼 이벤트
-        $(".cancelEditReviewBtn").on("click", function() {
+        $(document).on("click", ".cancelEditReviewBtn", function() {
             reviewListUpdate(); // 원래 리뷰 목록으로 되돌리기
         });
 
         // 수정 완료 버튼 이벤트
-        $(".submitEditReviewBtn").on("click", function() {
+        $(document).on("click", ".submitEditReviewBtn", function() {
             var editedId = reviewId;
             var editedTitle = $("input[name='editReviewTitle']").val();
             var editedAuthor = author;
@@ -254,7 +242,7 @@ function editReviewBtn() {
 
             $.ajax({
                 url: "/editReview",
-                method: "post",
+                method: "patch",
                 data: {
                     id: editedId,
                     title: editedTitle,
@@ -271,5 +259,55 @@ function editReviewBtn() {
                 }
             });
         });
+    });
+}
+
+//리뷰 삭제
+function deleteReviewBtn() {
+    $(document).on("click", ".deleteReviewBtn", function() {
+        var reviewId = $(this).data("review-id");
+        var author = $(this).data("author-name");
+        var reviewItem = $(this).closest(".reviewItem");
+        var originalTitle = reviewItem.find(".reviewTitle").text();
+        var originalContent = reviewItem.find(".reviewContent").text();
+
+        // 모달창 보이기
+        $("#reportOverlay .modalMessage").text("리뷰를 삭제하시겠습니까?");
+        $("#reportOverlay").css("display", "flex");
+        
+        //기존에 달린 이벤트리스너 해제 후 재등록
+
+        $(document).off("click", ".yesBtn").on("click",".yesBtn", function() {
+            $.ajax({
+                url: "/deleteReview",
+                method: "post",
+                data: {
+                    id: reviewId,
+                    title: originalTitle,
+                    author: author,
+                    content: originalContent
+                },
+                success: function() {
+                    // Close modal
+                    modalOFF();
+
+                    //리뷰란 갱신
+                    reviewListUpdate();
+
+                    console.log("/deleteReview ajax complete");
+                },
+                fail: function(err) {
+                    console.log(err);
+                    alert("리뷰 삭제 중 오류가 발생했습니다.");
+                }
+            });
+        });
+
+        // 취소할때
+        $(document).off("click", ".yesBtn").on("click",".noBtn", function() {
+            modalOFF();
+        });
+
+
     });
 }

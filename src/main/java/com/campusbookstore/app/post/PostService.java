@@ -9,6 +9,7 @@ import com.campusbookstore.app.member.MemberRepository;
 import com.campusbookstore.app.member.MemberService;
 import com.campusbookstore.app.review.Review;
 import com.campusbookstore.app.review.ReviewDTO;
+import com.campusbookstore.app.review.ReviewRepository;
 import com.campusbookstore.app.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
     private final MemberRepository memberRepository;
+    private final ReviewRepository reviewRepository;
     private final ReviewService reviewService;
 
     @Value("${file.dir}")
@@ -70,7 +72,7 @@ public class PostService {
             imagesDTO.add(imageDTO);
         }
 
-        List<Review> reviewObjs = reviewService.getReviews();
+        List<Review> reviewObjs = reviewRepository.findByStatus(1);
         List<ReviewDTO> reviewDTOs = reviewService.getReviewDTOs(reviewObjs);
         
         //DTO전달
