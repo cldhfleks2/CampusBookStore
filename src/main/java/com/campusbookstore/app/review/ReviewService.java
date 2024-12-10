@@ -100,4 +100,10 @@ public class ReviewService {
         //확인 됬으면 리뷰 저장
         reviewSubmit(reviewDTO);
     }
+
+    void deleteReview(ReviewDTO reviewDTO) {
+        //reviewDTO쓰자
+
+    }
+
 }

@@ -164,7 +164,6 @@ function reviewListUpdate(){
             return; //실패시 리바인딩 하지 않음
         }
     })
-    reBinding() //성공하면 리바인딩 시켜서 on click등이 다시 작동하도록
 }
 
 //리뷰 작성
@@ -274,7 +273,7 @@ function deleteReviewBtn() {
         $(document).off("click", ".yesBtn").on("click",".yesBtn", function() {
             $.ajax({
                 url: "/deleteReview",
-                method: "post",
+                method: "delete",
                 data: {
                     id: reviewId,
                     title: originalTitle,
@@ -282,7 +281,6 @@ function deleteReviewBtn() {
                     content: originalContent
                 },
                 success: function() {
-                    // Close modal
                     modalOFF();
 
                     //리뷰란 갱신
@@ -298,7 +296,7 @@ function deleteReviewBtn() {
         });
 
         // 취소할때
-        $(document).off("click", ".yesBtn").on("click",".noBtn", function() {
+        $(document).off("click", ".noBtn").on("click",".noBtn", function() {
             modalOFF();
         });
 
