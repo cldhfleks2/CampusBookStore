@@ -23,26 +23,23 @@ public class ReviewService {
     private final MemberRepository memberRepository;
 
     //DTO를 수정하면 아래 두개를 수정해야한다.
-    //DTOs 얻기 나중에 List안쓰도록? 수정?
-    public List<ReviewDTO> getReviewDTOs(List<Review> reviewObjs) {
-        List<ReviewDTO> reviewDTOs = new ArrayList<>();
-        for (Review reviewObj : reviewObjs) {
-            ReviewDTO.ReviewDTOBuilder builder = ReviewDTO.builder();
+    //1. Entity -> DTO
+    public ReviewDTO getReviewDTO(Review review) {
+        if (review == null) return null;
+        ReviewDTO.ReviewDTOBuilder builder = ReviewDTO.builder();
+        if (review.getId() != null)
+            builder.id(review.getId());
+        if (review.getTitle() != null && !review.getTitle().isEmpty())
+            builder.title(review.getTitle());
+        if (review.getContent() != null && !review.getContent().isEmpty())
+            builder.content(review.getContent());
 
-            if (reviewObj.getId() != null)
-                builder.id(reviewObj.getId());
-            if (reviewObj.getTitle() != null && !reviewObj.getTitle().isEmpty())
-                builder.title(reviewObj.getTitle());
-            if (reviewObj.getContent() != null && !reviewObj.getContent().isEmpty())
-                builder.content(reviewObj.getContent());
+        if (review.getMember() != null && review.getMember().getName() != null && !review.getMember().getName().isEmpty())
+            builder.author(review.getMember().getName());
 
-            if (reviewObj.getMember() != null && reviewObj.getMember().getName() != null && !reviewObj.getMember().getName().isEmpty())
-                builder.author(reviewObj.getMember().getName());
-
-            reviewDTOs.add(builder.build());
-        }
-        return reviewDTOs;
+        return builder.build();
     }
+
     //DTO -> Entity
     public Review convertToReview(ReviewDTO reviewDTO) {
         Review review = new Review();
@@ -67,13 +64,17 @@ public class ReviewService {
     //리뷰목록 제공 return "post/detailPost :: #reviewList"
     String reviewList(Model model) {
         //전체 리뷰 객체를 가져옴
-        List<Review> reviewObjs = reviewRepository.findAll();
+        List<Review> reviews = reviewRepository.findAll();
 
         //id 기준 정렬
-        reviewObjs = reviewObjs.stream().sorted(Comparator.comparingLong(Review::getId)) .collect(Collectors.toList());
+        reviews = reviews.stream().sorted(Comparator.comparingLong(Review::getId)) .collect(Collectors.toList());
 
         //DTO생성
-        List<ReviewDTO> reviewDTOs = getReviewDTOs(reviewObjs);
+        List<ReviewDTO> reviewDTOs = new ArrayList<>();
+        for(Review review : reviews) {
+            reviewDTOs.add(getReviewDTO(review));
+        }
+
 
         //DTO전달
         model.addAttribute("reviewDTOs", reviewDTOs);

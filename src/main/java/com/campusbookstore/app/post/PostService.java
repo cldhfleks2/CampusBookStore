@@ -72,9 +72,13 @@ public class PostService {
             imagesDTO.add(imageDTO);
         }
 
-        List<Review> reviewObjs = reviewRepository.findByStatus(1);
-        List<ReviewDTO> reviewDTOs = reviewService.getReviewDTOs(reviewObjs);
-        
+        List<Review> reviews = reviewRepository.findByStatus(1);
+        List<ReviewDTO> reviewDTOs = new ArrayList<>();
+        for(Review review : reviews) {
+            reviewDTOs.add(reviewService.getReviewDTO(review));
+        }
+
+
         //DTO전달
         model.addAttribute("postDTOs", postDTO);
         model.addAttribute("imagesDTOs", imagesDTO);
