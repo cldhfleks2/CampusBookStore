@@ -2,6 +2,8 @@ package com.campusbookstore.app.review;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +32,11 @@ public class ReviewController {
 
     @DeleteMapping("/deleteReview")
     @ResponseBody
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteReview(ReviewDTO reviewDTO) {
-        reviewService.deleteReview(reviewDTO);
+    ResponseEntity<String> deleteReview(ReviewDTO reviewDTO, Authentication auth) {
+        return reviewService.deleteReview(reviewDTO, auth);
     }
+
+
 
 
 }

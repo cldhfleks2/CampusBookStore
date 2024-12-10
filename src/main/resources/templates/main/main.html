@@ -26,45 +26,46 @@
 
 <!-- 인기 상품 -->
 <section class="productSection">
-    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">인기 상품</h2>
+    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">인기 책</h2>
     <div class="productGrid">
-        <a href="#">
-            <div class="productCard">
-                <div class="productImage"></div>
-                <h3 style="font-weight: bold;">책 제목</h3>
-                <p style="color: #6b7280;">저자</p>
+        <div class="productCard" th:each="recentPost : ${recentPostDTOs}">
+            <a th:href="@{/detailPost/{id}(id=${recentPost.id})}">
+                <div class="productImage">
+                    <img th:src="@{/uploadImage/} + ${recentPost.imagesEntity[0].imagePath}">
+                </div>
+                <h3 class="tp20" style="font-weight: bold;" th:text="${recentPost.title}">책 제목</h3>
+                <p class="tp20" style="color: #6b7280;" th:text="${recentPost.author}">저자</p>
                 <div class="productDetails">
-                    <div style="display: flex">
-                        <span class="productPrice">10,000</span>원
+                    <div class="tp20" style="display: flex">
+                        <span class="productPrice" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(recentPost.price), 0, 'COMMA')} + ' 원'">10,000</span>
                     </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
 </section>
 <br>
 <!-- 최근 상품 -->
 <section class="productSection">
-    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">최근 등록 상품</h2>
+    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">최근 등록된 책</h2>
     <div class="productGrid">
-        <a href="#">
-            <div class="productCard">
-                <div class="productImage"></div>
-                <h3 style="font-weight: bold;">책 제목</h3>
-                <p style="color: #6b7280;">저자</p>
+        <div class="productCard" th:each="recentPost : ${recentPostDTOs}">
+            <a th:href="@{/detailPost/{id}(id=${recentPost.id})}">
+                <div class="productImage">
+                    <img th:src="@{/uploadImage/} + ${recentPost.imagesEntity[0].imagePath}">
+                </div>
+                <h3 class="tp20" style="font-weight: bold;" th:text="${recentPost.title}">책 제목</h3>
+                <p class="tp20" style="color: #6b7280;" th:text="${recentPost.author}">저자</p>
                 <div class="productDetails">
-                    <div style="display: flex">
-                        <span class="productPrice">10,000</span>원
+                    <div class="tp20" style="display: flex">
+                        <span class="productPrice" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(recentPost.price), 0, 'COMMA')} + ' 원'">10,000</span>
                     </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
 </section>
 <br>
-
-
-
 
 <div th:replace="~{ headers/footer::footer }"></div>
 <script>

@@ -4,6 +4,8 @@ import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,22 +46,27 @@ public class ReviewService {
     public Review convertToReview(ReviewDTO reviewDTO) {
         Review review = new Review();
 
+        if (reviewDTO.getId() != null)
+            review.setId(reviewDTO.getId());
         if (reviewDTO.getTitle() != null && !reviewDTO.getTitle().isEmpty()) {
             review.setTitle(reviewDTO.getTitle());
         }
-        if (reviewDTO.getContent() != null && !reviewDTO.getContent().isEmpty())
-            review.setContent(reviewDTO.getContent());
-        // author -> member
+        // author(name type) -> member(member type)
         if (reviewDTO.getAuthor() != null && !reviewDTO.getAuthor().isEmpty()) {
             Optional<Member> memberObj = memberRepository.findByName(reviewDTO.getAuthor());
             memberObj.ifPresent(review::setMember);
         } else {
-            review.setMember(null); // Optional behavior when author is not provided
+            review.setMember(null);
         }
-        if (reviewDTO.getId() != null)
-            review.setId(reviewDTO.getId());
+        if (reviewDTO.getContent() != null && !reviewDTO.getContent().isEmpty())
+            review.setContent(reviewDTO.getContent());
+
         return review;
     }
+
+
+
+
 
     //리뷰목록 제공 return "post/detailPost :: #reviewList"
     String reviewList(Model model) {
@@ -81,30 +88,39 @@ public class ReviewService {
         return "post/detailPost :: #reviewSection"; //리뷰 섹션(리뷰갯ㅅ, 리뷰 리스트만 갱신)
     }
 
-    //작성한 리뷰를 DB에 저장
-    //이미 존재하면 수정기능으로 작동
+    //리뷰 작성 - DB저장
     void reviewSubmit(ReviewDTO reviewDTO) {
         //DTO를 Entity로 변환
         Review review = convertToReview(reviewDTO);
         reviewRepository.save(review);
     }
 
+    //리뷰 수정
     void editReview(ReviewDTO reviewDTO) {
+        //리뷰 확인
+        Review review = reviewRepository.findById(reviewDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없음."));
         //사용자 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentAccountName = authentication.getName();
-        Review review = reviewRepository.findById(reviewDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없음."));
         if (!review.getMember().getName().equals(currentAccountName))
             throw new AccessDeniedException("리뷰 작성자가 아님.");
 
-        //확인 됬으면 리뷰 저장
+        //확인 됬으면 리뷰 수정
         reviewSubmit(reviewDTO);
     }
-
-    void deleteReview(ReviewDTO reviewDTO) {
-        //삭제
-        reviewRepository.deleteById(reviewDTO.getId());
+    
+    //리뷰 삭제 - DB삭제
+    ResponseEntity<String> deleteReview(ReviewDTO reviewDTO, Authentication auth) {
+        if(auth.getName().equals(reviewDTO.getAuthor())) {
+            //삭제
+            reviewRepository.deleteById(reviewDTO.getId());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자가 일치 하지 않음.");
+        }
     }
+
+
 
 }

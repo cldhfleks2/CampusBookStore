@@ -47,11 +47,7 @@
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
 }
 
-.productImage {
-    height: 12rem;
-    background-color: #e5e7eb;
-    margin-bottom: 1rem;
-}
+
 
 .productDetails {
     display: flex;
@@ -76,4 +72,13 @@
     background: none; /* 호버시 배경색 없애기 */
 }
 
+.productImage {
+    height: 12rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
 
+.tp20{
+    margin-top: 20px;
+}

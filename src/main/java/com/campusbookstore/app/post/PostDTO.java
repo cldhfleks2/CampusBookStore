@@ -19,10 +19,12 @@ public class PostDTO {
     private String author;
     private String price;
     private String content;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+//    private LocalDateTime createDate;
+//    private LocalDateTime updateDate;
 
     private Member member;
 
     private List<MultipartFile> images;
+
+    private List<Image> imagesEntity;
 }

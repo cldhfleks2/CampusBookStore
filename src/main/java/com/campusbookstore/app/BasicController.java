@@ -2,6 +2,7 @@ package com.campusbookstore.app;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -11,16 +12,11 @@ public class BasicController {
 
     //간단한 뷰
     @GetMapping("/")
-    String viewMain () {
-        return basicService.viewMain();
+    String viewMain (Model model) {
+        return basicService.viewMain(model);
     }
     @GetMapping("/main")
-    String viewMain2 () {
-        return basicService.viewMain();
+    String viewMain2 (Model model) {
+        return basicService.viewMain(model);
     }
-
-
-
-
-
 }

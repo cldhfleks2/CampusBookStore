@@ -38,6 +38,54 @@ public class PostService {
     @Value("${file.dir}")
     private String fileDir;
 
+    //DTO를 수정하면 아래 두개 수정해야함.
+    //1. Entity -> DTO
+    public PostDTO getPostDTO(Post post) {
+        if (post == null) return null;
+        PostDTO.PostDTOBuilder builder = PostDTO.builder();
+
+        if (post.getId() != null)
+            builder.id(post.getId());
+        if (post.getTitle() != null && !post.getTitle().isEmpty())
+            builder.title(post.getTitle());
+        if(post.getAuthor() != null && !post.getAuthor().isEmpty())
+            builder.author(post.getAuthor());
+        if(post.getPrice() != null && !post.getPrice().isEmpty())
+            builder.price(post.getPrice());
+        if (post.getContent() != null && !post.getContent().isEmpty())
+            builder.content(post.getContent());
+        if (post.getMember() != null && post.getMember().getName() != null && !post.getMember().getName().isEmpty())
+            builder.author(post.getMember().getName());
+        //imagesEntity
+        if(post.getImages() != null && !post.getImages().isEmpty())
+            builder.imagesEntity(post.getImages());
+
+        return builder.build();
+    }
+
+    //2. DTO -> Entity
+    public Post convertToPost(PostDTO postDTO) {
+        Post post = new Post();
+
+        if (postDTO.getId() != null)
+            post.setId(postDTO.getId());
+        if (postDTO.getTitle() != null && !postDTO.getTitle().isEmpty()) {
+            post.setTitle(postDTO.getTitle());
+        }
+        if (postDTO.getAuthor() != null && !postDTO.getAuthor().isEmpty())
+            post.setAuthor(postDTO.getAuthor());
+        if (postDTO.getPrice() != null && !postDTO.getPrice().isEmpty())
+            post.setPrice(postDTO.getPrice());
+        if (postDTO.getContent() != null && !postDTO.getContent().isEmpty())
+            post.setContent(postDTO.getContent());
+        if(postDTO.getMember() != null)
+            post.setMember(postDTO.getMember());
+        if(postDTO.getImages() != null && !postDTO.getImages().isEmpty())
+            post.setImages(postDTO.getImagesEntity());
+
+        return post;
+    }
+
     String viewAddPost () {
         return "post/addPost";
     }
@@ -165,9 +213,13 @@ public class PostService {
     ResponseEntity<String> addWish(Long postId, Authentication auth) {
         return ResponseEntity.ok("장바구니 추가 성공");
     }
+    //인기 게시물 보여주기
 
 
-    //
+    //최근 게시물 보여주기
+    public List<Post> getRecentPost(int n){
+        return postRepository.findTopNByStatusOrderByCreateDateDesc(n);
+    }
 
 
 
