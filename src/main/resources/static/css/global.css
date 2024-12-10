@@ -116,7 +116,7 @@ a:hover {
 
 /* 마우스 호버시 아이콘 커짐 */
 .logo:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     transition: transform 0.2s, color 0.2s;
 }
 .searchIcon:hover {
@@ -127,7 +127,7 @@ a:hover {
 .headerRight .profileIcon:hover,
 .headerRight .logoutIcon:hover {
     color: #007BFF; /* 호버 시 색상 변경 */
-    transform: scale(1.5); /* 살짝 확대 */
+    transform: scale(1.3); /* 살짝 확대 */
     transition: transform 0.2s, color 0.2s;
 }
 

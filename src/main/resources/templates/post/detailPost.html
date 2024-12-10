@@ -32,14 +32,14 @@
 <!--               찜할때는 게시물의 아이디를 전송하게됨-->
                 <button class="likeBtn" th:data-post-id="${postDTOs.id}" id="likeBtn" style="background: white; margin-right: 40px;">
                     <a>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="fill" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg>
                     </a>
                 </button>
                 <button class="reportBtn" id="productReportBtn" data-name="book">
                     <a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
+                        <svg class="icons"  xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
                             <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
                         </svg>
                     </a>
@@ -129,7 +129,7 @@
                                     <button class="deleteReviewBtn" th:data-review-id="${review.id}" th:data-author-name="${review.author}" th:data-current-name="${#authentication.principal.name}">삭제</button>
                                 </a>
                             </div>
-                            <button class="reportBtn" id="reviewReportBtn" data-name="review">
+                            <button class="reportBtn bg" id="reviewReportBtn" data-name="review">
                                 <a>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
                                         <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>

@@ -164,9 +164,6 @@
     cursor: pointer;
     font-size: 0.875rem;
 }
-.editReviewBtn:hover, .deleteReviewBtn:hover {
-    text-decoration: underline;
-}
 
 .deleteReviewBtn{
     margin-left:10px
@@ -432,4 +429,23 @@ hr {
     background-color: #f44336;
     color: white;
     border: none;
+}
+
+.reportBtn.bg{
+    background-color: #f9fafb;
+}
+
+.reportBtn{
+    cursor: pointer;
+}
+
+
+
+/* hover effect */
+svg.icons:hover{
+    transform: scale(1.3);
+    transition: transform 0.2s, color 0.2s;
+}
+.editReviewBtn:hover, .deleteReviewBtn:hover, .reportBtn.bg:hover {
+    transform: scale(1.2);
 }
