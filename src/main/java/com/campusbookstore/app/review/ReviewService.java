@@ -40,7 +40,7 @@ public class ReviewService {
         return builder.build();
     }
 
-    //DTO -> Entity
+    //2. DTO -> Entity
     public Review convertToReview(ReviewDTO reviewDTO) {
         Review review = new Review();
 
@@ -103,8 +103,8 @@ public class ReviewService {
     }
 
     void deleteReview(ReviewDTO reviewDTO) {
-        //reviewDTO쓰자
-
+        //삭제
+        reviewRepository.deleteById(reviewDTO.getId());
     }
 
 }
