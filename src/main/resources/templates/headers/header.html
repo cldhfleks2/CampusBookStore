@@ -17,16 +17,18 @@
 <!--                검색페이지로-->
                 <form action="/search" method="post">
                     <input type="text" name="keyword" class="searchInput" placeholder="책 제목, 저자 검색" >
-                    <button class="searchButton" type="submit">🔍</button>
+                    <button class="searchButton" type="submit">
+                        <div class="searchIcon">🔍</div>
+                    </button>
                 </form>
             </div>
-            <a href="/wish">
+            <a href="/wish" sec:authorize="isAuthenticated()">
                 <div class="wishIcon">🛒</div>
             </a>
-            <a href="/mypage">
+            <a href="/mypage" sec:authorize="isAuthenticated()">
                 <div class="profileIcon">👤</div>
             </a>
-            <a href="/logout">
+            <a href="/logout" sec:authorize="isAuthenticated()">
                 <div class="logoutIcon">↩️</div>
             </a>
         </div>

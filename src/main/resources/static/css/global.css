@@ -60,6 +60,7 @@ a:hover {
     transition: color 0.3s ease;
 }
 
+/*카테고리*/
 .navLinks a:hover {
     color: #93c5fd;
 }
@@ -99,10 +100,37 @@ a:hover {
     transition: transform 0.2s ease;
 }
 
-.profileIcon:hover,
-.wishIcon:hover {
-    transform: scale(1.1);
+/*.profileIcon:hover,*/
+/*.wishIcon:hover {*/
+/*    transform: scale(1.1);*/
+/*}*/
+
+
+/* 아이콘 크기 조절 */
+.headerRight .wishIcon,
+.headerRight .profileIcon,
+.headerRight .logoutIcon {
+    font-size: 20px; /* 원하는 크기로 설정 */
+    display: inline-block;
 }
+
+/* 마우스 호버시 아이콘 커짐 */
+.logo:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s, color 0.2s;
+}
+.searchIcon:hover {
+    transform: scale(1.5);
+    transition: transform 0.2s, color 0.2s;
+}
+.headerRight .wishIcon:hover,
+.headerRight .profileIcon:hover,
+.headerRight .logoutIcon:hover {
+    color: #007BFF; /* 호버 시 색상 변경 */
+    transform: scale(1.5); /* 살짝 확대 */
+    transition: transform 0.2s, color 0.2s;
+}
+
 
 
 /* 푸터 */
@@ -115,3 +143,4 @@ a:hover {
     left: 0;
     width: 100%; /* 화면 전체 너비 */
 }
+

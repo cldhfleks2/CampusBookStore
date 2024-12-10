@@ -24,7 +24,7 @@ public class SecurityConfig {
         //클라이언트 요청에 대해 권한 부여
         http.authorizeHttpRequests((authorize) ->
                                 //자원에 대한 요구도 처리 가능
-                authorize.requestMatchers("/css/**", "/js/**", "/images/**", "/static/**").permitAll()
+                authorize.requestMatchers("/css/**", "/js/**", "/images/**", "/uploadImage/**", "/static/**").permitAll()
                         .requestMatchers("/", "/main").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
                         .requestMatchers("/search").permitAll()
