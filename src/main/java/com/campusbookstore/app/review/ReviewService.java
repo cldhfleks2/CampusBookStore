@@ -44,6 +44,7 @@ public class ReviewService {
 
     //2. DTO -> Entity
     public Review convertToReview(ReviewDTO reviewDTO) {
+        if (reviewDTO == null) return null;
         Review review = new Review();
 
         if (reviewDTO.getId() != null)

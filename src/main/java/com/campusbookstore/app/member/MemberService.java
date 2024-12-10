@@ -1,15 +1,65 @@
 package com.campusbookstore.app.member;
 
+import com.campusbookstore.app.post.Post;
+import com.campusbookstore.app.post.PostDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+
+    //1. Entity -> DTO
+    public MemberDTO getMemberDTO(Member member) {
+        if (member == null) return null;
+        MemberDTO.MemberDTOBuilder builder = MemberDTO.builder();
+
+        if (member.getId() != null)
+            builder.id(member.getId());
+        if (member.getName() != null && !member.getName().isEmpty())
+            builder.name(member.getName());
+        if(member.getEmail() != null && !member.getEmail().isEmpty())
+            builder.email(member.getEmail());
+        if(member.getPhone() != null && !member.getPhone().isEmpty())
+            builder.phone(member.getPhone());
+        if (member.getCampus() != null && !member.getCampus().isEmpty())
+            builder.campus(member.getCampus());
+        if (member.getPoint() != null)
+            builder.point(member.getPoint());
+
+        return builder.build();
+    }
+    //2. DTO -> Entity
+    public Member convertToPost(MemberDTO memberDTO) {
+        if (memberDTO == null) return null;
+
+        Member member = new Member();
+
+        if (memberDTO.getId() != null)
+            member.setId(memberDTO.getId());
+        if (memberDTO.getName() != null && !memberDTO.getName().isEmpty())
+            member.setName(memberDTO.getName());
+        if (memberDTO.getEmail() != null && !memberDTO.getEmail().isEmpty())
+            member.setEmail(memberDTO.getEmail());
+        if (memberDTO.getPhone() != null && !memberDTO.getPhone().isEmpty())
+            member.setPhone(memberDTO.getPhone());
+        if (memberDTO.getCampus() != null && !memberDTO.getCampus().isEmpty())
+            member.setCampus(memberDTO.getCampus());
+        if (memberDTO.getPoint() != null)
+            member.setPoint(memberDTO.getPoint());
+
+        return member;
+    }
+
+
 
     //뷰
     String viewLogin (Authentication auth) {
@@ -21,7 +71,14 @@ public class MemberService {
         if(auth != null && auth.isAuthenticated()) return "redirect:/main";
         return "member/register";
     }
-    String viewMyPage () {
+    String viewMyPage (Model model, Authentication auth) {
+        Optional<Member> member = memberRepository.findByName(auth.getName());
+        if(!member.isPresent()) return "error"; //현재 사용자 정보를 못찾았을때
+        MemberDTO memberDTO = getMemberDTO(member.get());
+        memberDTO.setId(null); //필요없는 값은 가림
+
+        model.addAttribute("member", memberDTO);
+
         return "member/myPage";
     }
     String viewLike(){
@@ -37,6 +94,8 @@ public class MemberService {
         return "redirect:/main";
     }
 
-
+    String editMypage(Member member) {
+        return "success";
+    }
 
 }

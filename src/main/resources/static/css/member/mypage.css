@@ -206,3 +206,10 @@
     background-color: #e6f2ff;
     color: #2563eb;
 }
+
+.error-message {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}

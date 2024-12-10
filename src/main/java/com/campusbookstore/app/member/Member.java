@@ -26,6 +26,8 @@ public class Member {
     private String phone;
     private String campus;
     private String password;
+    //보유 포인트
+    private Integer point=0;
 
     @Column(updatable = false)
     @CreationTimestamp

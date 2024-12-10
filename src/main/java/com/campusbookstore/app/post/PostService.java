@@ -65,6 +65,7 @@ public class PostService {
 
     //2. DTO -> Entity
     public Post convertToPost(PostDTO postDTO) {
+        if (postDTO == null) return null;
         Post post = new Post();
 
         if (postDTO.getId() != null)

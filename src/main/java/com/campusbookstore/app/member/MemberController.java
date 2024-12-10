@@ -3,13 +3,15 @@ package com.campusbookstore.app.member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
-
     private final MemberService memberService;
     
     //뷰
@@ -22,8 +24,8 @@ public class MemberController {
         return memberService.viewRegister(auth);
     }
     @GetMapping("/mypage")
-    String viewMyPage () {
-        return memberService.viewMyPage();
+    String viewMyPage (Model model, Authentication auth) {
+        return memberService.viewMyPage(model, auth);
     }
     @GetMapping("/like")
     String viewLike() {
@@ -34,6 +36,12 @@ public class MemberController {
     @PostMapping("/register")
     String register(Member member) {
         return memberService.register(member);
+    }
+
+    @PostMapping("/editMypage")
+    @ResponseBody
+    String editMypage(Member member) {
+        return memberService.editMypage(member);
     }
 
 
