@@ -24,19 +24,9 @@ public class BasicService {
         //최근 게시물 가져오기
         int recentPostCnt = 8;
         List<Post> recentPosts = postService.getRecentPost(recentPostCnt);
-        System.out.println(recentPosts.size());
-        //DEBUG
-        for(Post post : recentPosts) {
-            System.out.println(post.getTitle());
-        }
         List<PostDTO> recentPostDTOs = new ArrayList<>();
         for (Post post : recentPosts) {
             recentPostDTOs.add(postService.getPostDTO(post));
-        }
-        System.out.println(recentPostDTOs.size());
-        //DEBUG
-        for (PostDTO postDTO : recentPostDTOs) {
-            System.out.println(postDTO.getTitle());
         }
 
 

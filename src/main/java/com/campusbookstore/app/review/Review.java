@@ -5,7 +5,9 @@ import com.campusbookstore.app.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE review SET status = 0, update_date = CURRENT_TIMESTAMP WHERE id = ?")
+@ToString
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +30,11 @@ public class Review {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 

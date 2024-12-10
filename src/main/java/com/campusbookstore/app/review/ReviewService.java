@@ -71,7 +71,7 @@ public class ReviewService {
     //리뷰목록 제공 return "post/detailPost :: #reviewList"
     String reviewList(Model model) {
         //전체 리뷰 객체를 가져옴
-        List<Review> reviews = reviewRepository.findAll();
+        List<Review> reviews = reviewRepository.findAllByStatus();
 
         //id 기준 정렬
         reviews = reviews.stream().sorted(Comparator.comparingLong(Review::getId)) .collect(Collectors.toList());
@@ -115,6 +115,7 @@ public class ReviewService {
         if(auth.getName().equals(reviewDTO.getAuthor())) {
             //삭제
             reviewRepository.deleteById(reviewDTO.getId());
+
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자가 일치 하지 않음.");

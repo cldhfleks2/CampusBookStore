@@ -12,15 +12,13 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     //뷰
-    String viewLogin () {
+    String viewLogin (Authentication auth) {
+        //인증정보가 없거나 로그인됬으면 메인 화면으로 이동
+        if(auth != null && auth.isAuthenticated()) return "redirect:/main";
         return "member/login";
     }
     String viewRegister (Authentication auth) {
-        //인증정보가 없거나 로그인됬으면 메인 화면으로 이동
-        if(auth != null && auth.isAuthenticated())
-            return "redirect:/main";
-        
-        //화면 보여주기
+        if(auth != null && auth.isAuthenticated()) return "redirect:/main";
         return "member/register";
     }
     String viewMyPage () {

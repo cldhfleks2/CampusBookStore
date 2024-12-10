@@ -19,6 +19,7 @@ public class PostDTO {
     private String author;
     private String price;
     private String content;
+    //아직 안씀
 //    private LocalDateTime createDate;
 //    private LocalDateTime updateDate;
 

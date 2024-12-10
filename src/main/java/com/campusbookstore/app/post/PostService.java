@@ -120,7 +120,7 @@ public class PostService {
             imagesDTO.add(imageDTO);
         }
 
-        List<Review> reviews = reviewRepository.findByStatus(1);
+        List<Review> reviews = reviewRepository.findAllByStatus();
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
         for(Review review : reviews) {
             reviewDTOs.add(reviewService.getReviewDTO(review));
