@@ -12,12 +12,6 @@ $(document).ready(function() {
     deleteReviewBtn();
 });
 
-function reBinding(){
-    // addReview();
-    // editReviewBtn();
-    // deleteReviewBtn();
-}
-
 //책 그림 슬라이드
 function initImageSlider() {
     const $wrapper = $('.slider-wrapper');
