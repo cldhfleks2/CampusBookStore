@@ -3,10 +3,12 @@ package com.campusbookstore.app.post;
 import com.campusbookstore.app.image.Image;
 import com.campusbookstore.app.image.ImageDTO;
 import com.campusbookstore.app.image.ImageRepository;
+import com.campusbookstore.app.image.ImageService;
+import com.campusbookstore.app.like.Likey;
+import com.campusbookstore.app.like.LikeyRepository;
 import com.campusbookstore.app.member.AccountDetail;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
-import com.campusbookstore.app.member.MemberService;
 import com.campusbookstore.app.review.Review;
 import com.campusbookstore.app.review.ReviewDTO;
 import com.campusbookstore.app.review.ReviewRepository;
@@ -33,7 +35,10 @@ public class PostService {
     private final ImageRepository imageRepository;
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final LikeyRepository likeyRepository;
     private final ReviewService reviewService;
+    private final ImageService imageService;
+
 
     @Value("${file.dir}")
     private String fileDir;
@@ -55,7 +60,7 @@ public class PostService {
         if (post.getContent() != null && !post.getContent().isEmpty())
             builder.content(post.getContent());
         if (post.getMember() != null && post.getMember().getName() != null && !post.getMember().getName().isEmpty())
-            builder.author(post.getMember().getName());
+            builder.member(post.getMember());
         //imagesEntity
         if(post.getImages() != null && !post.getImages().isEmpty())
             builder.imagesEntity(post.getImages());
@@ -106,36 +111,31 @@ public class PostService {
 
         //postDTO생성
         Post post = postObj.get();
-        PostDTO postDTO = PostDTO.builder()
-                .id(post.getId())
-                .title(post.getTitle())
-                .author(post.getAuthor())
-                .price(post.getPrice())
-                .content(post.getContent())
-                .member(post.getMember())
-                .build();
+        PostDTO postDTO = getPostDTO(post);
         
         //imageDTO생성
         List<Image> images = imageRepository.findByPostId(postId);
         List<ImageDTO> imagesDTO = new ArrayList<>();
         for(Image image : images) {
-            ImageDTO imageDTO = ImageDTO.builder()
-                    .imagePath(image.getImagePath())
-                    .build();
-            imagesDTO.add(imageDTO);
+            imagesDTO.add(imageService.getImageDTO(image));
         }
-
+        
+        //reviewDTO생성
         List<Review> reviews = reviewRepository.findAllByStatus();
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
         for(Review review : reviews) {
             reviewDTOs.add(reviewService.getReviewDTO(review));
         }
+        
+        //like갯수세기
+        List<Likey> likeys = likeyRepository.findAllByStatus();
 
 
         //DTO전달
-        model.addAttribute("postDTOs", postDTO);
+        model.addAttribute("post", postDTO);
         model.addAttribute("imagesDTOs", imagesDTO);
         model.addAttribute("reviewDTOs", reviewDTOs);
+        model.addAttribute("likeysCnt", likeys.size());
         return "post/detailPost";
     }
     String viewEditPost () {
