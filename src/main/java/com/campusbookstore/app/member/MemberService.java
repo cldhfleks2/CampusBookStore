@@ -91,8 +91,8 @@ public class MemberService {
         if(pageIdx == null) { pageIdx = 1; }
 
         Page<Post> posts = postRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
-        model.addAttribute("totalPages", posts.getTotalPages());
-        model.addAttribute("currentPage", pageIdx);
+        model.addAttribute("sellTotalPages", posts.getTotalPages());
+        model.addAttribute("sellCurrentPage", pageIdx);
         model.addAttribute("posts", posts.getContent());
 
         return "member/myPage";

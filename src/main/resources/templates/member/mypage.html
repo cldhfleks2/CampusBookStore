@@ -130,11 +130,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="pagination" th:if="${totalPages != 0}">
-                    <button id="prevPage" class="pagination-btn">&lt; 이전</button>
-                    <span id="pageInfo" th:text="${currentPage} + ' / ' + ${totalPages}"
-                          th:data-current-page="${currentPage}" th:data-total-page="${totalPages}">1 / 1</span>
-                    <button id="nextPage" class="pagination-btn">다음 &gt;</button>
+                <div class="pagination" th:if="${sellTotalPages != 0}">
+                    <button id="sellPrevPage" class="pagination-btn">&lt; 이전</button>
+                    <span id="sellPageInfo" th:text="${sellCurrentPage} + ' / ' + ${sellTotalPages}"
+                          th:data-sell-current-page="${sellCurrentPage}" th:data-sell-total-page="${sellTotalPages}">1 / 1</span>
+                    <button id="sellNextPage" class="pagination-btn">다음 &gt;</button>
                 </div>
             </div>
 
@@ -145,28 +145,28 @@
     <div id="buyContent" class="content">
         <section>
             <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">구매 내역</h2>
-
-            <div class="productList">
-                <div class="productItem">
-                    <div class="productImage">
-                        <img src="/images/book2.jpg" alt="책 표지">
-                    </div>
-                    <div class="productDetails">
-                        <h3>데이터 사이언스 입문</h3>
-                        <p>저자: 이데이터</p>
-                        <p>상품 상태: 양호</p>
-                        <p>구매 가격: 20,000원</p>
-                        <p>구매 날짜: 2024-01-20</p>
-                        <p class="productDescription">데이터 분석의 기초를 배우는 초급자용 책</p>
+            <div class="productListContainer">
+                <div class="productList">
+                    <div class="productItem">
+                        <div class="productImage">
+<!--                            <img th:src="@{/uploadImage/} + ${post.images[0].imagePath}" alt="책 표지">-->
+                        </div>
+                        <div class="productDetails">
+                            <h3>데이터 사이언스 입문</h3>
+                            <p>저자: 이데이터</p>
+                            <p>구매 가격: 20,000원</p>
+                            <p>구매 날짜: 2024-01-20</p>
+                            <p class="productDescription">데이터 분석의 기초를 배우는 초급자용 책</p>
+                        </div>
                     </div>
                 </div>
-                <!-- More product items can be added here (total 10 max) -->
             </div>
 
-            <div class="pagination">
-                <button>이전</button>
-                <span>1/1</span>
-                <button>다음</button>
+            <div class="pagination" th:if="${totalPages != 0}">
+                <button id="prevPage" class="pagination-btn">&lt; 이전</button>
+                <span id="pageInfo" th:text="${currentPage} + ' / ' + ${totalPages}"
+                      th:data-current-page="${currentPage}" th:data-total-page="${totalPages}">1 / 1</span>
+                <button id="nextPage" class="pagination-btn">다음 &gt;</button>
             </div>
         </section>
     </div>

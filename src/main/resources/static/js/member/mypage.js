@@ -1,14 +1,13 @@
 $(document).ready(function() {
     //개인정보 수정 페이지를 기본으로 보여줌
     displayToggle("personalInfo");
-
     //사이드바 메뉴 활성화
     sidebarMenu();
 
-    //개인정보 수정 폼
+    //개인정보수정란 : 폼전송
     personalInfoFormSubmitBtn();
 
-    //페이지네이션
+    //판매내역란 : 페이지네이션적용
     pagination();
 });
 
@@ -161,23 +160,21 @@ function personalInfoFormSubmitBtn(){
 }
 
 function pagination(){
-    $(document).on('click',"#prevPage", function() {
-        let currentPage = $("#pageInfo").data("current-page");
-        const totalPages = $("#pageInfo").data("total-page");
-        console.log(currentPage)
-        console.log(totalPages)
+    $(document).on('click',"#sellPrevPage", function() {
+        let sellCurrentPage = $("#sellPageInfo").data("sell-current-page");
+        const sellTotalPages = $("#sellPageInfo").data("sell-total-page");
 
-        if (currentPage > 1) {
-            currentPage--;
+        if (sellCurrentPage > 1) {
+            sellCurrentPage--;
 
             // 새 페이지 정보 갱신
-            $("#pageInfo").data("current-page", currentPage);
-            $("#pageInfo").text(currentPage + ' / ' + totalPages);
+            $("#sellPageInfo").data("sell-current-page", sellCurrentPage);
+            $("#sellPageInfo").text(sellCurrentPage + ' / ' + sellTotalPages);
 
             $.ajax({
                 url: "/mypage",
                 method: "get",
-                data: {pageIdx: currentPage},
+                data: {pageIdx: sellCurrentPage},
                 success: function (data){
                     var data = $.parseHTML(data);
                     var dataHtml = $("<div>").append(data);
@@ -187,23 +184,21 @@ function pagination(){
         }
     });
 
-    $(document).on('click', "#nextPage", function() {
-        let currentPage = $("#pageInfo").data("current-page");
-        const totalPages = $("#pageInfo").data("total-page");
-        console.log(currentPage)
-        console.log(totalPages)
+    $(document).on('click', "#sellNextPage", function() {
+        let sellCurrentPage = $("#sellPageInfo").data("sell-current-page");
+        const sellTotalPages = $("#sellPageInfo").data("sell-total-page");
 
-        if (currentPage < totalPages) {
-            currentPage++;
+        if (sellCurrentPage < sellTotalPages) {
+            sellCurrentPage++;
 
             // 새 페이지 정보 갱신
-            $("#pageInfo").data("current-page", currentPage);
-            $("#pageInfo").text(currentPage + ' / ' + totalPages);
+            $("#sellPageInfo").data("sell-current-page", sellCurrentPage);
+            $("#sellPageInfo").text(sellCurrentPage + ' / ' + sellTotalPages);
 
             $.ajax({
                 url: "/mypage",
                 method: "get",
-                data: {pageIdx: currentPage},
+                data: {pageIdx: sellCurrentPage},
                 success: function (data){
                     var data = $.parseHTML(data);
                     var dataHtml = $("<div>").append(data);
@@ -212,10 +207,5 @@ function pagination(){
             })
         }
     });
-    // let currentPage = $("#pageInfo").data("current-page");
-    // const totalPages = $("#pageInfo").data("total-page");
-    //
-    // $("#prevPage").prop('disabled', currentPage <= 1);
-    // $("#nextPage").prop('disabled', currentPage >= totalPages);
-    // $("#pageInfo").text(`${currentPage}/${totalPages}`);
 }
+
