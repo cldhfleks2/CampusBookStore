@@ -1,4 +1,4 @@
-package com.campusbookstore.app.buy;
+package com.campusbookstore.app.likey;
 
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.post.Post;
@@ -14,25 +14,25 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE Buy SET status = 0, create_date = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLDelete(sql = "UPDATE Likey SET status = 0, createDate = CURRENT_TIMESTAMP WHERE id = ?")
 @ToString
-public class Buy {
+public class Likey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member; //누가 구매?
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post; //무엇을 구매?
 
     @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    //구매 내역 존재 여부
-    private int status = 1;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="post_id")
+    private Post post; //어떤 게시글
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member; //어떤 유저가 찜했는지
+
+    //찜한 내역 존재 여부
+    private Integer status=1;
 }

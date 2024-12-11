@@ -1,7 +1,6 @@
 package com.campusbookstore.app.member;
 
 import com.campusbookstore.app.post.Post;
-import com.campusbookstore.app.post.PostDTO;
 import com.campusbookstore.app.post.PostRepository;
 import com.campusbookstore.app.post.PostService;
 import lombok.RequiredArgsConstructor;

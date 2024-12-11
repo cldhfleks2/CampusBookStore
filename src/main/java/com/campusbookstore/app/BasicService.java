@@ -1,5 +1,7 @@
 package com.campusbookstore.app;
 
+import com.campusbookstore.app.likey.LikeyRepository;
+import com.campusbookstore.app.likey.LikeyService;
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostDTO;
 import com.campusbookstore.app.post.PostService;
@@ -14,12 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasicService {
     private final PostService postService;
+    private final LikeyRepository likeyRepository;
+    private final LikeyService likeyService;
 
     //간단한 뷰
     String viewMain (Model model) {
-        System.out.println("viewMain");
         //인기 게시물 가져오기
-
 
         //최근 게시물 가져오기
         int recentPostCnt = 8;

@@ -4,8 +4,8 @@ import com.campusbookstore.app.image.Image;
 import com.campusbookstore.app.image.ImageDTO;
 import com.campusbookstore.app.image.ImageRepository;
 import com.campusbookstore.app.image.ImageService;
-import com.campusbookstore.app.like.Likey;
-import com.campusbookstore.app.like.LikeyRepository;
+import com.campusbookstore.app.likey.Likey;
+import com.campusbookstore.app.likey.LikeyRepository;
 import com.campusbookstore.app.member.AccountDetail;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
@@ -129,13 +129,21 @@ public class PostService {
         
         //like갯수세기
         List<Likey> likeys = likeyRepository.findAllByStatus();
-
+        
+        //내가 좋아요를 눌렀는지 확인
+        //note: 2개이상 객체가 존재하면 에러임
+        List<Likey> iamlikeyObj = likeyRepository.findByPostIdAndMemberName(postId, auth.getName());
+        String iamlikey = "0"; //처음엔 좋아요 안누름
+        if(!iamlikeyObj.isEmpty() && iamlikeyObj.get(0).getStatus() == 1) { //likey객체가 존재하고 좋아요를 눌렀을때
+            iamlikey = "1";
+        }
 
         //DTO전달
         model.addAttribute("post", postDTO);
         model.addAttribute("imagesDTOs", imagesDTO);
         model.addAttribute("reviewDTOs", reviewDTOs);
-        model.addAttribute("likeysCnt", likeys.size());
+        model.addAttribute("likeyCnt", likeys.size());
+        model.addAttribute("iamlikey", iamlikey); //0: 안좋아요   1: 좋아요
         return "post/detailPost";
     }
     String viewEditPost () {
@@ -190,20 +198,15 @@ public class PostService {
 
             //DB에 저장
             Image image = new Image();
-//            image.setImagePath(filePath);
+            //image.setImagePath(filePath);
             image.setImagePath(fileName);
             image.setPost(post);
             imageRepository.save(image);
         }
-        System.out.println("성공");
 
         return "redirect:/main";
     }
-    //???찜한 리스트 추가 요청
-    ResponseEntity<String> addLike(Long postId, Authentication auth){
-    //맴버id는 auth에서 꺼내써라
-        return ResponseEntity.ok("찜하기 성공");
-    }
+
     //헤더의 검색 기능
     String searching(String keyword, Model model) {
         //제목과 책 저자로 검색
@@ -219,7 +222,6 @@ public class PostService {
         return ResponseEntity.ok("장바구니 추가 성공");
     }
     //인기 게시물 보여주기
-
 
     //최근 게시물 보여주기
     public List<Post> getRecentPost(int n){

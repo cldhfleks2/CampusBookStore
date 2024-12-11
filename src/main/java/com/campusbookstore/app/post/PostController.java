@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -17,7 +18,6 @@ import java.io.IOException;
 public class PostController {
     private final PostService postService;
 
-    //간단한 뷰
     @GetMapping("/addPost")
     String viewAddPost () {
         return postService.viewAddPost();
@@ -43,11 +43,7 @@ public class PostController {
         return postService.addPost(postDTO, auth);
     }
 
-    //찜한 리스트 추가 요청
-    @PostMapping("/likePlus")
-    ResponseEntity<String> addLike (Long postId, Authentication auth) {
-        return postService.addLike(postId, auth);
-    }
+
 
     //헤더의 검색바 작성
     @PostMapping("/search")
@@ -60,4 +56,7 @@ public class PostController {
     ResponseEntity<String> addWish(Long postId, Authentication auth) {
         return postService.addWish(postId, auth);
     }
+
+
+
 }

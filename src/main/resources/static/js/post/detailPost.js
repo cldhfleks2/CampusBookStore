@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     //책 관련 모달, 버튼
     report();
-    likeBtn();
+    likeyBtn();
     wishBtn();
     //리뷰
     addReview();
@@ -81,12 +81,10 @@ function initImageSlider() {
         $wrapper.css('transform', `translateX(${offset}%)`);
     }
 }
-
 //신고 모달 ON
 function modalON(){
     $("#reportOverlay").css("display", "flex");
 }
-
 //신고 모달 OFF
 function modalOFF() {
     $("#reportOverlay").css("display", "none");
@@ -111,8 +109,29 @@ function report() {
     });
 }
 
+//게시물번호로 좋아요 갯수를 가져와서 갱신
+function getLikeyCount(postId){
+    $.ajax({
+        url: "/likeyCount",
+        method: "get",
+        data: {postId: postId},
+        success: function (data){
+           $("#likeCount").text(data); //좋아요 갯수 갱신
+        },
+        fail: function (err) {
+            console.log(err);
+        }
+    })
+}
+
 //찜하기(좋아요)추가 요청
-function likeBtn(){
+function likeyBtn(){
+    //내가 좋아요를 눌렀는지 확인 //0: 안좋아요   1: 좋아요
+    var iamlikey = $(".likeCount").data("iamlikey");
+    if(iamlikey === 1)
+        $(".likeBtn").addClass("fill")
+    console.log(iamlikey)
+
     $(document).on("click", ".likeBtn", function () {
         var postId = $(this).data("post-id");
 
@@ -121,11 +140,27 @@ function likeBtn(){
             url:"/likePlus",
             method:"post",
             data: {postId: postId},
-            success: function (){
+            success: function (data){
+                //"likey" 를 받으면 
+                //likey버튼에 fill 클래스 추가
+                if(data === "likey"){
+                    $(".likeBtn").addClass("fill");
+                }
+                
+                //"noLikey"를 받으면
+                //fill클래스 제거
+                if(data === "noLikey"){
+                    $(".likeBtn").removeClass("fill");
+                }
+                //css도추가
+                
                 console.log("like-ajax-complete")
+                getLikeyCount(postId); //좋아요 갯수 갱신
             },
-            fail: function (err){
-                console.log(err);
+            fail: function (err){ //본인 게시물에 좋아요를 누르거나 등
+                //note: 실패시 아무것도 하지않음
+
+                console.log("like-ajax-failed")
             }
         })
     })
@@ -303,3 +338,4 @@ function deleteReviewBtn() {
 
     });
 }
+

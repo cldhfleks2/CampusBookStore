@@ -40,6 +40,6 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    //게시물 존재여부 (1:보임 0:삭제)
+    //게시물 존재 여부 (1:보임 0:삭제)
     private int status = 1;
 }

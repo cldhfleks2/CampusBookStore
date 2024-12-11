@@ -32,6 +32,7 @@
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-right:0.5rem;
 }
 .likeBtn:hover {
     background-color: #e5e7eb;
@@ -439,6 +440,16 @@ hr {
     cursor: pointer;
 }
 
+.likeCount{
+    position: relative;
+    bottom: 0px;
+    left: -40px;
+}
+
+.likeBtn.fill svg {
+    fill: red;
+}
+
 
 
 /* hover effect */
@@ -449,3 +460,5 @@ svg.icons:hover{
 .editReviewBtn:hover, .deleteReviewBtn:hover, .reportBtn.bg:hover {
     transform: scale(1.2);
 }
+
+
