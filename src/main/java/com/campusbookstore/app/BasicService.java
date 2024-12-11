@@ -23,11 +23,13 @@ public class BasicService {
     String viewMain (Model model) {
         //인기 게시물 가져오기
         List<Post> popularPosts = postRepository.findPostsByLikeyCount();
-        System.out.println("popularPosts size : " + popularPosts.size());
+        List<PostDTO> popularPostDTOs = new ArrayList<>();
         for (Post post : popularPosts) {
-            System.out.println(post.getTitle());
+            popularPostDTOs.add(postService.getPostDTO(post));
         }
-        System.out.println("============================ ");
+        model.addAttribute("popularPostDTOs", popularPostDTOs);
+
+
         //최근 게시물 가져오기
         int recentPostCnt = 8;
         List<Post> recentPosts = postService.getRecentPost(recentPostCnt);
@@ -35,7 +37,6 @@ public class BasicService {
         for (Post post : recentPosts) {
             recentPostDTOs.add(postService.getPostDTO(post));
         }
-
 
         model.addAttribute("recentPostDTOs", recentPostDTOs);
         return "main/main";
