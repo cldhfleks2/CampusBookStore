@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LikeyRepository extends JpaRepository<Likey, Long> {
-    Optional<Member> findByName(String name);
+    Optional<Likey> findByName(String name);
 
     @Query("SELECT l FROM Likey l WHERE l.status = 1")
     List<Likey> findAllByStatus();
