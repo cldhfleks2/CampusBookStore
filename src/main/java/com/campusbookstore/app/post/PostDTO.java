@@ -20,7 +20,7 @@ public class PostDTO {
     private String price;
     private String content;
     //아직 안씀
-//    private LocalDateTime createDate;
+    private LocalDateTime createDate;
 //    private LocalDateTime updateDate;
 
     private Member member;

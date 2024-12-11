@@ -2,13 +2,19 @@ package com.campusbookstore.app.member;
 
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostDTO;
+import com.campusbookstore.app.post.PostRepository;
+import com.campusbookstore.app.post.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +22,8 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PostRepository postRepository;
+    private final PostService postService;
 
     //1. Entity -> DTO
     public MemberDTO getMemberDTO(Member member) {
@@ -71,20 +79,28 @@ public class MemberService {
         if(auth != null && auth.isAuthenticated()) return "redirect:/main";
         return "member/register";
     }
-    String viewMyPage (Model model, Authentication auth) {
+    String viewMyPage (Model model, Authentication auth, Integer pageIdx) {
         Optional<Member> member = memberRepository.findByName(auth.getName());
         if(!member.isPresent()) return "error"; //현재 사용자 정보를 못찾았을때
+        Long memberId = member.get().getId(); //현재 사용자의 id
         MemberDTO memberDTO = getMemberDTO(member.get());
         memberDTO.setId(null); //필요없는 값은 가림
-
         model.addAttribute("member", memberDTO);
+
+        //pagination적용
+        if(pageIdx == null) { pageIdx = 1; }
+
+        Page<Post> posts = postRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
+        model.addAttribute("totalPages", posts.getTotalPages());
+        model.addAttribute("currentPage", pageIdx);
+        model.addAttribute("posts", posts.getContent());
 
         return "member/myPage";
     }
     String viewLike(){
         return "like/like";
     }
-    
+
     //회원가입
     String register (Member member) {
         String passwordEncoded = passwordEncoder.encode(member.getPassword());

@@ -59,6 +59,8 @@ public class PostService {
         //imagesEntity
         if(post.getImages() != null && !post.getImages().isEmpty())
             builder.imagesEntity(post.getImages());
+        if (post.getCreateDate() != null)
+            builder.createDate(post.getCreateDate()); // createDate 추가
 
         return builder.build();
     }
@@ -83,6 +85,8 @@ public class PostService {
             post.setMember(postDTO.getMember());
         if(postDTO.getImages() != null && !postDTO.getImages().isEmpty())
             post.setImages(postDTO.getImagesEntity());
+        if (postDTO.getCreateDate() != null)
+            post.setCreateDate(postDTO.getCreateDate());
 
         return post;
     }

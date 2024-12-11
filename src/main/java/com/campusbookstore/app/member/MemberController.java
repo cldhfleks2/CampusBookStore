@@ -24,8 +24,8 @@ public class MemberController {
         return memberService.viewRegister(auth);
     }
     @GetMapping("/mypage")
-    String viewMyPage (Model model, Authentication auth) {
-        return memberService.viewMyPage(model, auth);
+    String viewMyPage (Model model, Authentication auth, Integer pageIdx) {
+        return memberService.viewMyPage(model, auth, pageIdx);
     }
     @GetMapping("/like")
     String viewLike() {

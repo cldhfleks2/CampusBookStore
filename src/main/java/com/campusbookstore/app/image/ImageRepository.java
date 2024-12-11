@@ -11,4 +11,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("SELECT r FROM Review r WHERE r.status = 1")
     List<Review> findAllByStatus();
+
+
 }

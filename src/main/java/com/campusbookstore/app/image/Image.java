@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
-@SQLDelete(sql = "UPDATE image SET status = 0, update_date = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLDelete(sql = "UPDATE image SET status = 0, create_date = CURRENT_TIMESTAMP WHERE id = ?")
 @ToString
 public class Image {
     @Id
