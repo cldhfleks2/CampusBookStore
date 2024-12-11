@@ -32,16 +32,13 @@ public class PostController {
     String viewSearch () {
         return postService.viewSearch();
     }
-    @GetMapping("/wish")
-    String viewWish(Model model) {
-        return postService.viewWish(model);
-    }
+
 
 
     //책 등록
     @PostMapping("/addPost")
-    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
-        return postService.addPost(postDTO, auth);
+    String addPost (PostDTO postDTO, Authentication auth, Model model) throws Exception {
+        return postService.addPost(postDTO, auth, model);
     }
 
 
@@ -52,11 +49,7 @@ public class PostController {
         return postService.searching(keyword, model);
     }
 
-    //장바구니 추가 요청
-    @PostMapping("/wishPlus")
-    ResponseEntity<String> addWish(Long postId, Authentication auth) {
-        return postService.addWish(postId, auth);
-    }
+
 
 
 

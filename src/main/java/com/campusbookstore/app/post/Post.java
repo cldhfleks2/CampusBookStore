@@ -26,6 +26,7 @@ public class Post {
     private String author;
     private String price;
     private String content;
+
     //남은 갯수
     private Long quantity;
 

@@ -86,9 +86,9 @@
                     </div>
                 </div>
                 <div class="actionBtn">
-                    <button class="wishBtn" th:data-post-id="${post.id}">장바구니 담기</button>
+                    <button class="wishBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name == #authentication.name}">장바구니 담기</button>
 <!--                만들어야함-->
-                    <button class="buyBtn">바로 구매</button>
+                    <button class="buyBtn" th:disabled="${post.member.name == #authentication.name}">바로 구매</button>
                 </div>
             </div>
         </div>

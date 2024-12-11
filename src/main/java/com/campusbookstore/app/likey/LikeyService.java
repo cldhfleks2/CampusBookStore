@@ -33,7 +33,7 @@ public class LikeyService {
         Post post = postObj.get();
         Optional<Member> memberObj = memberRepository.findByName(auth.getName());
         //내 로그인한 정보가 없으면 오류
-        if(!memberObj.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("본인 정보가 존재하지 않음.");
+        if(!memberObj.isPresent()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자임");
         Member member = memberObj.get();
         //본인 게시물이라면 제외
         if(post.getMember().getName().equals(auth.getName())) 

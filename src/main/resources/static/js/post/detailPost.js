@@ -169,18 +169,18 @@ function likeyBtn(){
     })
 }
 
-//장바구니 추가 버튼
+//장바구니에 추가  기능
 function wishBtn(){
     $(document).on("click", ".wishBtn", function () {
         var postId = $(this).data("post-id");
         var quantity = $("input[name='quantity']").val();
-        console.log(quantity)
 
         $.ajax({
             url: "/wishPlus",
             method: "post",
-            data: {postId: postId},
+            data: {postId: postId, quantity: quantity},
             success: function (){
+                alert("상품을 장바구니에 담았습니다.")
                 console.log("wish-ajax-complete")
             }, fail: function (err){
                 console.log(err)
@@ -188,6 +188,9 @@ function wishBtn(){
         })
     })
 }
+
+//TODO: 바로 구매 버튼
+
 
 //리뷰 리스트 갱신
 function reviewListUpdate(){
@@ -345,6 +348,7 @@ function deleteReviewBtn() {
     });
 }
 
+//수량 버튼
 function quantityBtn() {
     const $decreaseBtn = $('.quantityDecrease');
     const $increaseBtn = $('.quantityIncrease');

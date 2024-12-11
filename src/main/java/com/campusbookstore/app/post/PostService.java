@@ -1,5 +1,6 @@
 package com.campusbookstore.app.post;
 
+import com.campusbookstore.app.error.ErrorService;
 import com.campusbookstore.app.image.Image;
 import com.campusbookstore.app.image.ImageDTO;
 import com.campusbookstore.app.image.ImageRepository;
@@ -13,8 +14,10 @@ import com.campusbookstore.app.review.Review;
 import com.campusbookstore.app.review.ReviewDTO;
 import com.campusbookstore.app.review.ReviewRepository;
 import com.campusbookstore.app.review.ReviewService;
+import com.campusbookstore.app.wish.Wish;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -106,7 +109,14 @@ public class PostService {
     String viewDetailPost (Model model, Authentication auth, Long postId, RedirectAttributes redirectAttributes) {
         Optional<Post> postObj = postRepository.findById(postId);
         //없는 postId일때
-        if(!postObj.isPresent()) { return "error"; }
+        if(!postObj.isPresent()) {
+            return ErrorService.send(
+                    HttpStatus.NOT_FOUND.value(),
+                    "/detailPost/{postId}",
+                    "DB에 없는 게시물",
+                    model
+            );
+        }
         //삭제된 게시물일때
         if(postObj.get().getStatus() == 0){
             redirectAttributes.addFlashAttribute("alertMessage", "삭제된 게시물입니다.");
@@ -156,17 +166,22 @@ public class PostService {
     String viewSearch () {
         return "search/search";
     }
-
-
     //책 등록
-    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
+    String addPost (PostDTO postDTO, Authentication auth, Model model) throws Exception {
         //Spring SEC로 로그인 정보를 가져옴
         AccountDetail userDetail = (AccountDetail) auth.getPrincipal();
         String name = userDetail.getName(); //getUserName에서 바꿈.
 
         //Member객체 가져옴
         Optional<Member> optionalMember = memberRepository.findByName(name);
-        if (!optionalMember.isPresent()) { return "redirect:/addPost"; }
+        if (!optionalMember.isPresent()) {
+            return ErrorService.send(
+                    HttpStatus.UNAUTHORIZED.value(),
+                    "/addPost",
+                    "DB없는 회원",
+                    model
+            );
+        }
         Member member = optionalMember.get();
 
         //Post객체 생성 후 저장
@@ -220,17 +235,7 @@ public class PostService {
         return "redirect:/search";
     }
 
-    //TODO: 장바구니 페이지
-    String viewWish(Model model){
 
-
-        return "wish/wish";
-    }
-
-    //TODO: 장바구니 추가 요청
-    ResponseEntity<String> addWish(Long postId, Authentication auth) {
-        return ResponseEntity.ok("장바구니 추가 성공");
-    }
 
 
 

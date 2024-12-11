@@ -1,11 +1,13 @@
 package com.campusbookstore.app.member;
 
+import com.campusbookstore.app.error.ErrorService;
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostRepository;
 import com.campusbookstore.app.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -80,7 +82,14 @@ public class MemberService {
     }
     String viewMyPage (Model model, Authentication auth, Integer pageIdx) {
         Optional<Member> member = memberRepository.findByName(auth.getName());
-        if(!member.isPresent()) return "error"; //현재 사용자 정보를 못찾았을때
+        if(!member.isPresent()) {
+            return ErrorService.send(
+                    HttpStatus.UNAUTHORIZED.value(),
+                    "/mypage",
+                    "DB없는 회원",
+                    model
+            );
+        }
         Long memberId = member.get().getId(); //현재 사용자의 id
         MemberDTO memberDTO = getMemberDTO(member.get());
         memberDTO.setId(null); //필요없는 값은 가림

@@ -1,6 +1,7 @@
 package com.campusbookstore.app.wish;
 
 import com.campusbookstore.app.member.Member;
+import com.campusbookstore.app.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +29,8 @@ public class Wish {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member; //장바구니에 등록한 유저
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post; //어떤 상품을 장바구니에 넣었는지
 }
