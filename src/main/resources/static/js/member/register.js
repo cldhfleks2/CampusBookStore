@@ -133,7 +133,7 @@ function submit() {
                     password: password,
                 },
                 success: function (data){
-                    window.location.href = "/";
+                    window.location.href = "/login";
                 },
                 fail: function (data){
                     console.log(data)
@@ -152,7 +152,6 @@ function showError(element, message) {
     errorDiv.text(message).show();
 }
 
-// Function to hide error message
 function hideError(element) {
     const errorDiv = element.closest('.input-group').find('.error-message');
     errorDiv.text('').hide();

@@ -128,8 +128,8 @@ public class PostService {
         }
         
         //like갯수세기
-        List<Likey> likeys = likeyRepository.findAllByStatus();
-        
+        List<Likey> likeys = likeyRepository.findAllByPostIdAndStatus(postId);
+
         //내가 좋아요를 눌렀는지 확인
         //note: 2개이상 객체가 존재하면 에러임
         List<Likey> iamlikeyObj = likeyRepository.findByPostIdAndMemberName(postId, auth.getName());
