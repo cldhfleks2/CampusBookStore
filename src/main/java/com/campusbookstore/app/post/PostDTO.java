@@ -19,9 +19,11 @@ public class PostDTO {
     private String author;
     private String price;
     private String content;
-    //아직 안씀
+    private Long quantity;
+
     private LocalDateTime createDate;
-//    private LocalDateTime updateDate;
+    //아직 안씀
+    //private LocalDateTime updateDate;
 
     private Member member;
 

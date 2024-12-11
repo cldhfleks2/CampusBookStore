@@ -6,6 +6,7 @@
     <title>장바구니</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/wish/wish.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -30,6 +31,15 @@
                 </div>
             </div>
             <div class="wishItemActions">
+                <div class="quantitySection">
+                    <div class="quantityContainer">
+                        <button class="quantityBtn quantityDecrease">-</button>
+                        <span class="quantityDisplay">1</span>
+<!--                        TODO: th:data-값으로 wish아이템 id값 넣기 -->
+                        <input type="hidden" class="quantityInput" name="quantity" value="1">
+                        <button class="quantityBtn quantityIncrease">+</button>
+                    </div>
+                </div>
                 <button class="deleteBtn">삭제</button>
             </div>
         </div>

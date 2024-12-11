@@ -22,6 +22,9 @@
                     </button>
                 </form>
             </div>
+            <a href="/addPost" sec:authorize="isAuthenticated()">
+                <div class="addIcon">📤</div>
+            </a>
             <a href="/wish" sec:authorize="isAuthenticated()">
                 <div class="wishIcon">🛒</div>
             </a>

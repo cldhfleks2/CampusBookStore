@@ -110,6 +110,7 @@ function upload() {
         formData.append("author", $("input[name='author']").val());
         formData.append("price", $("input[name='price']").val());
         formData.append("content", $("textarea[name='content']").val());
+        formData.append("quantity", $("input[name='quantity']").val());
 
         $(".image-wrapper input[type='file']").each(function() {
             if (this.files && this.files.length > 0) {

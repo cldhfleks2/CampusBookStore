@@ -8,10 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,6 +32,10 @@ public class PostController {
     String viewSearch () {
         return postService.viewSearch();
     }
+    @GetMapping("/wish")
+    String viewWish(Model model) {
+        return postService.viewWish(model);
+    }
 
 
     //책 등록
@@ -56,6 +57,8 @@ public class PostController {
     ResponseEntity<String> addWish(Long postId, Authentication auth) {
         return postService.addWish(postId, auth);
     }
+
+
 
 
 

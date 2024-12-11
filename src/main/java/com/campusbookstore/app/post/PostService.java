@@ -66,6 +66,8 @@ public class PostService {
             builder.imagesEntity(post.getImages());
         if (post.getCreateDate() != null)
             builder.createDate(post.getCreateDate()); // createDate 추가
+        if (post.getQuantity() != null)
+            builder.quantity(post.getQuantity());
 
         return builder.build();
     }
@@ -92,6 +94,8 @@ public class PostService {
             post.setImages(postDTO.getImagesEntity());
         if (postDTO.getCreateDate() != null)
             post.setCreateDate(postDTO.getCreateDate());
+        if (postDTO.getQuantity() != null)
+            post.setQuantity(postDTO.getQuantity());
 
         return post;
     }
@@ -160,7 +164,6 @@ public class PostService {
         AccountDetail userDetail = (AccountDetail) auth.getPrincipal();
         String name = userDetail.getName(); //getUserName에서 바꿈.
 
-
         //Member객체 가져옴
         Optional<Member> optionalMember = memberRepository.findByName(name);
         if (!optionalMember.isPresent()) { return "redirect:/addPost"; }
@@ -198,7 +201,6 @@ public class PostService {
 
             //DB에 저장
             Image image = new Image();
-            //image.setImagePath(filePath);
             image.setImagePath(fileName);
             image.setPost(post);
             imageRepository.save(image);
@@ -217,15 +219,17 @@ public class PostService {
         model.addAttribute("postCnt", results.size());
         return "redirect:/search";
     }
-    //???장바구니 추가 요청
+
+    //TODO: 장바구니 페이지
+    String viewWish(Model model){
+
+
+        return "wish/wish";
+    }
+
+    //TODO: 장바구니 추가 요청
     ResponseEntity<String> addWish(Long postId, Authentication auth) {
         return ResponseEntity.ok("장바구니 추가 성공");
-    }
-    //인기 게시물 보여주기
-
-    //최근 게시물 보여주기
-    public List<Post> getRecentPost(int n){
-        return postRepository.findTopNByStatusOrderByCreateDateDesc(n);
     }
 
 

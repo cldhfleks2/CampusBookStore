@@ -70,6 +70,21 @@
                         <span class="price" th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')}">10,000</span>원
                     </div>
                 </div>
+                <div class="quantityPriceWrapper">
+                    <div class="quantitySection">
+                        <div class="quantityContainer">
+                            <button class="quantityBtn quantityDecrease">-</button>
+                            <span class="quantityDisplay">1</span>
+                            <input type="hidden" id="quantityInput" name="quantity" value="1">
+                            <button class="quantityBtn quantityIncrease">+</button>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="totalPriceSection">
+                        <span class="totalPriceDisplay">10,000원</span>
+<!--                        todo:필요하면 여기에 hidden input으로 총 가격을 서버로 전송 할 것-->
+                    </div>
+                </div>
                 <div class="actionBtn">
                     <button class="wishBtn" th:data-post-id="${post.id}">장바구니 담기</button>
 <!--                만들어야함-->

@@ -116,3 +116,37 @@
     color: #7f8c8d;
     margin-top: 10px;
 }
+
+
+
+.wishItemActions .quantitySection {
+    margin-right: 15px;
+}
+
+.wishItemActions .quantityContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.25rem;
+    /*width: 100px;*/
+}
+
+.wishItemActions .quantityBtn {
+    background-color: #f9fafb;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.wishItemActions .quantityBtn:hover {
+    background-color: #f3f4f6;
+}
+
+.wishItemActions .quantityDisplay {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    min-width: 30px;
+    text-align: center;
+}

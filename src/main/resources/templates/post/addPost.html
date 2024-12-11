@@ -15,7 +15,6 @@
 <div class="container">
     <h1 class="pageTitle">책 등록</h1>
 
-    <!-- Image Upload Section -->
     <div class="imageUpload">
         <div class="uploadIcon">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -26,7 +25,6 @@
         <p class="uploadText" >이미지를 드래그 하거나 클릭하여 업로드</p>
     </div>
 
-    <!-- Book Information -->
     <div class="formGrid">
         <div class="formGroup">
             <label class="formLabel">책 제목</label>
@@ -38,22 +36,28 @@
         </div>
     </div>
 
-    <!-- Price -->
-    <div>
-        <label class="formLabel">판매 가격</label>
-        <div class="priceContainer">
-            <input type="number" class="priceInput" name="price"  placeholder="가격을 입력하세요">
-            <span>원</span>
+    <div class="formGrid">
+        <div class="formGroup">
+            <label class="formLabel" style="margin-bottom: -5px">판매 가격</label>
+            <div class="formInput" style="display: flex; border: none;">
+                <input type="number" class="priceInput" name="price" placeholder="가격을 입력하세요">
+                <span style="font-weight: bold;">&nbsp;&nbsp;원</span>
+            </div>
+        </div>
+        <div class="formGroup">
+            <label class="formLabel" style="margin-bottom: -5px">판매 갯수</label>
+            <div class="formInput" style="display: flex; border: none;">
+                <input type="number" class="priceInput" name="quantity" placeholder="가격을 입력하세요">
+                <span style="font-weight: bold;">&nbsp;&nbsp;개</span>
+            </div>
         </div>
     </div>
 
-    <!-- Description -->
     <div>
         <label class="formLabel">상세 설명</label>
         <textarea class="descriptionTextarea" name="content" placeholder="책의 상태, 특이사항 등을 자세히 기재해주세요"></textarea>
     </div>
 
-    <!-- Submit Button -->
     <button class="submitButton">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>

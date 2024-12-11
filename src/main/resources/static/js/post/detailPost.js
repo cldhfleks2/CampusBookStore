@@ -1,15 +1,18 @@
 $(document).ready(function() {
     //책 이미지
     initImageSlider();
-
     //책 관련 모달, 버튼
+
     report();
     likeyBtn();
     wishBtn();
+    quantityBtn()
+
     //리뷰
     addReview();
     editReviewBtn();
     deleteReviewBtn();
+
 });
 
 //책 그림 슬라이드
@@ -170,6 +173,9 @@ function likeyBtn(){
 function wishBtn(){
     $(document).on("click", ".wishBtn", function () {
         var postId = $(this).data("post-id");
+        var quantity = $("input[name='quantity']").val();
+        console.log(quantity)
+
         $.ajax({
             url: "/wishPlus",
             method: "post",
@@ -339,3 +345,35 @@ function deleteReviewBtn() {
     });
 }
 
+function quantityBtn() {
+    const $decreaseBtn = $('.quantityDecrease');
+    const $increaseBtn = $('.quantityIncrease');
+    const $quantityDisplay = $('.quantityDisplay');
+    const $quantityInput = $("#quantityInput");
+    const $totalPriceDisplay = $('.totalPriceDisplay');
+
+    const $basePriceElement = $('.price');
+    const $basePrice = parseInt($basePriceElement.text().replace(/,/g, ''), 10);
+
+    let quantity = 1;
+
+    const updateTotalPrice = () => {
+        const totalPrice = $basePrice * quantity;
+        $totalPriceDisplay.text(totalPrice.toLocaleString() + '원');
+        $quantityInput.val(quantity);  // Use .val() for input
+        $quantityDisplay.text(quantity);
+
+    };
+
+    $decreaseBtn.on('click', () => {
+        if (quantity > 1) {
+            quantity--;
+            updateTotalPrice();
+        }
+    });
+
+    $increaseBtn.on('click', () => {
+        quantity++;
+        updateTotalPrice();
+    });
+}
