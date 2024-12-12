@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -24,5 +25,10 @@ public class WishController {
     @PostMapping("/wishPlus")
     ResponseEntity<String> addWish(Long postId, Long quantity, Authentication auth) {
         return wishService.addWish(postId, quantity, auth);
+    }
+
+    @DeleteMapping("/wishDelete")
+    ResponseEntity<String> deleteWish(Long wishId, Authentication auth) {
+        return wishService.deleteWish(wishId, auth);
     }
 }

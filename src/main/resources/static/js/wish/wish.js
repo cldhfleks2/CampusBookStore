@@ -52,8 +52,7 @@ function quantityBtn(){
 }
 
 
-//TODO: 총상품금액, 포인트계산
-// 총 상품 금액, 포인트 계산 함수
+//총 상품 금액, 포인트 계산 함수
 function updateCartInfo(){
     //현재 총 금액 계산
     let totalPrice = 0;
@@ -79,5 +78,22 @@ function updateCartInfo(){
 
 //TODO: deleteBtn클래스 구현
 function deleteBtn(){
+    $(document).on("click", ".deleteBtn", function (){
+        var wishId = $(this).data("wish-id");
 
+        if(!wishId) return; //id가 업으면 에러
+
+        $.ajax({
+            url: "/wishDelete",
+            method: "delete",
+            data: {widhId: wishId},
+            success: function (data){
+                console.log(data);
+                console.log("delete-ajax-complete")
+            },
+            fail: function (err){
+                console.log(err);
+            }
+        })
+    })
 }

@@ -108,5 +108,19 @@ public class WishService {
         return ResponseEntity.status(HttpStatus.CREATED).body("장바구니 추가 완료");
     }
 
+    //TODO : wishId와 auth.name으로 맞는지 확인해서 wish객체 delete
+    ResponseEntity<String> deleteWish(Long wishId, Authentication auth) {
+        //장바구니 항목이 존재하는지
+        Optional<Wish> wishObj = wishRepository.findById(wishId);
+        if(!wishObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/wishDelete", "장바구니 목록이 없습니다.");
+        Wish wish = wishObj.get();
 
+        //사용자가 일치하는지
+        if(!wish.getMember().getName().equals(auth.getName())) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/wishDelete" ,"본인이 아닙니다.");
+
+        //삭제 진행
+        wishRepository.delete(wish);
+
+        return null;
+    }
 }
