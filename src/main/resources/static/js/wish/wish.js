@@ -86,9 +86,13 @@ function deleteBtn(){
         $.ajax({
             url: "/wishDelete",
             method: "delete",
-            data: {widhId: wishId},
+            data: {wishId: wishId},
             success: function (data){
-                console.log(data);
+                //비동기 갱신
+                var data = $.parseHTML(data);
+                var dataHtml = $("<div>").append(data);
+                $("#wishList").replaceWith(dataHtml.find("#wishList"));
+
                 console.log("delete-ajax-complete")
             },
             fail: function (err){

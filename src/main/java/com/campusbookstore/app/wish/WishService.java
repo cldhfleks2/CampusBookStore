@@ -7,6 +7,7 @@ import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -114,18 +115,21 @@ public class WishService {
 
     //TODO : wishId와 auth.name으로 맞는지 확인해서 wish객체 delete
     @Transactional
-    ResponseEntity<String> deleteWish(Long wishId, Authentication auth) {
+    String deleteWish(Long wishId, Authentication auth, Model model) {
+        System.out.println();
+        System.out.println("widhId = " + wishId);
+        System.out.println();
         //장바구니 항목이 존재하는지
         Optional<Wish> wishObj = wishRepository.findById(wishId);
-        if(!wishObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/wishDelete", "장바구니 목록이 없습니다.");
+        if(!wishObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/wishDelete", "장바구니 목록이 없습니다.", model);
         Wish wish = wishObj.get();
 
         //사용자가 일치하는지
-        if(!wish.getMember().getName().equals(auth.getName())) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/wishDelete" ,"본인이 아닙니다.");
+        if(!wish.getMember().getName().equals(auth.getName())) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/wishDelete" ,"본인이 아닙니다.", model);
 
         //삭제 진행
         wishRepository.delete(wish);
 
-        return null;
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("장바구니 데이터 삭제 완료");
     }
 }

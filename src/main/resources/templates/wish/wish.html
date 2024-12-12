@@ -17,9 +17,7 @@
         <h1 class="wishTitle">장바구니</h1>
     </div>
 
-    <div class="wishItemList">
-
-
+    <div class="wishItemList" id="wishList">
         <div class="wishItem"  th:each="wish : ${wishs}">
             <div class="checkboxContainer">
                 <div class="bookInfo">
@@ -48,7 +46,6 @@
                 <button class="deleteBtn" th:data-wish-id="${wish.id}">항목 삭제</button>
             </div>
         </div>
-
     </div>
 
     <div class="purchaseInfo">
