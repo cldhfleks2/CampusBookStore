@@ -36,9 +36,11 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
+    @ToString.Exclude
     @OneToMany(mappedBy="post", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Image> images;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

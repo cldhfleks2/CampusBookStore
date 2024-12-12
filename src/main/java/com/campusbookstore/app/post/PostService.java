@@ -163,7 +163,18 @@ public class PostService {
         model.addAttribute("iamlikey", iamlikey); //0: 안좋아요   1: 좋아요
         return "post/detailPost";
     }
-    String viewEditPost () {
+    String viewEditPost (Long postId, Authentication auth, Model model) {
+        //유효성 검사
+        Optional<Post> postObj = postRepository.findById(postId);
+        if(!postObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/editPost", "존재하지않는 게시물입니다.", String.class);
+        Optional<Member> memberObj = memberRepository.findByName(auth.getName());
+        if(!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/editPost", "사용자 정보가 없습니다", String.class);
+        Post post = postObj.get();
+        Member member = memberObj.get();
+        //본인인지 확인
+        if(post.getMember().getId() != member.getId()) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/editPost", "본인이 아닙니다.", String.class);
+
+
         return "post/editPost";
     }
     String viewSearch () {

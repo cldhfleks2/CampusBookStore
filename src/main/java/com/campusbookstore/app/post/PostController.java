@@ -24,9 +24,9 @@ public class PostController {
                            RedirectAttributes redirectAttributes) {
         return postService.viewDetailPost(model, auth, postId, redirectAttributes);
     }
-    @GetMapping("/editPost")
-    String viewEdit () {
-        return postService.viewEditPost();
+    @GetMapping("/editPost/{postId}")
+    String viewEdit (@PathVariable Long postId, Authentication auth, Model model) {
+        return postService.viewEditPost(postId, auth, model);
     }
     @GetMapping("/search")
     String viewSearch () {

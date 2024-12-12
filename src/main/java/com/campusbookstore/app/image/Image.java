@@ -27,6 +27,7 @@ public class Image {
     @CreationTimestamp
     private LocalDateTime createDate;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="post_id")
     private Post post;

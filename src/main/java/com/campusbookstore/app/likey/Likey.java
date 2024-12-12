@@ -25,10 +25,12 @@ public class Likey {
     @CreationTimestamp
     private LocalDateTime createDate;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="post_id")
     private Post post; //어떤 게시글
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member; //어떤 유저가 찜했는지

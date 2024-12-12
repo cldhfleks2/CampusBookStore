@@ -96,13 +96,15 @@ public class WishService {
     @Transactional
     ResponseEntity<String> addWish(Long postId, Long quantity, Authentication auth) {
         Optional<Member> memberObj = memberRepository.findByName(auth.getName());
-        if(!memberObj.isPresent()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자임");
-        Member member = memberObj.get();
-        
         Optional<Post> postObj = postRepository.findById(postId);
-        if(!postObj.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("게시물이 없음");
+        //유효성 검사
+        //게시물 존재 여부
+        if(!postObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/wishPlus" , "게시물이 존재하지 않습니다.", ResponseEntity.class);
         Post post = postObj.get();
-        
+        //사용자 존재 여부
+        if(!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/wishPlus" ,"사용자 정보가 없습니다.", ResponseEntity.class);
+        Member member = memberObj.get();
+
         //DB저장
         Wish wish = new Wish();
         wish.setQuantity(quantity);

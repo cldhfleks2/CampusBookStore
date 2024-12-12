@@ -1,5 +1,6 @@
 package com.campusbookstore.app.review;
 
+import com.campusbookstore.app.error.ErrorService;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -125,7 +126,7 @@ public class ReviewService {
 
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }else{
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자가 일치 하지 않음.");
+            return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/deleteReview", "리뷰 작성자가 아닙니다.", ResponseEntity.class);
         }
     }
 
