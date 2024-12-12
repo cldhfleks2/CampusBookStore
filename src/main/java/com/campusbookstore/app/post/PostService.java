@@ -175,6 +175,8 @@ public class PostService {
         if(post.getMember().getId() != member.getId()) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/editPost", "본인이 아닙니다.", String.class);
 
 
+
+
         return "post/editPost";
     }
     String viewSearch () {
