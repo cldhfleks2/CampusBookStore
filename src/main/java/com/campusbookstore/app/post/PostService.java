@@ -15,6 +15,7 @@ import com.campusbookstore.app.review.ReviewDTO;
 import com.campusbookstore.app.review.ReviewRepository;
 import com.campusbookstore.app.review.ReviewService;
 import com.campusbookstore.app.wish.Wish;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,7 @@ public class PostService {
 
     //DTO를 수정하면 아래 두개 수정해야함.
     //1. Entity -> DTO
+    @Transactional
     public PostDTO getPostDTO(Post post) {
         if (post == null) return null;
         PostDTO.PostDTOBuilder builder = PostDTO.builder();
@@ -74,8 +76,8 @@ public class PostService {
 
         return builder.build();
     }
-
     //2. DTO -> Entity
+    @Transactional
     public Post convertToPost(PostDTO postDTO) {
         if (postDTO == null) return null;
         Post post = new Post();
@@ -102,6 +104,7 @@ public class PostService {
 
         return post;
     }
+
 
     String viewAddPost () {
         return "post/addPost";
@@ -167,6 +170,7 @@ public class PostService {
         return "search/search";
     }
     //책 등록
+    @Transactional
     String addPost (PostDTO postDTO, Authentication auth, Model model) throws Exception {
         //Spring SEC로 로그인 정보를 가져옴
         AccountDetail userDetail = (AccountDetail) auth.getPrincipal();

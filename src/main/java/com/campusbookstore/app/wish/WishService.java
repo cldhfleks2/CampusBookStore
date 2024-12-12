@@ -5,6 +5,7 @@ import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class WishService {
     private final PostRepository postRepository;
 
     //Entity -> DTO
+    @Transactional
     WishDTO getWishDTO(Wish wish) {
         if(wish == null) return null;
         WishDTO.WishDTOBuilder wishDTOBuilder = WishDTO.builder();
@@ -42,6 +44,7 @@ public class WishService {
         return wishDTOBuilder.build();
     }
 
+    @Transactional
     Wish convertToWish(WishDTO wishDTO) {
         if(wishDTO == null) return null;
         Wish wish = new Wish();
@@ -89,6 +92,7 @@ public class WishService {
 
     //장바구니 추가 요청
     //TODO: 요청온 갯수만큼 post에서 quantity빼서 계산 해서 다시 저장
+    @Transactional
     ResponseEntity<String> addWish(Long postId, Long quantity, Authentication auth) {
         Optional<Member> memberObj = memberRepository.findByName(auth.getName());
         if(!memberObj.isPresent()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자임");
@@ -109,6 +113,7 @@ public class WishService {
     }
 
     //TODO : wishId와 auth.name으로 맞는지 확인해서 wish객체 delete
+    @Transactional
     ResponseEntity<String> deleteWish(Long wishId, Authentication auth) {
         //장바구니 항목이 존재하는지
         Optional<Wish> wishObj = wishRepository.findById(wishId);

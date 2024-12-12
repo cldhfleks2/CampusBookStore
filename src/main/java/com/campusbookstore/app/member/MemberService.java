@@ -4,6 +4,7 @@ import com.campusbookstore.app.error.ErrorService;
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostRepository;
 import com.campusbookstore.app.post.PostService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,7 +48,7 @@ public class MemberService {
         return builder.build();
     }
     //2. DTO -> Entity
-    public Member convertToPost(MemberDTO memberDTO) {
+    public Member convertToMember(MemberDTO memberDTO) {
         if (memberDTO == null) return null;
 
         Member member = new Member();
@@ -110,6 +111,7 @@ public class MemberService {
     }
 
     //회원가입
+    @Transactional
     String register (Member member) {
         String passwordEncoded = passwordEncoder.encode(member.getPassword());
         member.setPassword(passwordEncoded);

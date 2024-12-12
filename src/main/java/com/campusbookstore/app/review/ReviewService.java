@@ -3,6 +3,7 @@ package com.campusbookstore.app.review;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class ReviewService {
 
     //DTO를 수정하면 아래 두개를 수정해야한다.
     //1. Entity -> DTO
+    @Transactional
     public ReviewDTO getReviewDTO(Review review) {
         if (review == null) return null;
         ReviewDTO.ReviewDTOBuilder builder = ReviewDTO.builder();
@@ -70,6 +72,7 @@ public class ReviewService {
 
 
     //리뷰목록 제공 return "post/detailPost :: #reviewList"
+    @Transactional
     String reviewList(Model model) {
         //전체 리뷰 객체를 가져옴
         List<Review> reviews = reviewRepository.findAllByStatus();
@@ -90,6 +93,7 @@ public class ReviewService {
     }
 
     //리뷰 작성 - DB저장
+    @Transactional
     void reviewSubmit(ReviewDTO reviewDTO) {
         //DTO를 Entity로 변환
         Review review = convertToReview(reviewDTO);
@@ -97,6 +101,7 @@ public class ReviewService {
     }
 
     //리뷰 수정
+    @Transactional
     void editReview(ReviewDTO reviewDTO) {
         //리뷰 확인
         Review review = reviewRepository.findById(reviewDTO.getId())
@@ -112,6 +117,7 @@ public class ReviewService {
     }
     
     //리뷰 삭제 - DB삭제
+    @Transactional
     ResponseEntity<String> deleteReview(ReviewDTO reviewDTO, Authentication auth) {
         if(auth.getName().equals(reviewDTO.getAuthor())) {
             //삭제

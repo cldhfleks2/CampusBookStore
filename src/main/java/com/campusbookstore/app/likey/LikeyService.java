@@ -4,6 +4,7 @@ import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class LikeyService {
     }
 
     //찜한 리스트 추가 요청
+    @Transactional
     ResponseEntity<String> addLikey(Long postId, Authentication auth){
         Optional<Post> postObj = postRepository.findById(postId);
         //게시물이 없는경우 에러
