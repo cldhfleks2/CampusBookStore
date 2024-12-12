@@ -23,7 +23,9 @@
                 <div class="bookInfo">
                     <img th:src="@{/uploadImage/} + ${wish.post.images[0].imagePath}">
                     <div class="bookDetails">
-                        <div class="bookTitle" th:text="${wish.post.title}">자바 프로그래밍 입문</div>
+                        <a th:href="@{/detailPost/{id}(id=${wish.post.id})}">
+                            <div class="bookTitle" th:text="${wish.post.title}">자바 프로그래밍 입문</div>
+                        </a>
                         <div class="bookAuthor" th:text="${wish.post.author + '&nbsp;&nbsp;저'}">김상형</div>
                         <div style="display: flex; margin-top: 5px">
                             <div style="font-weight: bold;">총 : &nbsp;</div>

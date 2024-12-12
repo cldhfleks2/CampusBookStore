@@ -13,6 +13,8 @@ $(document).ready(function() {
     editReviewBtn();
     deleteReviewBtn();
 
+    //글작성자 일때
+    editBtn();
 });
 
 //책 그림 슬라이드
@@ -93,7 +95,11 @@ function modalOFF() {
     $("#reportOverlay").css("display", "none");
 }
 
-//신고하기 개발중
+/*
+TODO: 신고
+ 리뷰 신고
+ 게시물 신고
+*/
 function report() {
     $(document).on("click", "#productReportBtn, #reviewReportBtn", function() {
         modalON();
@@ -111,7 +117,6 @@ function report() {
         report($(this).data("name"));
     });
 }
-
 //게시물번호로 좋아요 갯수를 가져와서 갱신
 function getLikeyCount(postId){
     $.ajax({
@@ -188,9 +193,6 @@ function wishBtn(){
         })
     })
 }
-
-//TODO: 바로 구매 버튼
-
 
 //리뷰 리스트 갱신
 function reviewListUpdate(){
@@ -381,3 +383,18 @@ function quantityBtn() {
         updateTotalPrice();
     });
 }
+
+//TODO: 바로 구매 버튼 : 구매 페이지를 만들어야 하나?
+
+
+//수정 버튼 클릭시 수정 페이지로 이동
+function editBtn() {
+    $(document).on("click", ".editBtn", function () {
+        var postId = $(this).data("post-id");
+        window.location.href = "/editPost/" + postId;
+    })
+}
+
+//TODO: 삭제 버튼
+
+

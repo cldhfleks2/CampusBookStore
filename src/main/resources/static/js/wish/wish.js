@@ -4,8 +4,7 @@ $(document).ready(function () {
     updateCartInfo();
 })
 
-
-
+//수량 체크 버튼
 function quantityBtn(){
     $('.wishItem').each(function() {
         const $wishItem = $(this);
@@ -51,7 +50,6 @@ function quantityBtn(){
     });
 }
 
-
 //총 상품 금액, 포인트 계산 함수
 function updateCartInfo(){
     //현재 총 금액 계산
@@ -71,12 +69,7 @@ function updateCartInfo(){
     $(".remainPoint").text(remainPoint >= 0 ? remainPoint.toLocaleString() : "포인트가 부족합니다.");
 }
 
-
-//TODO: 구매하기 버튼
-
-
-
-//TODO: deleteBtn클래스 구현
+//항목 삭제 버튼
 function deleteBtn(){
     $(document).on("click", ".deleteBtn", function (){
         var wishId = $(this).data("wish-id");
@@ -102,4 +95,5 @@ function deleteBtn(){
     })
 }
 
+//TODO: 구매하기 버튼
 
