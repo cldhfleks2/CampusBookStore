@@ -117,7 +117,7 @@ public class PostService {
                     HttpStatus.NOT_FOUND.value(),
                     "/detailPost/{postId}",
                     "DB에 없는 게시물",
-                    model
+                    String.class
             );
         }
         //삭제된 게시물일때
@@ -171,7 +171,7 @@ public class PostService {
     }
     //책 등록
     @Transactional
-    String addPost (PostDTO postDTO, Authentication auth, Model model) throws Exception {
+    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
         //Spring SEC로 로그인 정보를 가져옴
         AccountDetail userDetail = (AccountDetail) auth.getPrincipal();
         String name = userDetail.getName(); //getUserName에서 바꿈.
@@ -183,7 +183,7 @@ public class PostService {
                     HttpStatus.UNAUTHORIZED.value(),
                     "/addPost",
                     "DB없는 회원",
-                    model
+                    String.class
             );
         }
         Member member = optionalMember.get();

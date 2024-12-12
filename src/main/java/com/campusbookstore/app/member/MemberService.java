@@ -88,7 +88,7 @@ public class MemberService {
                     HttpStatus.UNAUTHORIZED.value(),
                     "/mypage",
                     "DB없는 회원",
-                    model
+                    String.class
             );
         }
         Long memberId = member.get().getId(); //현재 사용자의 id

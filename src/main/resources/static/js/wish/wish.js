@@ -80,24 +80,26 @@ function updateCartInfo(){
 function deleteBtn(){
     $(document).on("click", ".deleteBtn", function (){
         var wishId = $(this).data("wish-id");
-
+        var thisParents = $(this).closest(".wishItem");
         if(!wishId) return; //id가 업으면 에러
 
         $.ajax({
             url: "/wishDelete",
             method: "delete",
             data: {wishId: wishId},
-            success: function (data){
-                //비동기 갱신
-                var data = $.parseHTML(data);
-                var dataHtml = $("<div>").append(data);
-                $("#wishList").replaceWith(dataHtml.find("#wishList"));
-
+            success: function (){
                 console.log("delete-ajax-complete")
+
+                //뷰 갱신
+                thisParents.remove();
+                updateCartInfo();
             },
             fail: function (err){
                 console.log(err);
+                console.log("delete-ajax-failed")
             }
         })
     })
 }
+
+

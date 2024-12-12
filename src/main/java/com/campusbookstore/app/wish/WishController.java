@@ -28,7 +28,7 @@ public class WishController {
     }
 
     @DeleteMapping("/wishDelete")
-    String deleteWish(Long wishId, Authentication auth) {
+    ResponseEntity<String> deleteWish(Long wishId, Authentication auth) {
         return wishService.deleteWish(wishId, auth);
     }
 }
