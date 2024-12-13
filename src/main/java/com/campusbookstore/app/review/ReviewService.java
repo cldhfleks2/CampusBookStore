@@ -3,6 +3,8 @@ package com.campusbookstore.app.review;
 import com.campusbookstore.app.error.ErrorService;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
+import com.campusbookstore.app.post.Post;
+import com.campusbookstore.app.post.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
+    private final PostRepository postRepository;
 
     //DTO를 수정하면 아래 두개를 수정해야한다.
     //1. Entity -> DTO
@@ -38,9 +41,10 @@ public class ReviewService {
             builder.title(review.getTitle());
         if (review.getContent() != null && !review.getContent().isEmpty())
             builder.content(review.getContent());
-
         if (review.getMember() != null && review.getMember().getName() != null && !review.getMember().getName().isEmpty())
             builder.author(review.getMember().getName());
+        if(review.getPost() != null)
+            builder.postId(review.getPost().getId());
 
         return builder.build();
     }
@@ -55,15 +59,23 @@ public class ReviewService {
         if (reviewDTO.getTitle() != null && !reviewDTO.getTitle().isEmpty()) {
             review.setTitle(reviewDTO.getTitle());
         }
-        // author(name type) -> member(member type)
+        // String author -> Member member
         if (reviewDTO.getAuthor() != null && !reviewDTO.getAuthor().isEmpty()) {
             Optional<Member> memberObj = memberRepository.findByName(reviewDTO.getAuthor());
-            memberObj.ifPresent(review::setMember);
+            if(!memberObj.isPresent()) throw new EntityNotFoundException("사용자 정보를 찾을 수 없습니다.");
+            review.setMember(memberObj.get());
         } else {
             review.setMember(null);
         }
         if (reviewDTO.getContent() != null && !reviewDTO.getContent().isEmpty())
             review.setContent(reviewDTO.getContent());
+        if(reviewDTO.getPostId() != null){
+            Optional<Post> postObj = postRepository.findById(reviewDTO.getPostId());
+            if(!postObj.isPresent()) throw new EntityNotFoundException("게시물 정보를 찾을 수 없습니다.");
+            review.setPost(postObj.get());
+        }else {
+            review.setPost(null);
+        }
 
         return review;
     }

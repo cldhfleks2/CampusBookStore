@@ -1,6 +1,7 @@
 package com.campusbookstore.app.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,11 +37,9 @@ public class MemberController {
     String register(Member member) {
         return memberService.register(member);
     }
-
     @PostMapping("/editMypage")
-    @ResponseBody
-    String editMypage(Member member) {
-        return memberService.editMypage(member);
+    String editMypage(MemberDTO memberDTO) {
+        return memberService.editMypage(memberDTO);
     }
 
 

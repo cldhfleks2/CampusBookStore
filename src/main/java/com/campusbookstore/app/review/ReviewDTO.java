@@ -12,4 +12,5 @@ public class ReviewDTO {
     private String title;
     private String author;
     private String content;
+    private Long postId;
 }

@@ -3,81 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상품 등록 페이지</title>
+    <title>상품 수정 페이지</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/post/editPost.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <div th:replace="~{ headers/header::header }"></div>
 
 <div class="container">
-    <h1 class="pageTitle">등록한 책 수정</h1>
+    <h1 class="pageTitle">책 수정 페이지</h1>
 
-    <!-- Image Upload Section -->
     <div class="imageUpload">
-        <div class="uploadIcon">
+        <div class="uploadIcon" th:style="${not #lists.isEmpty(post.images)} ? 'display:none;' : ''">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21.2 15c.7-1.2 1-2.5.8-3.9-.3-1.9-1.5-3.6-3.3-4.3-1.3-.5-2.7-.4-4 .2M12 15V3m0 0l-3 3m3-3l3 3"/>
                 <path d="M20.2 15.7h0c-1 .4-1.9.7-3 .8h0c-.9.1-1.8 0-2.7-.3-2-.6-3.7-2-4.7-3.8M15 18v3a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-3"/>
             </svg>
         </div>
-        <p class="uploadText">이미지를 드래그 하거나 클릭하여 업로드</p>
-        <input type="file" class="fileInput" accept="image/*">
+        <p class="uploadText" th:style="${not #lists.isEmpty(post.images)} ? 'display:none;' : ''">
+            이미지를 드래그 하거나 클릭하여 업로드
+        </p>
+
+        <!-- Existing Images -->
+        <th:block th:each="image : ${post.images}">
+            <div class="image-wrapper">
+                <img th:src="@{/uploadImage/} + ${image.imagePath}" name="image" />
+                <input type="hidden" name="uploadedFile" />
+            </div>
+        </th:block>
     </div>
 
-    <!-- Book Information -->
     <div class="formGrid">
         <div class="formGroup">
             <label class="formLabel">책 제목</label>
-            <input type="text" class="formInput" placeholder="책 제목을 입력하세요">
+            <input type="text" class="formInput" name="title" placeholder="책 제목을 입력하세요"
+                   th:value="${post.title}">
         </div>
         <div class="formGroup">
             <label class="formLabel">저자</label>
-            <input type="text" class="formInput" placeholder="저자명을 입력하세요">
+            <input type="text" class="formInput" name="author" placeholder="저자명을 입력하세요"
+                   th:value="${post.author}">
         </div>
     </div>
 
-    <!-- Product Status -->
-    <div>
-        <label class="formLabel">상품 상태</label>
-        <div class="productStatus">
-            <label class="statusLabel">
-                <input type="radio" name="bookStatus">
-                최상
-            </label>
-            <label class="statusLabel">
-                <input type="radio" name="bookStatus">
-                상
-            </label>
-            <label class="statusLabel">
-                <input type="radio" name="bookStatus">
-                중
-            </label>
-            <label class="statusLabel">
-                <input type="radio" name="bookStatus">
-                하
-            </label>
+    <div class="formGrid">
+        <div class="formGroup">
+            <label class="formLabel" style="margin-bottom: -5px">판매 가격</label>
+            <div class="formInput" style="display: flex; border: none;">
+                <input type="number" class="priceInput" name="price" placeholder="가격을 입력하세요"
+                       th:value="${post.price}">
+                <span style="font-weight: bold;">&nbsp;&nbsp;원</span>
+            </div>
+        </div>
+        <div class="formGroup">
+            <label class="formLabel" style="margin-bottom: -5px">판매 갯수</label>
+            <div class="formInput" style="display: flex; border: none;">
+                <input type="number" class="priceInput" name="quantity" placeholder="갯수를 입력하세요"
+                       th:value="${post.quantity}">
+                <span style="font-weight: bold;">&nbsp;&nbsp;개</span>
+            </div>
         </div>
     </div>
 
-    <!-- Price -->
-    <div>
-        <label class="formLabel">판매 가격</label>
-        <div class="priceContainer">
-            <input type="number" class="priceInput" placeholder="가격을 입력하세요">
-            <span>원</span>
-        </div>
-    </div>
-
-    <!-- Description -->
     <div>
         <label class="formLabel">상세 설명</label>
-        <textarea class="descriptionTextarea" placeholder="책의 상태, 특이사항 등을 자세히 기재해주세요"></textarea>
+        <textarea class="descriptionTextarea" name="content" placeholder="책의 상태, 특이사항 등을 자세히 기재해주세요"
+                  th:value="${post.content}"></textarea>
     </div>
 
-    <!-- Submit Button -->
-    <button class="submitButton">
+    <button class="submitButton" th:data-post-id="${post.id}">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
@@ -85,6 +81,9 @@
         책 수정하기
     </button>
 </div>
+
+
+
 <script>
     window.onload = function() {
         const alertMessage = "[[${alertMessage}]]";
@@ -93,6 +92,6 @@
         }
     };
 </script>
-<script src="/js/post/detailPost.js"></script>
+<script src="/js/post/editPost.js"></script>
 </body>
 </html>

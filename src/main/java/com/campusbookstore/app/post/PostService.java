@@ -43,7 +43,6 @@ public class PostService {
     private final ReviewService reviewService;
     private final ImageService imageService;
 
-
     @Value("${file.dir}")
     private String fileDir;
 
@@ -104,7 +103,6 @@ public class PostService {
 
         return post;
     }
-
 
     String viewAddPost () {
         return "post/addPost";
@@ -175,38 +173,18 @@ public class PostService {
         if(post.getMember().getId() != member.getId()) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/editPost", "본인이 아닙니다.", String.class);
 
 
-
+        model.addAttribute("post", post);
 
         return "post/editPost";
     }
     String viewSearch () {
         return "search/search";
     }
-    //책 등록
+
     @Transactional
-    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
-        //Spring SEC로 로그인 정보를 가져옴
-        AccountDetail userDetail = (AccountDetail) auth.getPrincipal();
-        String name = userDetail.getName(); //getUserName에서 바꿈.
-
-        //Member객체 가져옴
-        Optional<Member> optionalMember = memberRepository.findByName(name);
-        if (!optionalMember.isPresent()) {
-            return ErrorService.send(
-                    HttpStatus.UNAUTHORIZED.value(),
-                    "/addPost",
-                    "DB없는 회원",
-                    String.class
-            );
-        }
-        Member member = optionalMember.get();
-
-        //Post객체 생성 후 저장
-        Post post = new Post();
-        post.setTitle(postDTO.getTitle());
-        post.setAuthor(postDTO.getAuthor());
-        post.setPrice(postDTO.getPrice());
-        post.setContent(postDTO.getContent());
+    void savePostAndImages(PostDTO postDTO, Member member) throws Exception {
+        //DB수정
+        Post post = convertToPost(postDTO);
         post.setMember(member);
         postRepository.save(post);
 
@@ -214,34 +192,56 @@ public class PostService {
         String uploadDir = System.getProperty("user.dir") + fileDir;
 
         //Image객체 생성 후 저장
-        for(MultipartFile file : postDTO.getImages()) {
-            //고유 값과 확장자
-            String uuid = UUID.randomUUID().toString();
-            String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-            //폴더가 없으면 생성
-            File dir = new File(uploadDir);
-            if(!dir.exists()){
-                if(dir.mkdir()){
+        if(postDTO.getImages() != null){
+            for(MultipartFile file : postDTO.getImages()) {
+                //고유 값과 확장자
+                String uuid = UUID.randomUUID().toString();
+                String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+                //폴더가 없으면 생성
+                File dir = new File(uploadDir);
+                if(!dir.exists()){
+                    if(dir.mkdir()){
+                    }
                 }
+                //저장될 경로를 구함
+                String fileName = uuid + ext; //새로 생성된 파일이름
+                String filePath = uploadDir + fileName;
+
+                //파일을 저장
+                file.transferTo(new File(filePath));
+
+                //DB에 저장
+                Image image = new Image();
+                image.setImagePath(fileName);
+                image.setPost(post);
+                imageRepository.save(image);
             }
-            //저장될 경로를 구함
-            String fileName = uuid + ext; //새로 생성된 파일이름
-            String filePath = uploadDir + fileName;
-
-            //파일을 저장
-            file.transferTo(new File(filePath));
-
-            //DB에 저장
-            Image image = new Image();
-            image.setImagePath(fileName);
-            image.setPost(post);
-            imageRepository.save(image);
         }
+    }
+    //책 등록
+    @Transactional
+    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
+        //Spring SEC로 로그인 정보를 가져옴
+        String name = auth.getName();
+
+        //Member객체 가져옴
+        Optional<Member> memberObj = memberRepository.findByName(name);
+        if (!memberObj.isPresent()) {
+            return ErrorService.send(
+                    HttpStatus.UNAUTHORIZED.value(),
+                    "/addPost",
+                    "사용자 정보가 존재 하지 않습니다.",
+                    String.class
+            );
+        }
+        //DB에 게시물 저장
+        Member member = memberObj.get();
+        savePostAndImages(postDTO, member);
 
         return "redirect:/main";
     }
-
     //헤더의 검색 기능
+    @Transactional
     String searching(String keyword, Model model) {
         //제목과 책 저자로 검색
         List<Post> results = postRepository.findByTitleContainingAndAuthor(keyword, keyword);
@@ -251,9 +251,49 @@ public class PostService {
         model.addAttribute("postCnt", results.size());
         return "redirect:/search";
     }
+    //책 수정 내용 DB에 수정
+    @Transactional
+    ResponseEntity<String> editPost(PostDTO postDTO, Authentication auth) throws Exception {
+        Optional<Post> postObj = postRepository.findById(postDTO.getId());
+        Optional<Member> memberObj = memberRepository.findByName(auth.getName());
+        //유효성검사
+        //원래 존재하던 게시물인지
+        if(!postObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/editPost", "존재 하지 않는 게시물을 수정할 수 없습니다.", ResponseEntity.class);
+        //사용자가 존재 하는지
+        if(!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/editPost", "사용자 정보가 존재하지 않습니다.", ResponseEntity.class);
+        //본인 게시물인지 - 이거하면 에러나서 안돼
+//        if(postDTO.getMember().getId() != memberObj.get().getId()) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/editPost", "본인의 게시물만 수정 할 수 있습니다.", ResponseEntity.class);
 
+        //DB수정
+        Member member = memberObj.get();
+        savePostAndImages(postDTO, member);
 
+        return ResponseEntity.status(HttpStatus.OK.value()).body("책 정보 수정 성공");
+    }
 
+    //TODO 게시물 삭제
+    @Transactional
+    ResponseEntity<String> deletePost (PostDTO postDTO, Authentication auth) {
+        System.out.println("시작");
+        System.out.println(postDTO.getId());
+        Optional<Post> postObj = postRepository.findById(postDTO.getId());
+        System.out.println("1");
+        Optional<Member> memberObj = memberRepository.findByName(auth.getName());
+        //유효성검사
+        //원래 존재하던 게시물인지
+        if(!postObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/deletePost", "존재 하지 않는 게시물을 수정할 수 없습니다.", ResponseEntity.class);
+        System.out.println("2");
+        //사용자가 존재 하는지
+        if(!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/deletePost", "사용자 정보가 존재하지 않습니다.", ResponseEntity.class);
+        System.out.println("3");
+        //본인 게시물인지 - 이거하면 에러나서 안돼
+//        if(postDTO.getMember().getId() != memberObj.get().getId()) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/deletePost", "본인의 게시물만 삭제 할 수 있습니다.", ResponseEntity.class);
+
+        System.out.println("여기까지 와야 성공");
+        postRepository.delete(postObj.get());
+        System.out.println("찐 성공");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT.value()).build();
+    }
 
 
 }

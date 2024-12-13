@@ -47,7 +47,6 @@ function displayImages(transferFiles) {
         fileReader.onload = function(event) {
             const image = new Image();
             image.src = event.target.result;
-            // image.classList.add("image");
             $(image).attr("name", "image");
 
             const hiddenFileInput = $("<input>", {
@@ -129,6 +128,7 @@ function upload() {
             },
             fail: function (err) {
                 console.log(err)
+                alert("게시글 작성 중 오류가 발생했습니다.");
             }
 
         })
@@ -137,5 +137,5 @@ function upload() {
     })
 }
 
-
+//TODO 유효성 검사를 할까 말까..
 

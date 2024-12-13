@@ -15,6 +15,7 @@ $(document).ready(function() {
 
     //글작성자 일때
     editBtn();
+    deleteBtn();
 });
 
 //책 그림 슬라이드
@@ -117,6 +118,7 @@ function report() {
         report($(this).data("name"));
     });
 }
+
 //게시물번호로 좋아요 갯수를 가져와서 갱신
 function getLikeyCount(postId){
     $.ajax({
@@ -215,6 +217,7 @@ function reviewListUpdate(){
 //리뷰 작성
 function addReview(){
     $(document).on("click", ".submitReviewBtn", function () {
+        var postId = $(this).data("post-id");
         var title = $("input[name='reviewTitle']").val(); //value값
         var author =$(".myname").text(); //text값
         var content = $("textarea[name='reviewContent']").val(); //value값
@@ -224,13 +227,13 @@ function addReview(){
             url: "/reviewSubmit",
             method: "post",
             data: {
+                postId: postId,
                 title: title,
                 author: author,
                 content: content
             },
             success: function (){
                 reviewListUpdate()
-
                 console.log("/reviewSubmit ajax complete");
             }, fail: function (err){
                 console.log(err);
@@ -335,6 +338,7 @@ function deleteReviewBtn() {
                     console.log("/deleteReview ajax complete");
                 },
                 fail: function(err) {
+                    modalOFF();
                     console.log(err);
                     alert("리뷰 삭제 중 오류가 발생했습니다.");
                 }
@@ -384,10 +388,7 @@ function quantityBtn() {
     });
 }
 
-//TODO: 바로 구매 버튼 : 구매 페이지를 만들어야 하나?
-
-
-//수정 버튼 클릭시 수정 페이지로 이동
+//게시물 수정 : 수정 페이지 이동
 function editBtn() {
     $(document).on("click", ".editBtn", function () {
         var postId = $(this).data("post-id");
@@ -395,6 +396,43 @@ function editBtn() {
     })
 }
 
-//TODO: 삭제 버튼
+//게시물 삭제 : ajax통신
+function deleteBtn(){
+    $(document).on("click", ".removeBtn", function (){
+        var postId = $(this).data("post-id");
 
+        // 모달창 보이기
+        $("#reportOverlay .modalMessage").text("게시물을 정말 삭제하시겠습니까?");
+        $("#reportOverlay").css("display", "flex");
 
+        //기존에 달린 이벤트리스너 해제 후 재등록
+        $(document).off("click", ".yesBtn").on("click",".yesBtn", function() {
+            $.ajax({
+                url: "/deletePost",
+                method: "delete",
+                data: {
+                    id: postId,
+                },
+                success: function() {
+                    modalOFF();
+
+                    console.log("/deletePost ajax complete");
+                    window.location.href = "/detailPost/" + postId;
+                },
+                fail: function(err) {
+                    modalOFF();
+                    console.log(err);
+                    alert("게시물 삭제 중 오류가 발생했습니다.");
+                    window.location.href = "/detailPost/" + postId;
+                }
+            });
+        });
+
+        // 취소할때
+        $(document).off("click", ".noBtn").on("click",".noBtn", function() {
+            modalOFF();
+        });
+    })
+}
+
+//TODO: 바로 구매 버튼 : 구매 페이지를 만들어야 하나?

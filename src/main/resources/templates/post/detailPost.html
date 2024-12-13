@@ -88,10 +88,10 @@
                     </div>
                 </div>
                 <div class="actionBtn">
-                    <button class="editBtn" th:data-post-id="${post.id}" th:if="${post.member.name == #authentication.name}">수정</button>
-                    <button class="removeBtn" th:data-post-id="${post.id}" th:if="${post.member.name == #authentication.name}">삭제</button>
-                    <button class="wishBtn" th:data-post-id="${post.id}" th:if="${post.member.name != #authentication.name}">장바구니 담기</button>
-                    <button class="buyBtn" th:data-post-id="${post.id}" th:if="${post.member.name != #authentication.name}">바로 구매</button>
+                    <button class="editBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name != #authentication.name}" th:style="${post.member.name != #authentication.name ? 'display: none;' : 'display: inline-block;'}">수정</button>
+                    <button class="removeBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name != #authentication.name}" th:style="${post.member.name != #authentication.name ? 'display: none;' : 'display: inline-block;'}">삭제</button>
+                    <button class="wishBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name == #authentication.name}" th:style="${post.member.name == #authentication.name ? 'display: none;' : 'display: inline-block;'}">장바구니 담기</button>
+                    <button class="buyBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name == #authentication.name}" th:style="${post.member.name == #authentication.name ? 'display: none;' : 'display: inline-block;'}">바로 구매</button>
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                     </div>
                     <textarea placeholder="리뷰 내용을 입력하세요" name="reviewContent" class="addReviewContent"></textarea>
                 </div>
-                <button class="submitReviewBtn">리뷰 작성</button>
+                <button class="submitReviewBtn" th:data-post-id="${post.id}">리뷰 작성</button>
             </div>
         </div>
 
@@ -179,6 +179,6 @@
         }
     };
 </script>
-<script src="/js/post/editPost.js"></script>
+<script src="/js/post/detailPost.js"></script>
 </body>
 </html>

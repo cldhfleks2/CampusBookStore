@@ -46,7 +46,6 @@ public class ErrorService {
     }
 
 
-
     // 에러 속성을 보기 (아직 사용 안함)
     public static Map<String, Object> getErrorContext() {
         return errorContext.get();

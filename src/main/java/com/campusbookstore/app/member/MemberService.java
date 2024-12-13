@@ -9,11 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,14 +115,16 @@ public class MemberService {
     //회원가입
     @Transactional
     String register (Member member) {
+        //비밀번호 암호화
         String passwordEncoded = passwordEncoder.encode(member.getPassword());
         member.setPassword(passwordEncoded);
-
+        //DB저장
         memberRepository.save(member);
         return "redirect:/main";
     }
-
-    String editMypage(Member member) {
+    //TODO 개인정보 수정 을 받는 곳
+    //아직 미완성
+    String editMypage(MemberDTO memberDTO) {
         return "success";
     }
 
