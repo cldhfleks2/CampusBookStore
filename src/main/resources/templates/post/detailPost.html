@@ -71,6 +71,10 @@
                     <div class="flex items-center mb-2">
                         <span class="price" th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')}">10,000</span>원
                     </div>
+                    <div class="remainingQuantity">
+                        <span class="quantityLabel">남은 수량:</span>
+                        <span class="quantityValue" th:text="${post.quantity}">7</span>
+                    </div>
                 </div>
                 <div class="quantityPriceWrapper"  th:if="${post.member.name != #authentication.name}">
                     <div class="quantitySection">

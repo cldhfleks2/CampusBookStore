@@ -87,20 +87,24 @@ function initImageSlider() {
         $wrapper.css('transform', `translateX(${offset}%)`);
     }
 }
-//신고 모달 ON
+//리뷰,게시물 삭제 모달창 ON
 function modalON(){
     $("#reportOverlay").css("display", "flex");
 }
-//신고 모달 OFF
+//리뷰,게시물 삭제 모달창 OFF
 function modalOFF() {
     $("#reportOverlay").css("display", "none");
 }
+//신고 모달창 ON
+function reportModelON(){
+    $("#reportDetailModal").css("display", "flex");
+}
+//신고 모달창 OFF
+function reportModelOFF(){
+    $("#reportDetailModal").css("display", "none");
+}
 
-/*
-TODO: 신고
- 리뷰 신고
- 게시물 신고
-*/
+//신고 - 게시물,리뷰
 function report() {
     var reportType = "";
     //게시물 신고
@@ -111,7 +115,7 @@ function report() {
         if(postAuthorName === curentUserName){
             alert("본인 게시물은 신고할 수 없습니다.")
         }else{
-            $("#reportDetailModal").css("display", "flex");
+            reportModelON();
             $("#reportDetailModal .reportSubmitBtn").attr("data-post-id", postId) // data-post-id 속성 추가
                                                     .removeAttr("data-review-id"); // data-review-id 속성 제거
             reportType = "product";
@@ -125,7 +129,7 @@ function report() {
         if(reviewAuthorName === curentUserName){
             alert("본인 댓글은 신고할 수 없습니다.")
         }else{
-            $("#reportDetailModal").css("display", "flex");
+            reportModelON();
             $("#reportDetailModal .reportSubmitBtn").attr("data-review-id", reviewId) // data-review-id 속성 추가
                                                     .removeAttr("data-post-id"); // data-post-id 속성 제거
             reportType = "review";
@@ -134,7 +138,7 @@ function report() {
 
     //신고 취소 버튼
     $(".reportCancelBtn").on("click", function() {
-        $("#reportDetailModal").css("display", "none");
+        reportModelOFF();
         reportType = "";
     });
 
@@ -186,7 +190,7 @@ function report() {
                 }
             })
         }
-        $("#reportDetailModal").css("display", "none");
+        reportModelOFF();
         reportType = "";
     });
 
@@ -388,8 +392,8 @@ function deleteReviewBtn() {
 
         // 모달창 보이기
         $("#reportOverlay .modalMessage").text("리뷰를 삭제하시겠습니까?");
-        $("#reportOverlay").css("display", "flex");
-        
+        modalON();
+
         //기존에 달린 이벤트리스너 해제 후 재등록
 
         $(document).off("click", ".yesBtn").on("click",".yesBtn", function() {
@@ -434,6 +438,7 @@ function quantityBtn() {
     const $quantityDisplay = $('.quantityDisplay');
     const $quantityInput = $("#quantityInput");
     const $totalPriceDisplay = $('.totalPriceDisplay');
+    const maxQuantity = $(".quantityValue").text();
 
     const $basePriceElement = $('.price');
     const $basePrice = parseInt($basePriceElement.text().replace(/,/g, ''), 10);
@@ -456,6 +461,7 @@ function quantityBtn() {
     });
 
     $increaseBtn.on('click', () => {
+        if(quantity < maxQuantity)
         quantity++;
         updateTotalPrice();
     });
@@ -476,7 +482,7 @@ function deleteBtn(){
 
         // 모달창 보이기
         $("#reportOverlay .modalMessage").text("게시물을 정말 삭제하시겠습니까?");
-        $("#reportOverlay").css("display", "flex");
+        modalON();
 
         //기존에 달린 이벤트리스너 해제 후 재등록
         $(document).off("click", ".yesBtn").on("click",".yesBtn", function() {
@@ -509,3 +515,4 @@ function deleteBtn(){
 }
 
 //TODO: 바로 구매 버튼 : 구매 페이지를 만들어야 하나?
+

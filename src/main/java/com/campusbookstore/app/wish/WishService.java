@@ -65,28 +65,25 @@ public class WishService {
 
     //TODO: 장바구니 페이지
     String viewWish(Model model, Authentication auth) {
+        //유효성 검사
+        Optional<Member> memberObj = memberRepository.findByName(auth.getName());
+        //사용자 존재 여부
+        if(!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/wish", "DB에 없는 회원", String.class);
+        Member member = memberObj.get();
+
         List<Wish> wishs = wishRepository.findAllByMemberName(auth.getName());
         List<WishDTO> wishDTOs = new ArrayList<>();
         for(Wish wish : wishs) {
+            //post가 삭제된경우는 제외
+            if(wish.getPost().getStatus() == 0) continue;
+            //DTO생성
             WishDTO wishDTO = getWishDTO(wish);
             wishDTOs.add(wishDTO);
         }
 
-        //TODO: 포인트정보전송
-        Optional<Member> memberObj = memberRepository.findByName(auth.getName());
-        //가입정보를 못찾는경우
-        if(!memberObj.isPresent()) {
-            return ErrorService.send(
-                    HttpStatus.UNAUTHORIZED.value(),
-                    "/wish",
-                    "DB에 없는 회원",
-                    String.class
-            );
-        }
-        Member member = memberObj.get();
+        //포인트 정보 전달
         model.addAttribute("point", member.getPoint());
-
-
+        //DTO 전달
         model.addAttribute("wishs", wishDTOs);
         return "wish/wish";
     }

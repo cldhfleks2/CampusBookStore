@@ -20,13 +20,11 @@ public class WishController {
     String viewWish(Model model, Authentication auth) {
         return wishService.viewWish(model, auth);
     }
-
     //장바구니 추가 요청
     @PostMapping("/wishPlus")
     ResponseEntity<String> addWish(Long postId, Long quantity, Authentication auth) {
         return wishService.addWish(postId, quantity, auth);
     }
-
     @DeleteMapping("/wishDelete")
     ResponseEntity<String> deleteWish(Long wishId, Authentication auth) {
         return wishService.deleteWish(wishId, auth);

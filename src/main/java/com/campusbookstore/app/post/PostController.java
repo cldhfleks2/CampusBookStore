@@ -42,23 +42,23 @@ public class PostController {
     String searching(String keyword, Model model) {
         return postService.searching(keyword, model);
     }
+    //게시물 수정
     @PostMapping("/editPost")
     ResponseEntity<String> editPost (PostDTO postDTO, Authentication auth) throws Exception {
         return postService.editPost(postDTO, auth);
     }
-    
-    //TODO 게시물 삭제
+    //게시물 삭제
     @DeleteMapping("/deletePost")
     ResponseEntity<String> deletePost (PostDTO postDTO, Authentication auth) {
         return postService.deletePost(postDTO, auth);
     }
-
+    //게시물 신고
     @PostMapping("/reportPost")
     ResponseEntity<String> reportPost(Long postId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement,
         Boolean misinformation, String otherReason, Authentication auth) {
         return postService.reportPost(postId,  inappropriateContent, spamOrAds, copyrightInfringement, misinformation, otherReason, auth);
     }
-
+    //리뷰 신고
     @PostMapping("/reportReview")
     ResponseEntity<String> reportReview(Long reviewId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement,
                                       Boolean misinformation, String otherReason, Authentication auth) {

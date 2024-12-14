@@ -125,7 +125,7 @@ public class PostService {
                     String.class
             );
         }
-        //삭제된 게시물일때
+        //삭제된 게시물 일때 메인페이지로 리다이렉트
         if(postObj.get().getStatus() == 0){
             redirectAttributes.addFlashAttribute("alertMessage", "삭제된 게시물입니다.");
             return "redirect:/main";
@@ -277,32 +277,23 @@ public class PostService {
 
         return ResponseEntity.status(HttpStatus.OK.value()).body("책 정보 수정 성공");
     }
-
-    //TODO 게시물 삭제
+    //게시물 삭제
     @Transactional
     ResponseEntity<String> deletePost (PostDTO postDTO, Authentication auth) {
-        System.out.println("시작");
-        System.out.println(postDTO.getId());
         Optional<Post> postObj = postRepository.findById(postDTO.getId());
-        System.out.println("1");
         Optional<Member> memberObj = memberRepository.findByName(auth.getName());
         //유효성검사
         //원래 존재하던 게시물인지
         if(!postObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/deletePost", "존재 하지 않는 게시물을 수정할 수 없습니다.", ResponseEntity.class);
-        System.out.println("2");
         //사용자가 존재 하는지
         if(!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/deletePost", "사용자 정보가 존재하지 않습니다.", ResponseEntity.class);
-        System.out.println("3");
         //본인 게시물인지 - 이거하면 에러나서 안돼
 //        if(postDTO.getMember().getId() != memberObj.get().getId()) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/deletePost", "본인의 게시물만 삭제 할 수 있습니다.", ResponseEntity.class);
-
-        System.out.println("여기까지 와야 성공");
+        //게시물 DB 삭제
         postRepository.delete(postObj.get());
-        System.out.println("찐 성공");
         return ResponseEntity.status(HttpStatus.NO_CONTENT.value()).build();
     }
-
-    //TODO 게시물 신고
+    //게시물 신고
     ResponseEntity<String> reportPost(Long postId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement, Boolean misinformation, String otherReason, Authentication auth) {
         //유효성 검사
         //1. 게시물 존재 여부
@@ -332,9 +323,7 @@ public class PostService {
         reportPostRepository.save(reportPost);
         return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
     }
-
-
-    //TODO 리뷰 신고
+    //리뷰 신고
     ResponseEntity<String> reportReview(Long reviewId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement,
                                       Boolean misinformation, String otherReason, Authentication auth) {
         //유효성 검사
@@ -365,4 +354,6 @@ public class PostService {
         reportReviewRepository.save(reportReview);
         return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
     }
+
+
 }

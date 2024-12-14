@@ -647,6 +647,29 @@ hr {
 
 
 
+.remainingQuantity {
+    position: absolute;
+    right: 200px;
+    bottom: 340px;
+    background-color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.quantityLabel {
+    margin-right: 5px;
+}
+
+.quantityValue {
+    color: #4CAF50;
+}
+
 
 
 
