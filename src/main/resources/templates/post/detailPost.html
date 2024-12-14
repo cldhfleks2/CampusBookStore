@@ -37,7 +37,7 @@
                     </a>
                 </button>
                 <span class="likeCount" id="likeCount" th:text="${likeyCnt}" th:data-iamlikey="${iamlikey}">좋아요숫자</span>
-                <button class="reportBtn" id="productReportBtn" data-name="book">
+                <button class="reportBtn" id="productReportBtn" th:data-post-id="${post.id}" th:data-my-name="${#authentication.name}" th:data-post-author="${post.member.name}">
                     <a>
                         <svg class="icons"  xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
                             <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
@@ -140,7 +140,7 @@
                                     <button class="deleteReviewBtn" th:data-review-id="${review.id}" th:data-author-name="${review.author}" th:data-current-name="${#authentication.principal.name}">삭제</button>
                                 </a>
                             </div>
-                            <button class="reportBtn bg" id="reviewReportBtn" data-name="review">
+                            <button class="reportBtn bg" id="reviewReportBtn" th:data-review-id="${review.id}" th:data-review-author="${review.author}" th:data-my-name="${#authentication.name}">
                                 <a>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="none">
                                         <path d="M18 16V9c0-4.418-3.582-8-8-8S2 4.582 2 9v7l-1 2v1h18v-1l-1-2z" fill="red"/>
@@ -164,6 +164,36 @@
             <div class="modalActions">
                 <button class="modalBtn yesBtn">예</button>
                 <button class="modalBtn noBtn">아니오</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 신고 모달 -->
+    <div class="reportDetailModal" id="reportDetailModal" >
+        <div class="reportDetailContent">
+            <h2 style="text-align: center;">신고 사유 선택</h2>
+            <div class="reportReasons">
+                <label>
+                    <input type="checkbox" id="inappropriateContent">
+                    부적절한 내용
+                </label>
+                <label>
+                    <input type="checkbox" id="spamOrAds">
+                    스팸 또는 광고
+                </label>
+                <label>
+                    <input type="checkbox" id="copyrightInfringement">
+                    저작권 침해
+                </label>
+                <label>
+                    <input type="checkbox" id="misinformation">
+                    허위 정보
+                </label>
+                <textarea class="otherReasonInput" placeholder="기타 신고 사유를 입력해주세요 (선택사항)"></textarea>
+            </div>
+            <div class="reportModalActions">
+                <button class="reportSubmitBtn" th:data-post-id="${post.id}">제출</button>
+                <button class="reportCancelBtn">취소</button>
             </div>
         </div>
     </div>

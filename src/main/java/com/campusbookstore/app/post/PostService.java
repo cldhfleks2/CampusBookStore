@@ -10,6 +10,10 @@ import com.campusbookstore.app.likey.LikeyRepository;
 import com.campusbookstore.app.member.AccountDetail;
 import com.campusbookstore.app.member.Member;
 import com.campusbookstore.app.member.MemberRepository;
+import com.campusbookstore.app.report.ReportPost;
+import com.campusbookstore.app.report.ReportPostRepository;
+import com.campusbookstore.app.report.ReportReview;
+import com.campusbookstore.app.report.ReportReviewRepository;
 import com.campusbookstore.app.review.Review;
 import com.campusbookstore.app.review.ReviewDTO;
 import com.campusbookstore.app.review.ReviewRepository;
@@ -23,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,6 +47,8 @@ public class PostService {
     private final LikeyRepository likeyRepository;
     private final ReviewService reviewService;
     private final ImageService imageService;
+    private final ReportPostRepository reportPostRepository;
+    private final ReportReviewRepository reportReviewRepository;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -295,5 +302,67 @@ public class PostService {
         return ResponseEntity.status(HttpStatus.NO_CONTENT.value()).build();
     }
 
+    //TODO 게시물 신고
+    ResponseEntity<String> reportPost(Long postId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement, Boolean misinformation, String otherReason, Authentication auth) {
+        //유효성 검사
+        //1. 게시물 존재 여부
+        Optional<Post> postObj = postRepository.findById(postId);
+        if(!postObj.isPresent()) ErrorService.send(HttpStatus.NOT_FOUND.value(), "/reportPost", "게시물이 존재 하지 않습니다.", ResponseEntity.class);
+        //2. 사용자 존재 여부
+        Optional<Member> memberObj = memberRepository.findByName(auth.getName());
+        if(!memberObj.isPresent()) ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/reportPost", "사용자 정보가 존재하지 않습니다.", ResponseEntity.class);
+        Post post = postObj.get();
+        Member member = memberObj.get();
+        List<ReportPost> reportPostObj = reportPostRepository.findByMemberNameAndPostId(auth.getName(), postId);
+        //3. 이미 신고한 게시물의 경우 제외 : DB에존재하고 status=1인것.
+        if(!reportPostObj.isEmpty() && reportPostObj.get(0).getStatus() == 1)
+            return ErrorService.send(HttpStatus.ALREADY_REPORTED.value(), "/reportPost", "이미 신고한 게시물 입니다.", ResponseEntity.class);
 
+        //객체 생성
+        ReportPost reportPost = new ReportPost();
+        reportPost.setInappropriateContent(inappropriateContent);
+        reportPost.setSpamOrAds(spamOrAds);
+        reportPost.setCopyrightInfringement(copyrightInfringement);
+        reportPost.setMisinformation(misinformation);
+        reportPost.setOtherReason(otherReason);
+        reportPost.setPost(post);
+        reportPost.setMember(member);
+
+        //DB저장
+        reportPostRepository.save(reportPost);
+        return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+    }
+
+
+    //TODO 리뷰 신고
+    ResponseEntity<String> reportReview(Long reviewId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement,
+                                      Boolean misinformation, String otherReason, Authentication auth) {
+        //유효성 검사
+        //1. 게시물 존재 여부
+        Optional<Review> reviewObj = reviewRepository.findById(reviewId);
+        if(!reviewObj.isPresent()) ErrorService.send(HttpStatus.NOT_FOUND.value(), "/reportReview", "리뷰가 존재 하지 않습니다.", ResponseEntity.class);
+        //2. 사용자 존재 여부
+        Optional<Member> memberObj = memberRepository.findByName(auth.getName());
+        if(!memberObj.isPresent()) ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/reportReview", "사용자 정보가 존재하지 않습니다.", ResponseEntity.class);
+        Review review = reviewObj.get();
+        Member member = memberObj.get();
+        List<ReportReview> reportReviewObj = reportReviewRepository.findByMemberNameAndReviewId(auth.getName(), reviewId);
+        //3. 이미 신고한 게시물의 경우 제외 : DB에존재하고 status=1인것.
+        if(!reportReviewObj.isEmpty() && reportReviewObj.get(0).getStatus() == 1)
+            return ErrorService.send(HttpStatus.ALREADY_REPORTED.value(), "/reportReview", "이미 신고한 리뷰 입니다.", ResponseEntity.class);
+
+        //객체 생성
+        ReportReview reportReview = new ReportReview();
+        reportReview.setInappropriateContent(inappropriateContent);
+        reportReview.setSpamOrAds(spamOrAds);
+        reportReview.setCopyrightInfringement(copyrightInfringement);
+        reportReview.setMisinformation(misinformation);
+        reportReview.setOtherReason(otherReason);
+        reportReview.setReview(review);
+        reportReview.setMember(member);
+
+        //DB저장
+        reportReviewRepository.save(reportReview);
+        return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+    }
 }

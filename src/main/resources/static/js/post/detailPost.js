@@ -102,21 +102,94 @@ TODO: 신고
  게시물 신고
 */
 function report() {
-    $(document).on("click", "#productReportBtn, #reviewReportBtn", function() {
-        modalON();
-        $("#reportOverlay .modalMessage").text("신고하시겠습니까?");
-        $("#reportOverlay").css("display", "flex");
+    var reportType = "";
+    //게시물 신고
+    $(document).on("click", "#productReportBtn", function() {
+        var postAuthorName = $(this).data("post-author");
+        var curentUserName = $(this).data("my-name");
+        var postId = $(this).data("post-id");
+        if(postAuthorName === curentUserName){
+            alert("본인 게시물은 신고할 수 없습니다.")
+        }else{
+            $("#reportDetailModal").css("display", "flex");
+            $("#reportDetailModal .reportSubmitBtn").attr("data-post-id", postId) // data-post-id 속성 추가
+                                                    .removeAttr("data-review-id"); // data-review-id 속성 제거
+            reportType = "product";
+        }
     });
-    $(".noBtn").off("click").on("click", function() {
-        modalOFF();
+    //댓글 신고
+    $(document).on("click", "#reviewReportBtn", function() {
+        var reviewAuthorName = $(this).data("review-author");
+        var curentUserName = $(this).data("my-name");
+        var reviewId = $(this).data("review-id");
+        if(reviewAuthorName === curentUserName){
+            alert("본인 댓글은 신고할 수 없습니다.")
+        }else{
+            $("#reportDetailModal").css("display", "flex");
+            $("#reportDetailModal .reportSubmitBtn").attr("data-review-id", reviewId) // data-review-id 속성 추가
+                                                    .removeAttr("data-post-id"); // data-post-id 속성 제거
+            reportType = "review";
+        }
     });
 
-    //예 버튼 클릭
-    $(document).off("click", ".yesBtn").on("click",".yesBtn", function() {
-        modalOFF();
-        alert("신고가 완료되었습니다.");
-        report($(this).data("name"));
+    //신고 취소 버튼
+    $(".reportCancelBtn").on("click", function() {
+        $("#reportDetailModal").css("display", "none");
+        reportType = "";
     });
+
+    //신고 제출 버튼
+    $(".reportSubmitBtn").on("click", function() {
+        //게시물 신고
+        if(reportType === "product"){
+            $.ajax({
+                url: "/reportPost",
+                method: "post",
+                data: {
+                    postId: $(this).data("post-id"),
+                    inappropriateContent: $("#inappropriateContent").is(":checked"),
+                    spamOrAds: $("#spamOrAds").is(":checked"),
+                    copyrightInfringement: $("#copyrightInfringement").is(":checked"),
+                    misinformation: $("#misinformation").is(":checked"),
+                    otherReason: $(".otherReasonInput").val().trim()
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log("reportPost-ajax-complete")
+                },
+                fail: function (err) {
+                    console.log(err);
+                    console.log("reportPost-ajax-failed")
+                }
+            })
+
+        //리뷰 신고
+        }else if(reportType === "review"){
+            $.ajax({
+                url: "/reportReview",
+                method: "post",
+                data: {
+                    reviewId: $(this).data("review-id"),
+                    inappropriateContent: $("#inappropriateContent").is(":checked"),
+                    spamOrAds: $("#spamOrAds").is(":checked"),
+                    copyrightInfringement: $("#copyrightInfringement").is(":checked"),
+                    misinformation: $("#misinformation").is(":checked"),
+                    otherReason: $(".otherReasonInput").val().trim()
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log("reportReview-ajax-complete")
+                },
+                fail: function (err) {
+                    console.log(err);
+                    console.log("reportReview-ajax-failed")
+                }
+            })
+        }
+        $("#reportDetailModal").css("display", "none");
+        reportType = "";
+    });
+
 }
 
 //게시물번호로 좋아요 갯수를 가져와서 갱신
