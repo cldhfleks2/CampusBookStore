@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시물 신고</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/admin/report.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="adminSideBar">
+    <div class="siteLogo">관리자 페이지</div>
+    <button class="adminLogoutBtn" onclick="window.location.href='/logout'">로그아웃</button>
+    <hr>
+    <div class="navMenu">
+        <div class="menuItem active">
+            <span>📋</span> 게시물 삭제
+        </div>
+        <div class="menuItem">
+            <span>💬</span> 리뷰 삭제
+        </div>
+    </div>
+</div>
+
+<div class="report-container">
+    <table class="report-table">
+        <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAllRows" class="select-all-checkbox"></th>
+            <th>신고 ID</th>
+            <th>신고 속성</th>
+            <th>상세 내용</th>
+            <th>상태</th>
+        </tr>
+        </thead>
+        <tbody id="reportTableBody">
+        <th:block th:each="report : ${reportPosts}">
+            <tr>
+                <td><input type="checkbox" class="row-checkbox" th:attr="data-id=${report.id}"></td>
+                <td th:text="${report.id}"></td>
+                <td>
+                    <div class="report-attributes">
+                        <label>
+                            <input type="checkbox" th:checked="${report.inappropriateContent}" disabled>
+                            부적절한 내용
+                        </label>
+                        <label>
+                            <input type="checkbox" th:checked="${report.spamOrAds}" disabled>
+                            스팸 또는 광고
+                        </label>
+                        <label>
+                            <input type="checkbox" th:checked="${report.copyrightInfringement}" disabled>
+                            저작권 침해
+                        </label>
+                        <label>
+                            <input type="checkbox" th:checked="${report.misinformation}" disabled>
+                            허위 정보
+                        </label>
+                    </div>
+                </td>
+                <td th:text="${report.otherReason ?: '없음'}"></td>
+                <td>
+                    <span th:class="${report.status == 1 ? 'status-active' : 'status-inactive'}" th:text="${report.status == 1 ? '활성' : '비활성'}"></span>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+    <div class="action-buttons">
+        <button class="accept-btn">선택 무시</button>
+        <button class="reject-btn">선택 삭제</button>
+    </div>
+</div>
+<script>
+    window.onload = function() {
+        const alertMessage = "[[${alertMessage}]]";
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    };
+</script>
+<script src="/js/admin/report.js"></script>
+</body>
+</html>
