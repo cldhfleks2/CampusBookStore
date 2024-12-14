@@ -24,6 +24,8 @@ public class ErrorService {
      * @return           String.class: error페이지, ResponseEntity.class: JSON에러메시지
      */
     public static <T>T send(int status, String path, String message, Class<T> returnType) {
+        //에러 내용을 콘솔에도 추가
+        System.out.println("에러발생 >>>   " + path + "   ,  메시지 >>>   " + message + "   returnType >>> " + returnType);
         if(returnType.equals(String.class)){
             Map<String, Object> errorInfo = new HashMap<>();
             errorInfo.put("status", status);
