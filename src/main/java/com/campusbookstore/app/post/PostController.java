@@ -26,9 +26,10 @@ public class PostController {
     String viewEdit (@PathVariable Long postId, Authentication auth, Model model) {
         return postService.viewEditPost(postId, auth, model);
     }
+    //실제 검색 기능
     @GetMapping("/search")
-    String viewSearch () {
-        return postService.viewSearch();
+    String viewSearch (String keyword, Integer pageIdx, Model model) {
+        return postService.viewSearch(keyword, pageIdx, model);
     }
 
     //책 등록
@@ -36,12 +37,7 @@ public class PostController {
     String addPost (PostDTO postDTO, Authentication auth, Model model) throws Exception {
         return postService.addPost(postDTO, auth);
     }
-    //헤더의 검색바 작성시 호출
-    //TODO 이것을 search view랑 합쳐보자.
-    @PostMapping("/search")
-    String searching(String keyword, Model model) {
-        return postService.searching(keyword, model);
-    }
+
     //게시물 수정
     @PostMapping("/editPost")
     ResponseEntity<String> editPost (PostDTO postDTO, Authentication auth) throws Exception {

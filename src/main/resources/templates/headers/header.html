@@ -8,14 +8,14 @@
 <body>
 <!-- Header -->
 <header class="header" th:fragment="header">
-    <a href="/" style="">
+    <a href="/main" style="">
         <div class="logo">CampusBookStore</div>
     </a>
     <div class="headerNav">
         <div class="headerRight">
             <div class="searchContainer">
 <!--                검색페이지로-->
-                <form action="/search" method="post">
+                <form action="/search" method="get">
                     <input type="text" name="keyword" class="searchInput" placeholder="책 제목, 저자 검색" >
                     <button class="searchButton" type="submit">
                         <div class="searchIcon">🔍</div>

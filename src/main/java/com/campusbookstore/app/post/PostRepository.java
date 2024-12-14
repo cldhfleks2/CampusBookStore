@@ -10,7 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findByTitleContainingAndAuthor(String titleKeyword, String authorKeyword);
+
+    @Query("SELECT p FROM Post p WHERE p.status = 1 AND (p.title LIKE %:keyword% OR p.author LIKE %:keyword%)")
+    Page<Post> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+
 
 //    @Query("SELECT r FROM Review r WHERE r.status = 1")
 //    List<Review> findAllByStatus();

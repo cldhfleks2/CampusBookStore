@@ -79,6 +79,12 @@
     justify-content: center;
 }
 
+.productImage img{
+    width: 100%;
+    height: auto;
+    max-width: 248px;
+}
+
 .tp20{
     margin-top: 20px;
 }

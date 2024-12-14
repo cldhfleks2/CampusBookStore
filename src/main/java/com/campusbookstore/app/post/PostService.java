@@ -22,6 +22,8 @@ import com.campusbookstore.app.wish.Wish;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -110,21 +112,15 @@ public class PostService {
 
         return post;
     }
-
     String viewAddPost () {
         return "post/addPost";
     }
+    @Transactional
     String viewDetailPost (Model model, Authentication auth, Long postId, RedirectAttributes redirectAttributes) {
         Optional<Post> postObj = postRepository.findById(postId);
         //없는 postId일때
-        if(!postObj.isPresent()) {
-            return ErrorService.send(
-                    HttpStatus.NOT_FOUND.value(),
-                    "/detailPost/{postId}",
-                    "DB에 없는 게시물",
-                    String.class
-            );
-        }
+        if(!postObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/detailPost/{postId}", "DB에 없는 게시물", String.class);
+
         //삭제된 게시물 일때 메인페이지로 리다이렉트
         if(postObj.get().getStatus() == 0){
             redirectAttributes.addFlashAttribute("alertMessage", "삭제된 게시물입니다.");
@@ -184,7 +180,23 @@ public class PostService {
 
         return "post/editPost";
     }
-    String viewSearch () {
+    @Transactional
+    String viewSearch (String keyword, Integer pageIdx, Model model) {
+        if(keyword == null) keyword = ""; //검색어 없을때
+        if(pageIdx == null) pageIdx = 1;
+
+        //제목과 책 저자로 검색 : 한페이지에 최대 5개
+        Page<Post> searchPosts = postRepository.findByKeyword(keyword, PageRequest.of(pageIdx - 1, 5));
+        List<Post> posts = new ArrayList<>();
+        //수량 남은것만 보여줄거임
+        for(Post post : searchPosts.getContent()) 
+            if(post.getQuantity() > 0) posts.add(post);
+        model.addAttribute("totalPages", searchPosts.getTotalPages());
+        model.addAttribute("currentPage", pageIdx);
+        model.addAttribute("posts", posts);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("postCnt", posts.size());
+
         return "search/search";
     }
 
@@ -246,17 +258,6 @@ public class PostService {
         savePostAndImages(postDTO, member);
 
         return "redirect:/main";
-    }
-    //헤더의 검색 기능
-    @Transactional
-    String searching(String keyword, Model model) {
-        //제목과 책 저자로 검색
-        List<Post> results = postRepository.findByTitleContainingAndAuthor(keyword, keyword);
-
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("posts", results);
-        model.addAttribute("postCnt", results.size());
-        return "redirect:/search";
     }
     //책 수정 내용 DB에 수정
     @Transactional

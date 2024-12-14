@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>검색 결과</title>
+    <title>검색 결과 페이지</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/search/search.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -14,46 +14,56 @@
 
 <div class="realTimeSearch">
     <div class="searchWrapper">
-        <input
-                type="text"
-                class="searchInput"
-                placeholder="책 제목, 저자를 검색하세요"
-                id="liveSearchInput"
-        >
+        <input type="text" class="searchInput" placeholder="책 제목, 저자를 검색하세요" id="liveSearchInput" th:value="${keyword}">
         <button class="searchBtn">검색</button>
     </div>
 </div>
 <div class="container">
-    <div class="searchSummary" th:if="${postCnt}" style="display: flex">
+    <div class="searchSummary" id="searchSummary" style="display: flex">
         "<p class="searchSummaryText" th:text="${keyword}">키워드</p>"
         검색 결과 총&nbsp;<p class="searchSummaryText" th:text="${postCnt}">갯수</p>개
     </div>
     <div class="sortSection">
         <select class="sortSelect">
-            <option>정확도순</option>
+            <option>제목 순</option>
+            <option>작가 순</option>
             <option>낮은 가격순</option>
-            <option>높은 가격순</option>
             <option>최신 등록순</option>
         </select>
     </div>
-    <div class="searchResultsGrid">
-
-        <div class="bookCard" th:each="post : ${posts}">
-            <div class="bookImage"></div>
-            <div class="bookDetails">
-                <h3 class="bookTitle">자바의 정석</h3>
-                <p class="bookAuthor">남궁성</p>
-                <div class="bookPriceSection">
-                    <span class="bookPrice">10,000원</span>
-                    <button class="wishlistButton">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="wishlistIcon">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        </svg>
-                    </button>
+    <div id="searchSection">
+        <div class="searchResultsGrid">
+            <div class="bookCard" th:each="post : ${posts}">
+                <img class="bookImage" th:src="@{/uploadImage/} + ${post.images[0].imagePath}">
+                <div class="bookDetails">
+                    <h3 class="bookTitle" th:text="${post.title}">자바의 정석</h3>
+                    <p class="bookAuthor" th:text="${post.author}">남궁성</p>
+                    <div class="bookPriceSection">
+                        <span class="bookPrice" th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')} + ' 원'">10,000원</span>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <div class="pagination" th:if="${postCnt > 0}" th:data-total-page="${totalPages}">
+            <button class="pagination-prev" th:if="${currentPage > 1}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <div class="pagination-numbers">
+                <th:block th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+                    <button class="pagination-number"
+                            th:classappend="${pageNum == currentPage ? 'active' : ''}"
+                            th:text="${pageNum}"
+                            th:onclick="|searchPage(${pageNum})|">페이지 번호</button>
+                </th:block>
+            </div>
+            <button class="pagination-next" th:if="${currentPage < totalPages}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
     </div>
 </div>
 
