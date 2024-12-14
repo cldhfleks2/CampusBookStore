@@ -12,13 +12,13 @@ function quantityBtn(){
         const $increaseBtn = $wishItem.find('.quantityIncrease');
         const $quantityDisplay = $wishItem.find('.quantityDisplay');
         const $quantityInput = $wishItem.find('.quantityInput');
+        let MAXquantity = $wishItem.find(".maxQuantity").text(); //최댓값은 wish.post.quantity에서 가져옴
 
         // 가격 추출 (콤마 제거 후 숫자로 변환)
         const $bookPriceElement = $wishItem.find('.bookPrice');
         const basePrice = parseInt($bookPriceElement.text().replace(/,/g, ''), 10);
 
         let quantity = parseInt($quantityDisplay.text(), 10);
-        let MAXquantity = quantity; //초깃값이 즉 최댓값인상태임
 
         const updateItemPrice = () => {
             const totalPrice = basePrice * quantity;

@@ -60,6 +60,7 @@
 }
 .priceSection {
     margin-bottom: 1rem;
+    display: flex;
 }
 .price {
     font-size: 1.875rem;
@@ -648,7 +649,6 @@ hr {
 
 
 .remainingQuantity {
-    position: absolute;
     right: 200px;
     bottom: 340px;
     background-color: #fff;
@@ -660,6 +660,7 @@ hr {
     color: #333;
     display: flex;
     align-items: center;
+    margin-left: 30px;
 }
 
 .quantityLabel {
@@ -670,7 +671,9 @@ hr {
     color: #4CAF50;
 }
 
-
+.wishBtn{
+    max-width: 185px;
+}
 
 
 

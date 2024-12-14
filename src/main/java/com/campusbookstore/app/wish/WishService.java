@@ -63,7 +63,7 @@ public class WishService {
         return wish;
     }
 
-    //TODO: 장바구니 페이지
+    //장바구니 페이지 보여주기
     String viewWish(Model model, Authentication auth) {
         //유효성 검사
         Optional<Member> memberObj = memberRepository.findByName(auth.getName());
@@ -89,7 +89,6 @@ public class WishService {
     }
 
     //장바구니 추가 요청
-    //TODO: 요청온 갯수만큼 post에서 quantity빼서 계산 해서 다시 저장
     @Transactional
     ResponseEntity<String> addWish(Long postId, Long quantity, Authentication auth) {
         Optional<Member> memberObj = memberRepository.findByName(auth.getName());
@@ -112,17 +111,15 @@ public class WishService {
         return ResponseEntity.status(HttpStatus.CREATED).body("장바구니 추가 완료");
     }
 
-    //TODO : wishId와 auth.name으로 맞는지 확인해서 wish객체 delete
+    //장바구니 항목 삭제 버튼
     @Transactional
     ResponseEntity<String> deleteWish(Long wishId, Authentication auth) {
-        System.out.println();
-        System.out.println("widhId = " + wishId);
-        System.out.println();
-        //장바구니 항목이 존재하는지
+        //유효성 검사
         Optional<Wish> wishObj = wishRepository.findById(wishId);
+        //1. 장바구니 항목이 존재하는지
         if(!wishObj.isPresent()) return ErrorService.send(HttpStatus.NOT_FOUND.value(), "/wishDelete", "장바구니 목록이 없습니다.", ResponseEntity.class);
         Wish wish = wishObj.get();
-        //사용자가 일치하는지
+        //2. 사용자 본인이 맞는지
         if(!wish.getMember().getName().equals(auth.getName())) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/wishDelete" ,"본인이 아닙니다.", ResponseEntity.class);
 
         //삭제 진행
