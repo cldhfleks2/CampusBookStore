@@ -514,5 +514,4 @@ function deleteBtn(){
     })
 }
 
-//TODO: 바로 구매 버튼 : 구매 페이지로 이동
 

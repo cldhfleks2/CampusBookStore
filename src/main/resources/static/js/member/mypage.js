@@ -8,7 +8,10 @@ $(document).ready(function() {
     personalInfoFormSubmitBtn();
 
     //판매내역란 : 페이지네이션적용
-    pagination();
+    sellPagination();
+
+    //주문내역란 : 페이지네이션
+    purchasePagination();
 });
 
 //클릭한 id를 가져와서 그것만 display=block;
@@ -32,7 +35,6 @@ function sidebarMenu () {
 
         // 클릭된 메뉴의 id값 추출
         var targetContentId = $(this).data('content');
-        // activeMenuToggle(targetContentId)
 
         // 클릭된 메뉴로 화면을 변경
         displayToggle(targetContentId);
@@ -159,7 +161,7 @@ function personalInfoFormSubmitBtn(){
     })
 }
 
-function pagination(){
+function sellPagination(){
     $(document).on('click',"#sellPrevPage", function() {
         let sellCurrentPage = $("#sellPageInfo").data("sell-current-page");
         const sellTotalPages = $("#sellPageInfo").data("sell-total-page");
@@ -207,5 +209,56 @@ function pagination(){
             })
         }
     });
+
 }
 
+function purchasePagination(){
+    $(document).on('click',"#purchasePrevPage", function() {
+        let purchaseCurrentPage = $("#purchasePageInfo").data("purchase-current-page");
+        const purchaseTotalPages = $("#purchasePageInfo").data("purchase-total-page");
+
+        if (purchaseCurrentPage > 1) {
+            purchaseCurrentPage--;
+
+            // 새 페이지 정보 갱신
+            $("#purchasePageInfo").data("purchase-current-page", purchaseCurrentPage);
+            $("#purchasePageInfo").text(purchaseCurrentPage + ' / ' + purchaseTotalPages);
+
+            $.ajax({
+                url: "/mypage",
+                method: "get",
+                data: {pageIdx: purchaseCurrentPage},
+                success: function (data){
+                    var data = $.parseHTML(data);
+                    var dataHtml = $("<div>").append(data);
+                    $("#purchaseContent").replaceWith(dataHtml.find("#purchaseContent"));
+                }
+            })
+        }
+    });
+
+    $(document).on('click', "#purchaseNextPage", function() {
+        let purchaseCurrentPage = $("#purchasePageInfo").data("purchase-current-page");
+        const purchaseTotalPages = $("#purchasePageInfo").data("purchase-total-page");
+
+        if (purchaseCurrentPage < purchaseTotalPages) {
+            purchaseCurrentPage++;
+
+            // 새 페이지 정보 갱신
+            $("#purchasePageInfo").data("sell-current-page", purchaseCurrentPage);
+            $("#purchasePageInfo").text(purchaseCurrentPage + ' / ' + purchaseTotalPages);
+
+            $.ajax({
+                url: "/mypage",
+                method: "get",
+                data: {pageIdx: purchaseCurrentPage},
+                success: function (data){
+                    var data = $.parseHTML(data);
+                    var dataHtml = $("<div>").append(data);
+                    $("#purchaseContent").replaceWith(dataHtml.find("#purchaseContent"));
+                }
+            })
+        }
+    });
+
+}

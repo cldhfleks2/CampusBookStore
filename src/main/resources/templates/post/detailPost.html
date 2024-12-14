@@ -95,7 +95,7 @@
                     <button class="editBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name != #authentication.name}" th:style="${post.member.name != #authentication.name ? 'display: none;' : 'display: inline-block;'}">수정</button>
                     <button class="removeBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name != #authentication.name}" th:style="${post.member.name != #authentication.name ? 'display: none;' : 'display: inline-block;'}">삭제</button>
                     <button class="wishBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name == #authentication.name}" th:style="${post.member.name == #authentication.name ? 'display: none;' : 'display: inline-block;'}">장바구니 담기</button>
-                    <!--                    <button class="buyBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name == #authentication.name}" th:style="${post.member.name == #authentication.name ? 'display: none;' : 'display: inline-block;'}">바로 구매</button>-->
+                    <!--  <button class="buyBtn" th:data-post-id="${post.id}" th:disabled="${post.member.name == #authentication.name}" th:style="${post.member.name == #authentication.name ? 'display: none;' : 'display: inline-block;'}">바로 구매</button>-->
                 </div>
             </div>
         </div>

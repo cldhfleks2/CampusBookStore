@@ -19,9 +19,8 @@
         <div class="sidebarMenu">
             <a href="#" data-content="personalInfo">개인정보 수정</a>
             <a href="#" data-content="sellContent">판매 내역</a>
-            <a href="#" data-content="buyContent">구매 내역</a>
+            <a href="#" data-content="purchaseContent">주문 내역</a>
             <a href="#" >찜한 상품</a>
-            <a href="#" >포인트 현황</a>
         </div>
     </div>
 
@@ -123,9 +122,10 @@
                         </div>
                         <div class="productDetails">
                             <h3 th:text="${post.title}" style="margin-bottom: 20px">책이름</h3>
-                            저자: <p th:text="${post.author}" style="margin-bottom: 10px">작성자</p>
-                            판매 가격: <p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(post.price), 0, 'COMMA')} + ' 원'" style="color: blue;margin-bottom: 10px;">가격+원</p>
-                            판매 날짜: <p th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 10px">작성 날짜</p>
+                            <span style="font-weight: bold">저자 </span><p th:text="${post.author}" style="margin-bottom: 10px">작성자</p>
+                            <span style="font-weight: bold">수량 </span><p th:text="${post.quantity}" style="margin-bottom: 10px"></p>
+                            <span style="font-weight: bold">판매 가격 </span><p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(post.price), 0, 'COMMA')} + ' 원'" style="color: blue;margin-bottom: 10px;">가격+원</p>
+                            <span style="font-weight: bold">등록 날짜 </span><p th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 30px">작성 날짜</p>
                             <p class="productDescription" th:text="${post.content}">책 설명</p>
                         </div>
                     </div>
@@ -137,39 +137,48 @@
                     <button id="sellNextPage" class="pagination-btn">다음 &gt;</button>
                 </div>
             </div>
-
         </section>
     </div>
 
-<!--    구매내역 컨테이너-->
-    <div id="buyContent" class="content">
+<!--    주문내역 컨테이너-->
+    <div id="purchaseContent" class="content">
         <section>
-            <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">구매 내역</h2>
+            <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">주문 내역</h2>
             <div class="productListContainer">
                 <div class="productList">
-                    <div class="productItem">
+                    <div class="productItem" th:each="purchase : ${purchases}">
                         <div class="productImage">
-<!--                            <img th:src="@{/uploadImage/} + ${post.images[0].imagePath}" alt="책 표지">-->
+                            <img th:src="@{/uploadImage/} + ${purchase.post.images[0].imagePath}" alt="책 표지">
                         </div>
                         <div class="productDetails">
-                            <h3>데이터 사이언스 입문</h3>
-                            <p>저자: 이데이터</p>
-                            <p>구매 가격: 20,000원</p>
-                            <p>구매 날짜: 2024-01-20</p>
-                            <p class="productDescription">데이터 분석의 기초를 배우는 초급자용 책</p>
+                            <h3 th:text="${purchase.post.title}" style="margin-bottom: 20px">책이름</h3>
+                            <span style="font-weight: bold">저자 </span><p th:text="${purchase.post.author}" style="margin-bottom: 10px">작성자</p>
+                            <span style="font-weight: bold">개당 판매 가격 </span><p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(purchase.post.price), 0, 'COMMA')} + ' 원'" style="margin-bottom: 10px"></p>
+                            <span style="font-weight: bold">주문 수량 </span><p th:text="${purchase.quantity} + ' 개'" style="color: blue;margin-bottom: 10px;">0개</p>
+                            <span style="font-weight: bold">주문 날짜 </span><p th:text="${#temporals.format(purchase.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 30px">작성 날짜</p>
+                            <p class="productDescription" th:text="${purchase.post.content}">책 설명</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="pagination" th:if="${totalPages != 0}">
-                <button id="prevPage" class="pagination-btn">&lt; 이전</button>
-                <span id="pageInfo" th:text="${currentPage} + ' / ' + ${totalPages}"
-                      th:data-current-page="${currentPage}" th:data-total-page="${totalPages}">1 / 1</span>
-                <button id="nextPage" class="pagination-btn">다음 &gt;</button>
+                <div class="pagination" th:if="${purchaseTotalPages != 0}">
+                    <button id="purchasePrevPage" class="pagination-btn">&lt; 이전</button>
+                    <span id="purchasePageInfo" th:text="${purchaseCurrentPage} + ' / ' + ${purchaseTotalPages}"
+                          th:data-purchase-current-page="${purchaseCurrentPage}" th:data-purchase-total-page="${purchaseTotalPages}">1 / 1</span>
+                    <button id="purchaseNextPage" class="pagination-btn">다음 &gt;</button>
+                </div>
             </div>
         </section>
     </div>
+
+    <div id="likeyContent" class="content">
+        <section>
+            <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">찜한 상품</h2>
+            <div>
+
+            </div>
+        </section>
+    </div>
+
 </div>
 
 <div th:replace="~{ headers/footer::footer }"></div>

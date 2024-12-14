@@ -72,7 +72,7 @@
         <div class="pointInfo">
             현재 보유 포인트: &nbsp;<span class="currentPoint" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(point), 0, 'COMMA')} ">0</span>P
             <br>
-            구매 후 남는 포인트: &nbsp;<span class="remainPoint" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(point), 0, 'COMMA')} ">0</span>P
+            주문 후 남는 포인트: &nbsp;<span class="remainPoint" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(point), 0, 'COMMA')} ">0</span>P
         </div>
     </div>
 </div>

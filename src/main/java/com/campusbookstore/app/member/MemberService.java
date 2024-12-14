@@ -4,6 +4,9 @@ import com.campusbookstore.app.error.ErrorService;
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostRepository;
 import com.campusbookstore.app.post.PostService;
+import com.campusbookstore.app.purchase.Purchase;
+import com.campusbookstore.app.purchase.PurchaseRepository;
+import com.campusbookstore.app.purchase.PurchaseService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +30,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final PostRepository postRepository;
-    private final PostService postService;
+    private final PurchaseRepository purchaseRepository;
 
     //1. Entity -> DTO
     public MemberDTO getMemberDTO(Member member) {
@@ -93,6 +96,7 @@ public class MemberService {
                     String.class
             );
         }
+        //유저 정보 전달
         Long memberId = member.get().getId(); //현재 사용자의 id
         MemberDTO memberDTO = getMemberDTO(member.get());
         memberDTO.setId(null); //필요없는 값은 가림
@@ -101,11 +105,18 @@ public class MemberService {
         //pagination적용
         if(pageIdx == null) { pageIdx = 1; }
 
+        //판매 내역 전달
         Page<Post> posts = postRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
         model.addAttribute("sellTotalPages", posts.getTotalPages());
         model.addAttribute("sellCurrentPage", pageIdx);
         model.addAttribute("posts", posts.getContent());
 
+        //주문 내역 전달
+        Page<Purchase> purchases = purchaseRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
+        System.out.println( "1111111111=      " + purchases.getContent().size());
+        model.addAttribute("purchaseTotalPages", purchases.getTotalPages());
+        model.addAttribute("purchaseCurrentPage", pageIdx);
+        model.addAttribute("purchases", purchases.getContent());
         return "member/myPage";
     }
     String viewLike(){
