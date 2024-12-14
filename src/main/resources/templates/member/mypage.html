@@ -20,7 +20,7 @@
             <a href="#" data-content="personalInfo">개인정보 수정</a>
             <a href="#" data-content="sellContent">판매 내역</a>
             <a href="#" data-content="purchaseContent">주문 내역</a>
-            <a href="#" >찜한 상품</a>
+            <a href="#" data-content="likeyContent">찜한 상품</a>
         </div>
     </div>
 
@@ -169,12 +169,32 @@
             </div>
         </section>
     </div>
-
+<!--찜한 내역 뷰-->
     <div id="likeyContent" class="content">
         <section>
             <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">찜한 상품</h2>
-            <div>
-
+            <div class="productListContainer">
+                <div class="productList">
+                    <div class="productItem" th:each="likey : ${likeys}">
+                        <div class="productImage">
+                            <img th:src="@{/uploadImage/} + ${likey.post.images[0].imagePath}" alt="책 표지">
+                        </div>
+                        <div class="productDetails">
+                            <h3 th:text="${likey.post.title}" style="margin-bottom: 20px">책이름</h3>
+                            <span style="font-weight: bold">저자 </span><p th:text="${likey.post.author}" style="margin-bottom: 10px">작성자</p>
+                            <span style="font-weight: bold">남은 수량 </span><p th:text="${likey.post.quantity}" style="margin-bottom: 10px"></p>
+                            <span style="font-weight: bold">한개당 판매 가격 </span><p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(likey.post.price), 0, 'COMMA')} + ' 원'" style="color: blue;margin-bottom: 10px;">가격+원</p>
+                            <span style="font-weight: bold">등록 날짜 </span><p th:text="${#temporals.format(likey.post.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 30px">작성 날짜</p>
+                            <p class="productDescription" th:text="${likey.post.content}">책 설명</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination" th:if="${likeyTotalPages != 0}">
+                    <button id="likeyPrevPage" class="pagination-btn">&lt; 이전</button>
+                    <span id="likeyPageInfo" th:text="${likeyCurrentPage} + ' / ' + ${likeyTotalPages}"
+                          th:data-likey-current-page="${likeyCurrentPage}" th:data-likey-total-page="${likeyTotalPages}">1 / 1</span>
+                    <button id="likeyNextPage" class="pagination-btn">다음 &gt;</button>
+                </div>
             </div>
         </section>
     </div>

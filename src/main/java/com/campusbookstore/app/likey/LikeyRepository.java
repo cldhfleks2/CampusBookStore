@@ -1,6 +1,9 @@
 package com.campusbookstore.app.likey;
 
 import com.campusbookstore.app.member.Member;
+import com.campusbookstore.app.purchase.Purchase;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,4 +21,8 @@ public interface LikeyRepository extends JpaRepository<Likey, Long> {
     List<Likey> findAllByPostId(Long postId);
 
     List<Likey> findByPostIdAndMemberName(Long postId, String memberName);
+
+    //멤버아이디로 찜한 내역을 가져옴.
+    @Query("SELECT l FROM Likey l WHERE l.member.id = :memberId AND l.status = 1")
+    Page<Likey> findAllByMemberId(long memberId, Pageable pageable);
 }

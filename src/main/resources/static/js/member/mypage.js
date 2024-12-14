@@ -7,27 +7,19 @@ $(document).ready(function() {
     //개인정보수정란 : 폼전송
     personalInfoFormSubmitBtn();
 
-    //판매내역란 : 페이지네이션적용
+    //판매 내역 란 : 페이지네이션적용
     sellPagination();
 
-    //주문내역란 : 페이지네이션
+    //주문 내역 란 : 페이지네이션
     purchasePagination();
+
+    //찜한 상품 란
+    likeyPagination();
 });
 
-//클릭한 id를 가져와서 그것만 display=block;
-function displayToggle (targetId) {
-    // 모든 화면 display=none;
-    $('.content').hide();
-    $('#' + targetId).show();
-}
-//클릭한 class를 가져와서 active를 붙여줌
-function sidebarActive (tag) {
-    // 사이드바에 있는 모든 active 제거
-    $('.sidebarMenu a').removeClass('active');
-    // 해당 클래스에만 active 추가
-    $(tag).addClass('active');
-}
-
+//사이드 메뉴를 선택할때
+//1. 선택한 메뉴에 active클래스를 붙여준다.
+//2. 태그에 지정된 data-content값을 가져와서 해당 이름과 같은 id값인 div태그를 display:block으로 보여줌
 function sidebarMenu () {
     // 사이드바 메뉴 클릭 이벤트 핸들러
     $('.sidebarMenu a').on('click', function(e) {
@@ -43,20 +35,34 @@ function sidebarMenu () {
         sidebarActive(this);
     });
 }
+//(1) active 클래스를 붙여줌 (1)
+function sidebarActive (tag) {
+    // 사이드바에 있는 모든 active 제거
+    $('.sidebarMenu a').removeClass('active');
+    // 해당 클래스에만 active 추가
+    $(tag).addClass('active');
+}
+//(2) targetId를 받아서 #+targetId 로 선택해서 display:block;
+function displayToggle (targetId) {
+    // 모든 화면 display=none;
+    $('.content').hide();
+    $('#' + targetId).show();
+}
 
+//개인 정보 수정란에서 입력칸마다의 에러메시지를 보여주는 함수
 function showError(element, message) {
     // Find the error message div for this input
     const errorDiv = element.closest('.formGroup').find('.error-message');
 
-
     // Show and set error message
     errorDiv.text(message).show();
 }
+//개인 정보 수정란에서 입력칸의 에러 메시지를 가린다.
 function hideError(element) {
     const errorDiv = element.closest('.formGroup').find('.error-message');
     errorDiv.text('').hide();
 }
-
+//개인 정보 수정란에서 입력칸의 유효성 검사 함수들
 function nameValidation() {
     const name = $('#name').val().trim();
     if (name === '') {
@@ -160,7 +166,7 @@ function personalInfoFormSubmitBtn(){
 
     })
 }
-
+//판매내역 뷰
 function sellPagination(){
     $(document).on('click',"#sellPrevPage", function() {
         let sellCurrentPage = $("#sellPageInfo").data("sell-current-page");
@@ -173,16 +179,7 @@ function sellPagination(){
             $("#sellPageInfo").data("sell-current-page", sellCurrentPage);
             $("#sellPageInfo").text(sellCurrentPage + ' / ' + sellTotalPages);
 
-            $.ajax({
-                url: "/mypage",
-                method: "get",
-                data: {pageIdx: sellCurrentPage},
-                success: function (data){
-                    var data = $.parseHTML(data);
-                    var dataHtml = $("<div>").append(data);
-                    $("#sellContent").replaceWith(dataHtml.find("#sellContent"));
-                }
-            })
+            pageReload(sellCurrentPage);
         }
     });
 
@@ -197,21 +194,23 @@ function sellPagination(){
             $("#sellPageInfo").data("sell-current-page", sellCurrentPage);
             $("#sellPageInfo").text(sellCurrentPage + ' / ' + sellTotalPages);
 
-            $.ajax({
-                url: "/mypage",
-                method: "get",
-                data: {pageIdx: sellCurrentPage},
-                success: function (data){
-                    var data = $.parseHTML(data);
-                    var dataHtml = $("<div>").append(data);
-                    $("#sellContent").replaceWith(dataHtml.find("#sellContent"));
-                }
-            })
+            pageReload(sellCurrentPage);
         }
     });
-
+    function pageReload(sellCurrentPage){
+        $.ajax({
+            url: "/mypage",
+            method: "get",
+            data: {pageIdx: sellCurrentPage},
+            success: function (data){
+                var data = $.parseHTML(data);
+                var dataHtml = $("<div>").append(data);
+                $("#sellContent").replaceWith(dataHtml.find("#sellContent"));
+            }
+        })
+    }
 }
-
+//주문내역 뷰
 function purchasePagination(){
     $(document).on('click',"#purchasePrevPage", function() {
         let purchaseCurrentPage = $("#purchasePageInfo").data("purchase-current-page");
@@ -224,16 +223,7 @@ function purchasePagination(){
             $("#purchasePageInfo").data("purchase-current-page", purchaseCurrentPage);
             $("#purchasePageInfo").text(purchaseCurrentPage + ' / ' + purchaseTotalPages);
 
-            $.ajax({
-                url: "/mypage",
-                method: "get",
-                data: {pageIdx: purchaseCurrentPage},
-                success: function (data){
-                    var data = $.parseHTML(data);
-                    var dataHtml = $("<div>").append(data);
-                    $("#purchaseContent").replaceWith(dataHtml.find("#purchaseContent"));
-                }
-            })
+            pageReload(purchaseCurrentPage);
         }
     });
 
@@ -245,20 +235,69 @@ function purchasePagination(){
             purchaseCurrentPage++;
 
             // 새 페이지 정보 갱신
-            $("#purchasePageInfo").data("sell-current-page", purchaseCurrentPage);
+            $("#purchasePageInfo").data("purchase-current-page", purchaseCurrentPage);
             $("#purchasePageInfo").text(purchaseCurrentPage + ' / ' + purchaseTotalPages);
 
-            $.ajax({
-                url: "/mypage",
-                method: "get",
-                data: {pageIdx: purchaseCurrentPage},
-                success: function (data){
-                    var data = $.parseHTML(data);
-                    var dataHtml = $("<div>").append(data);
-                    $("#purchaseContent").replaceWith(dataHtml.find("#purchaseContent"));
-                }
-            })
+            pageReload(purchaseCurrentPage);
         }
     });
 
+    function pageReload(purchaseCurrentPage){
+        $.ajax({
+            url: "/mypage",
+            method: "get",
+            data: {pageIdx: purchaseCurrentPage},
+            success: function (data){
+                var data = $.parseHTML(data);
+                var dataHtml = $("<div>").append(data);
+                $("#purchaseContent").replaceWith(dataHtml.find("#purchaseContent"));
+            }
+        })
+    }
 }
+//찜한 상품 뷰
+function likeyPagination() {
+    $(document).on('click',"#likeyPrevPage", function() {
+        let likeyCurrentPage = $("#likeyPageInfo").data("likey-current-page");
+        const likeyTotalPages = $("#likeyPageInfo").data("likey-total-page");
+
+        if (likeyCurrentPage > 1) {
+            likeyCurrentPage--;
+
+            // 새 페이지 정보 갱신
+            $("#likeyPageInfo").data("likey-current-page", likeyCurrentPage);
+            $("#likeyPageInfo").text(likeyCurrentPage + ' / ' + likeyTotalPages);
+
+            pageReload(likeyCurrentPage);
+        }
+    });
+
+    $(document).on('click', "#likeyNextPage", function() {
+        let likeyCurrentPage = $("#likeyPageInfo").data("likey-current-page");
+        const likeyTotalPages = $("#likeyPageInfo").data("likey-total-page");
+
+        if (likeyCurrentPage < likeyTotalPages) {
+            likeyCurrentPage++;
+
+            // 새 페이지 정보 갱신
+            $("#likeyPageInfo").data("likey-current-page", likeyCurrentPage);
+            $("#likeyPageInfo").text(likeyCurrentPage + ' / ' + likeyTotalPages);
+
+            pageReload(likeyCurrentPage);
+        }
+    });
+
+    function pageReload(likeyCurrentPage){
+        $.ajax({
+            url: "/mypage",
+            method: "get",
+            data: {pageIdx: likeyCurrentPage},
+            success: function (data){
+                var data = $.parseHTML(data);
+                var dataHtml = $("<div>").append(data);
+                $("#likeyContent").replaceWith(dataHtml.find("#likeyContent"));
+            }
+        })
+    }
+}
+

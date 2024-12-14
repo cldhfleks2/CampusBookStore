@@ -1,6 +1,8 @@
 package com.campusbookstore.app.member;
 
 import com.campusbookstore.app.error.ErrorService;
+import com.campusbookstore.app.likey.Likey;
+import com.campusbookstore.app.likey.LikeyRepository;
 import com.campusbookstore.app.post.Post;
 import com.campusbookstore.app.post.PostRepository;
 import com.campusbookstore.app.post.PostService;
@@ -31,6 +33,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final PostRepository postRepository;
     private final PurchaseRepository purchaseRepository;
+    private final LikeyRepository likeyRepository;
 
     //1. Entity -> DTO
     public MemberDTO getMemberDTO(Member member) {
@@ -74,8 +77,6 @@ public class MemberService {
         return member;
     }
 
-
-
     //뷰
     String viewLogin (Authentication auth) {
         //인증정보가 없거나 로그인됬으면 메인 화면으로 이동
@@ -86,16 +87,11 @@ public class MemberService {
         if(auth != null && auth.isAuthenticated()) return "redirect:/main";
         return "member/register";
     }
+    @Transactional
     String viewMyPage (Model model, Authentication auth, Integer pageIdx) {
         Optional<Member> member = memberRepository.findByName(auth.getName());
-        if(!member.isPresent()) {
-            return ErrorService.send(
-                    HttpStatus.UNAUTHORIZED.value(),
-                    "/mypage",
-                    "DB없는 회원",
-                    String.class
-            );
-        }
+        if(!member.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/mypage", "DB없는 회원", String.class);
+
         //유저 정보 전달
         Long memberId = member.get().getId(); //현재 사용자의 id
         MemberDTO memberDTO = getMemberDTO(member.get());
@@ -113,10 +109,24 @@ public class MemberService {
 
         //주문 내역 전달
         Page<Purchase> purchases = purchaseRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
-        System.out.println( "1111111111=      " + purchases.getContent().size());
+        List<Purchase> purchaseList = new ArrayList<>();
+        for(Purchase purchase : purchaseList) //수량이 남은것만 추가
+            if(purchase.getPost().getQuantity() > 0)
+                purchaseList.add(purchase);
         model.addAttribute("purchaseTotalPages", purchases.getTotalPages());
         model.addAttribute("purchaseCurrentPage", pageIdx);
-        model.addAttribute("purchases", purchases.getContent());
+        model.addAttribute("purchases", purchaseList);
+
+        //찜한 내역 전달
+        Page<Likey> likeys = likeyRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
+        List<Likey> likeyList = new ArrayList<>();
+        for(Likey likey : likeyList) //수량이 남은것만 추가
+            if(likey.getPost().getQuantity() > 0)
+                likeyList.add(likey);
+        model.addAttribute("likeyTotalPages", likeys.getTotalPages());
+        model.addAttribute("likeyCurrentPage", pageIdx);
+        model.addAttribute("likeys", likeyList);
+
         return "member/myPage";
     }
     String viewLike(){

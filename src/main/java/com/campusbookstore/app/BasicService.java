@@ -25,20 +25,20 @@ public class BasicService {
         int popularPostCnt = 8;
         List<Post> popularPosts = postRepository.findTopPostsByLikeyCount(popularPostCnt);
         List<PostDTO> popularPostDTOs = new ArrayList<>();
-        for (Post post : popularPosts) {
-            popularPostDTOs.add(postService.getPostDTO(post));
-        }
+        for (Post post : popularPosts)
+            if(post.getQuantity() > 0)
+                popularPostDTOs.add(postService.getPostDTO(post));
         model.addAttribute("popularPostDTOs", popularPostDTOs);
-
 
         //최근 게시물 가져오기
         int recentPostCnt = 8;
         List<Post> recentPosts = postRepository.findTopNByStatusOrderByCreateDateDesc(recentPostCnt);;
         List<PostDTO> recentPostDTOs = new ArrayList<>();
-        for (Post post : recentPosts) {
-            recentPostDTOs.add(postService.getPostDTO(post));
-        }
+        for (Post post : recentPosts)
+            if(post.getQuantity() > 0)
+                recentPostDTOs.add(postService.getPostDTO(post));
         model.addAttribute("recentPostDTOs", recentPostDTOs);
+        
         return "main/main";
     }
 
