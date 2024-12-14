@@ -19,18 +19,19 @@
     </div>
 </div>
 <div class="container">
-    <div class="searchSummary" id="searchSummary" style="display: flex">
+    <div class="searchSummary" id="searchSummary" style="display: flex; width: 100%;">
         "<p class="searchSummaryText" th:text="${keyword}">키워드</p>"
         검색 결과 총&nbsp;<p class="searchSummaryText" th:text="${postCnt}">갯수</p>개
     </div>
-    <div class="sortSection">
-        <select class="sortSelect">
-            <option>제목 순</option>
-            <option>작가 순</option>
-            <option>낮은 가격순</option>
-            <option>최신 등록순</option>
-        </select>
-    </div>
+<!--    이것을 주석 해제할땐  searchSummary의 width: 100%를 지울것.-->
+<!--    <div class="sortSection">-->
+<!--        <select class="sortSelect">-->
+<!--            <option>제목 순</option>-->
+<!--            <option>작가 순</option>-->
+<!--            <option>낮은 가격순</option>-->
+<!--            <option>최신 등록순</option>-->
+<!--        </select>-->
+<!--    </div>-->
     <div id="searchSection">
         <div class="searchResultsGrid">
             <div class="bookCard" th:each="post : ${posts}">

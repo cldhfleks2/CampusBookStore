@@ -30,7 +30,7 @@ public class AccountDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         //여기서 멤버들의 등급을 정함
-        String role = "ROLE_" + roleService.getUserRole(loginMember.getName()).getRoleName();
+        String role = roleService.getUserRole(loginMember.getName()).getRoleName();
         authorities.add(new SimpleGrantedAuthority(role));
 
         //유저 정보 리턴
