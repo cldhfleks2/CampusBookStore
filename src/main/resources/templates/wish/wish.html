@@ -17,9 +17,21 @@
         <h1 class="wishTitle">장바구니</h1>
     </div>
 
+    <div class="selectAllCheckbox">
+        <input type="checkbox" id="selectAllCheckbox">
+        <label for="selectAllCheckbox">전체 선택</label>
+    </div>
+
     <div class="wishItemList" id="wishList">
         <div class="wishItem"  th:each="wish : ${wishs}">
+
             <div class="checkboxContainer">
+                <div class="checkboxWrapper">
+                    <input type="checkbox" class="wishItemCheckbox"
+                           th:attr="data-wish-id=${wish.id},
+                                data-price=${wish.post.price},
+                                data-quantity=${wish.quantity}">
+                </div>
                 <div class="bookInfo">
                     <img th:src="@{/uploadImage/} + ${wish.post.images[0].imagePath}">
                     <div class="bookDetails">
@@ -55,13 +67,20 @@
     </div>
 
     <div class="purchaseInfo" id="purchaseInfo">
-        <div class="totalPrice">총 상품 금액: <span class="calculatePrice">1111</span>원</div>
-        <button class="purchaseButton">구매하기</button>
+        <div class="totalPrice">총 상품 금액: <span class="calculatePrice">0</span>원</div>
+        <button class="purchaseButton">주문 하기</button>
         <div class="pointInfo">
-            현재 보유 포인트: &nbsp;<span class="currentPoint" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(point), 0, 'COMMA')} ">2222</span>P
+            현재 보유 포인트: &nbsp;<span class="currentPoint" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(point), 0, 'COMMA')} ">0</span>P
             <br>
-            구매 후 남는 포인트: &nbsp;<span class="remainPoint">333</span>P
+            구매 후 남는 포인트: &nbsp;<span class="remainPoint" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(point), 0, 'COMMA')} ">0</span>P
         </div>
+    </div>
+</div>
+<!-- 모달 창 -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="modalMessage">잔액이 부족합니다.</p>
     </div>
 </div>
 
