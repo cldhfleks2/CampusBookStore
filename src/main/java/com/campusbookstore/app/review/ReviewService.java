@@ -86,9 +86,9 @@ public class ReviewService {
 
     //리뷰목록 제공 return "post/detailPost :: #reviewList"
     @Transactional
-    String reviewList(Model model) {
-        //전체 리뷰 객체를 가져옴
-        List<Review> reviews = reviewRepository.findAllByStatus();
+    String reviewList(Model model, Long postId) {
+        //현재 게시글의 전체 리뷰를 가져옴
+        List<Review> reviews = reviewRepository.findAllByPostId(postId);
 
         //id 기준 정렬
         reviews = reviews.stream().sorted(Comparator.comparingLong(Review::getId)) .collect(Collectors.toList());
@@ -99,10 +99,9 @@ public class ReviewService {
             reviewDTOs.add(getReviewDTO(review));
         }
 
-
         //DTO전달
         model.addAttribute("reviewDTOs", reviewDTOs);
-        return "post/detailPost :: #reviewSection"; //리뷰 섹션(리뷰갯ㅅ, 리뷰 리스트만 갱신)
+        return "post/detailPost :: #reviewSection"; //리뷰 섹션(리뷰갯수, 리뷰 리스트만 갱신)
     }
 
     //리뷰 작성 - DB저장

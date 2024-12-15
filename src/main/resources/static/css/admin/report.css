@@ -28,7 +28,8 @@ body {
     padding-top: 30px;
 }
 
-.adminSideBar .adminLogoutBtn {
+.adminSideBar .adminLogoutBtn,
+.adminSideBar .adminMainpageBtn{
     background-color: #e74c3c;
     color: white;
     border: none;
@@ -36,6 +37,10 @@ body {
     margin-bottom: 20px;
     cursor: pointer;
     border-radius: 10px;
+}
+
+.adminSideBar .adminMainpageBtn{
+    background-color: #376eff;
 }
 
 .adminSideBar .navMenu {

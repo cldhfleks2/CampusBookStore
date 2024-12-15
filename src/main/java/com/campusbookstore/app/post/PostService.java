@@ -139,7 +139,7 @@ public class PostService {
         }
         
         //reviewDTO생성
-        List<Review> reviews = reviewRepository.findAllByStatus();
+        List<Review> reviews = reviewRepository.findAllByPostId(postId);
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
         for(Review review : reviews) {
             reviewDTOs.add(reviewService.getReviewDTO(review));
@@ -306,23 +306,32 @@ public class PostService {
         Post post = postObj.get();
         Member member = memberObj.get();
         List<ReportPost> reportPostObj = reportPostRepository.findByMemberNameAndPostId(auth.getName(), postId);
-        //3. 이미 신고한 게시물의 경우 제외 : DB에존재하고 status=1인것.
-        if(!reportPostObj.isEmpty() && reportPostObj.get(0).getStatus() == 1)
-            return ErrorService.send(HttpStatus.ALREADY_REPORTED.value(), "/reportPost", "이미 신고한 게시물 입니다.", ResponseEntity.class);
-
-        //객체 생성
-        ReportPost reportPost = new ReportPost();
-        reportPost.setInappropriateContent(inappropriateContent);
-        reportPost.setSpamOrAds(spamOrAds);
-        reportPost.setCopyrightInfringement(copyrightInfringement);
-        reportPost.setMisinformation(misinformation);
-        reportPost.setOtherReason(otherReason);
-        reportPost.setPost(post);
-        reportPost.setMember(member);
-
-        //DB저장
-        reportPostRepository.save(reportPost);
-        return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+        //3. 신고 내역 갯수와 status로 인한 처리
+        if(reportPostObj.size() == 0){
+            //3-1. 신고 내역이 없을땐 객체 생성
+            ReportPost reportPost = new ReportPost();
+            reportPost.setInappropriateContent(inappropriateContent);
+            reportPost.setSpamOrAds(spamOrAds);
+            reportPost.setCopyrightInfringement(copyrightInfringement);
+            reportPost.setMisinformation(misinformation);
+            reportPost.setOtherReason(otherReason);
+            reportPost.setPost(post);
+            reportPost.setMember(member);
+            reportPostRepository.save(reportPost);
+            return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+        }else if(reportPostObj.size() == 1 && reportPostObj.get(0).getStatus() == 0){
+            //3-2. 신고 내역이 1개이고 status=0 : status=1로 수정
+            //DB에 데이터 추가 생성하지 않음
+            ReportPost reportPost = reportPostObj.get(0);
+            reportPost.setStatus(1); //status를 살림
+            reportPostRepository.save(reportPost);
+            return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+        }else if(reportPostObj.size() == 1 && reportPostObj.get(0).getStatus() == 1){
+            //3-3. 신고 내역이 1개이고 status=1 : 중복 신고임을 전달
+            return ResponseEntity.status(HttpStatus.ALREADY_REPORTED.value()).body("이미 신고한 게시물 입니다.");
+        }else{
+            return ResponseEntity.status(400).body("예상치 못한 에러 발생");
+        }
     }
     //리뷰 신고
     ResponseEntity<String> reportReview(Long reviewId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement,
@@ -337,23 +346,33 @@ public class PostService {
         Review review = reviewObj.get();
         Member member = memberObj.get();
         List<ReportReview> reportReviewObj = reportReviewRepository.findByMemberNameAndReviewId(auth.getName(), reviewId);
-        //3. 이미 신고한 게시물의 경우 제외 : DB에존재하고 status=1인것.
-        if(!reportReviewObj.isEmpty() && reportReviewObj.get(0).getStatus() == 1)
-            return ErrorService.send(HttpStatus.ALREADY_REPORTED.value(), "/reportReview", "이미 신고한 리뷰 입니다.", ResponseEntity.class);
 
-        //객체 생성
-        ReportReview reportReview = new ReportReview();
-        reportReview.setInappropriateContent(inappropriateContent);
-        reportReview.setSpamOrAds(spamOrAds);
-        reportReview.setCopyrightInfringement(copyrightInfringement);
-        reportReview.setMisinformation(misinformation);
-        reportReview.setOtherReason(otherReason);
-        reportReview.setReview(review);
-        reportReview.setMember(member);
-
-        //DB저장
-        reportReviewRepository.save(reportReview);
-        return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+        //3. 신고 내역 갯수와 status로 인한 처리
+        if(reportReviewObj.size() == 0){
+            //3-1. 신고 내역이 없을땐 객체 생성
+            ReportReview reportReview = new ReportReview();
+            reportReview.setInappropriateContent(inappropriateContent);
+            reportReview.setSpamOrAds(spamOrAds);
+            reportReview.setCopyrightInfringement(copyrightInfringement);
+            reportReview.setMisinformation(misinformation);
+            reportReview.setOtherReason(otherReason);
+            reportReview.setReview(review);
+            reportReview.setMember(member);
+            reportReviewRepository.save(reportReview);
+            return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+        }else if(reportReviewObj.size() == 1 && reportReviewObj.get(0).getStatus() == 0){
+            //3-2. 신고 내역이 1개이고 status=0 : status=1로 수정
+            //DB에 데이터 추가 생성하지 않음
+            ReportReview reportReview = reportReviewObj.get(0);
+            reportReview.setStatus(1); //status를 살림
+            reportReviewRepository.save(reportReview);
+            return ResponseEntity.status(HttpStatus.ACCEPTED.value()).build();
+        }else if(reportReviewObj.size() == 1 && reportReviewObj.get(0).getStatus() == 1){
+            //3-3. 신고 내역이 1개이고 status=1 : 중복 신고임을 전달
+            return ResponseEntity.status(HttpStatus.ALREADY_REPORTED.value()).body("이미 신고한 댓글 입니다.");
+        }else{
+            return ResponseEntity.status(400).body("예상치 못한 에러 발생");
+        }
     }
 
 

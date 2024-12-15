@@ -34,7 +34,7 @@ public class ReportReview {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="post_id")
+    @JoinColumn(name="review_id")
     private Review review; //어떤 게시물
 
     @ToString.Exclude

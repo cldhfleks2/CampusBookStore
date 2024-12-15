@@ -14,8 +14,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/reviewList")
-    String reviewList(Model model) {
-        return reviewService.reviewList(model);
+    String reviewList(Model model, Long postId) {
+        return reviewService.reviewList(model, postId);
     }
 
     @PostMapping("/reviewSubmit")

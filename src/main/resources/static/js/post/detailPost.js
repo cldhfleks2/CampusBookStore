@@ -18,6 +18,9 @@ $(document).ready(function() {
     deleteBtn();
 });
 
+//전역 변수 선언
+var postId = $(".bookInfoSection").data("post-id");
+
 //책 그림 슬라이드
 function initImageSlider() {
     const $wrapper = $('.slider-wrapper');
@@ -104,10 +107,12 @@ function reportModelOFF(){
     $("#reportDetailModal").css("display", "none");
 }
 
+var reviewId = null; //전역 변수 선언
 //신고 - 게시물,리뷰
 function report() {
     var reportType = "";
     //게시물 신고
+    //게시물은 하나이기 때문에 신고버튼도 하나 그래서 id로 #productReportBtn
     $(document).on("click", "#productReportBtn", function() {
         var postAuthorName = $(this).data("post-author");
         var curentUserName = $(this).data("my-name");
@@ -122,10 +127,11 @@ function report() {
         }
     });
     //댓글 신고
-    $(document).on("click", "#reviewReportBtn", function() {
+    //리뷰는 여러개이기 때문에 신고버튼이 여러개. 그래서 class로 .reviewReportBtn
+    $(document).on("click", ".reviewReportBtn", function() {
         var reviewAuthorName = $(this).data("review-author");
         var curentUserName = $(this).data("my-name");
-        var reviewId = $(this).data("review-id");
+        reviewId = $(this).data("review-id");
         if(reviewAuthorName === curentUserName){
             alert("본인 댓글은 신고할 수 없습니다.")
         }else{
@@ -160,20 +166,23 @@ function report() {
                 success: function (data) {
                     console.log(data);
                     console.log("reportPost-ajax-complete")
+                    if(data === "이미 신고한 게시물 입니다.")
+                        alert("이미 신고한 게시물 입니다.")
+                    else
+                        alert("게시물 신고가 접수되었습니다.")
                 },
                 fail: function (err) {
                     console.log(err);
                     console.log("reportPost-ajax-failed")
                 }
             })
-
         //리뷰 신고
         }else if(reportType === "review"){
             $.ajax({
                 url: "/reportReview",
                 method: "post",
                 data: {
-                    reviewId: $(this).data("review-id"),
+                    reviewId: reviewId, //전역 변수로 설정한 리뷰 아이디값 전달
                     inappropriateContent: $("#inappropriateContent").is(":checked"),
                     spamOrAds: $("#spamOrAds").is(":checked"),
                     copyrightInfringement: $("#copyrightInfringement").is(":checked"),
@@ -183,6 +192,10 @@ function report() {
                 success: function (data) {
                     console.log(data);
                     console.log("reportReview-ajax-complete")
+                    if(data === "이미 신고한 댓글 입니다.")
+                        alert("이미 신고한 댓글 입니다.")
+                    else
+                        alert("댓글 신고가 접수되었습니다.")
                 },
                 fail: function (err) {
                     console.log(err);
@@ -279,6 +292,7 @@ function reviewListUpdate(){
         url:"/reviewList",
         method:"get",
         async: false,
+        data: {postId: postId},
         success: function (data){
             $("#reviewSection").replaceWith(data);
             // console.log(data);

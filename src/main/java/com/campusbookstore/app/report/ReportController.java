@@ -26,9 +26,9 @@ public class ReportController {
         return reportService.viewReport(model);
     }
     //reportId들을 받아서 reportPost 삭제
-    @DeleteMapping("/admin/report/ignore")
-    ResponseEntity<String> ignoreReport(@RequestBody List<Long> reportIds) {
-        return reportService.ignoreReport(reportIds);
+    @DeleteMapping("/admin/report/post/ignore")
+    ResponseEntity<String> ignorePost(@RequestBody List<Long> reportIds) {
+        return reportService.ignorePost(reportIds);
     }
     //reportId들을 받아서 reportPost에 해당하는 post를 실제로 삭제
     @DeleteMapping("/admin/report/post/delete")
@@ -36,5 +36,15 @@ public class ReportController {
         return reportService.deletePost(reportIds);
     }
 
+    //reportId들을 받아서 reportReview 삭제
+    @DeleteMapping("/admin/report/review/ignore")
+    ResponseEntity<String> ignoreReview(@RequestBody List<Long> reportIds) {
+        return reportService.ignoreReview(reportIds);
+    }
+    //reportId들을 받아서 reportReview에 해당하는 review를 실제로 삭제
+    @DeleteMapping("/admin/report/review/delete")
+    ResponseEntity<String> deleteReview(@RequestBody List<Long> reportIds) {
+        return reportService.deleteReview(reportIds);
+    }
 
 }
