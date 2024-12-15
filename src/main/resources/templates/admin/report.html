@@ -23,22 +23,37 @@
     </div>
 </div>
 
-<div class="report-container">
+<div class="report-container" id="postContainer">
     <table class="report-table">
         <thead>
         <tr>
-            <th><input type="checkbox" id="selectAllRows" class="select-all-checkbox"></th>
-            <th>신고 ID</th>
+            <th>
+                <input type="checkbox" id="selectAllRows" class="select-all-checkbox">
+            </th>
+            <th>게시물 이미지</th>
+            <th>게시물 제목</th>
+            <th>게시물 내용</th>
             <th>신고 속성</th>
             <th>상세 내용</th>
-            <th>상태</th>
         </tr>
         </thead>
         <tbody id="reportTableBody">
         <th:block th:each="report : ${reportPosts}">
             <tr>
-                <td><input type="checkbox" class="row-checkbox" th:attr="data-id=${report.id}"></td>
-                <td th:text="${report.id}"></td>
+                <td>
+                    <input type="checkbox" class="row-checkbox" th:attr="data-report-id=${report.id}">
+                </td>
+                <td>
+                    <img style="max-width: 148px;" th:src="@{/uploadImage/} + ${report.post.images[0].imagePath}">
+                </td>
+                <td>
+                    <a th:href="@{/detailPost/{id}(id=${report.post.id})}">
+                        <div style="font-weight: bold" th:text="${report.post.title}"></div>
+                    </a>
+                </td>
+                <td>
+                    <div style="font-style: italic;" th:text="${report.post.content}"></div>
+                </td>
                 <td>
                     <div class="report-attributes">
                         <label>
@@ -60,9 +75,6 @@
                     </div>
                 </td>
                 <td th:text="${report.otherReason ?: '없음'}"></td>
-                <td>
-                    <span th:class="${report.status == 1 ? 'status-active' : 'status-inactive'}" th:text="${report.status == 1 ? '활성' : '비활성'}"></span>
-                </td>
             </tr>
         </th:block>
         </tbody>

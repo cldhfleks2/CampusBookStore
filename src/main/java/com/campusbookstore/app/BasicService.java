@@ -7,6 +7,7 @@ import com.campusbookstore.app.post.PostDTO;
 import com.campusbookstore.app.post.PostRepository;
 import com.campusbookstore.app.post.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -32,7 +33,7 @@ public class BasicService {
 
         //최근 게시물 가져오기
         int recentPostCnt = 8;
-        List<Post> recentPosts = postRepository.findTopNByStatusOrderByCreateDateDesc(recentPostCnt);;
+        List<Post> recentPosts = postRepository.findTopNByStatusOrderByCreateDateDesc(recentPostCnt);
         List<PostDTO> recentPostDTOs = new ArrayList<>();
         for (Post post : recentPosts)
             if(post.getQuantity() > 0)

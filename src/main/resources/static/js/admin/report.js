@@ -1,9 +1,8 @@
 $(document).ready(function (){
     clickMenuBar();
     checkbox();
-    display();
+    btns();
 })
-
 
 function clickMenuBar(){
     $(document).on("click", ".menuItem", function () {
@@ -28,30 +27,77 @@ function checkbox() {
     });
 }
 
-function display(){
+function btns(){
+    function postViewReload(){
+        $.ajax({
+            url: "/admin/report",
+            method: "get",
+            success: function (data){
+                var data = $.parseHTML(data);
+                var dataHtml = $("<div>").append(data);
+                $("#postContainer").replaceWith(dataHtml.find("#postContainer"));
+                console.log("reportPostViewReload-ajax-success");
+            },
+            fail: function (err) {
+                console.log(err)
+                console.log("reportPostViewReload-ajax-failed");
+            }
+        })
+    }
+
     // 선택 제외 버튼
-    $('.accept-btn').on('click', function() {
-        const selectedIds = $('.row-checkbox:checked').map(function() {
-            return $(this).data('id');
+    $(document).on("click", ".accept-btn", function () {
+        const selectedReportIds = $('.row-checkbox:checked').map(function() {
+            return $(this).data('report-id');
         }).get();
 
-        if (selectedIds.length > 0) {
-            alert(`선택된 신고 ID: ${selectedIds.join(', ')} 를 제외합니다.`);
-            // 실제 구현 시 서버 통신 로직 추가
+        if (selectedReportIds.length > 0) {
+            $.ajax({
+                url: "/admin/report/ignore",
+                method: "delete",
+                contentType: "application/json", // JSON 형식 지정
+                data: JSON.stringify(selectedReportIds), // 데이터를 JSON 문자열로 변환
+                success: function (){
+
+                    postViewReload();
+
+                    console.log("ignoreReportPost-ajax-complete");
+                    alert(`선택된 신고 ID: ${selectedReportIds.join(', ')} 를 제외합니다.`);
+                },
+                fail: function (err) {
+                    console.log(err)
+                    console.log("ignoreReportPost-ajax-failed");
+                }
+            })
         } else {
             alert('선택된 항목이 없습니다.');
         }
     });
 
     // 선택 삭제 버튼
-    $('.reject-btn').on('click', function() {
-        const selectedIds = $('.row-checkbox:checked').map(function() {
-            return $(this).data('id');
+    $(document).on("click", ".reject-btn", function () {
+        const selectedReportIds = $('.row-checkbox:checked').map(function() {
+            return $(this).data('report-id');
         }).get();
 
-        if (selectedIds.length > 0) {
-            alert(`선택된 신고 ID: ${selectedIds.join(', ')} 를 삭제합니다.`);
-            // 실제 구현 시 서버 통신 로직 추가
+        if (selectedReportIds.length > 0) {
+            $.ajax({
+                url: "/admin/report/post/delete",
+                method: "delete",
+                contentType: "application/json",
+                data: JSON.stringify(selectedReportIds),
+                success: function (){
+
+                    postViewReload();
+
+                    console.log("reportPostDelete-ajax-complete");
+                    alert(`선택된 신고 ID: ${selectedReportIds.join(', ')} 를 삭제합니다.`);
+                },
+                fail: function (err) {
+                    console.log(err)
+                    console.log("reportPostDelete-ajax-failed");
+                }
+            })
         } else {
             alert('선택된 항목이 없습니다.');
         }

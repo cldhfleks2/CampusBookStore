@@ -248,3 +248,49 @@ body {
     color: red;
     font-weight: bold;
 }
+
+
+
+
+
+
+.report-table th:nth-child(1), .report-table td:nth-child(1) {
+    width: 3.5%; /* 체크박스 */
+}
+.report-table th:nth-child(2), .report-table td:nth-child(2) {
+    width: 15%; /* 이미지 */
+}
+.report-table th:nth-child(3), .report-table td:nth-child(3) {
+    width: 15%;/* 제목 */
+}
+
+.report-table th:nth-child(4), .report-table td:nth-child(4) {
+    width: 25%;/* 내용 */
+}
+
+.report-table th:nth-child(5), .report-table td:nth-child(5) {
+    width: 15%;/* 신고속성 */
+}
+
+.report-table th:nth-child(6), .report-table td:nth-child(6) {
+    width: 26.5%;/* 상세내용 */
+}
+
+.report-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;  /* 중요: 이 속성 추가 */
+    border-spacing: 0;
+}
+
+.report-table tr,
+.report-table td {
+    height: 50px;  /* 명시적 높이 지정 */
+    min-height: 50px;
+}
+
+.report-table th {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bolder;
+}

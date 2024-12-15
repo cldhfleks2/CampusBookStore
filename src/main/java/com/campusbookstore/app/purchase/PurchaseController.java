@@ -15,6 +15,7 @@ public class PurchaseController {
     private final PurchaseService purchaseService;
 
     @PostMapping("/order")
+    //@RequestBody가 있어야 json data를 가져 올 수 있음.
     ResponseEntity<String> order(@RequestBody List<PurchaseDTO> purchaseDTOs, Authentication auth) {
         return purchaseService.order(purchaseDTOs, auth);
     }
