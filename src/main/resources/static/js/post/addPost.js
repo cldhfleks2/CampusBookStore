@@ -3,7 +3,6 @@ $(document).ready(function() {
     imageRemove();
     upload();
     dynamicCategoryInitialize()
-    addCategoryBox();
 });
 
 //드래그 앤 드랍 컨트롤
@@ -206,10 +205,6 @@ function dynamicCategoryInitialize(){
         adjustInputWidth($(this));
     });
 
-    // Initial width adjustment
-    $('.categoryInput').each(function() {
-        adjustInputWidth($(this));
-    });
 
     // Remove category functionality for initial box
     $('.removeCategory').click(function() {
@@ -230,13 +225,6 @@ function dynamicCategoryInitialize(){
             }
         }
     });
-
-// Rest of the previous submit button logic remains the same
-    $('#submitPostBtn').click(function(e) {
-        // ... (previous implementation)
-    });
-
-
 }
 
 

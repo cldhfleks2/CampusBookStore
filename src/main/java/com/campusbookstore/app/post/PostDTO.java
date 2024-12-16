@@ -33,5 +33,4 @@ public class PostDTO {
     private List<Image> imagesEntity;
 
     private List<String> categorys = new ArrayList<>(); //카테고리 받기
-
 }

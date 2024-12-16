@@ -3,6 +3,7 @@ $(document).ready(function() {
     dragEvent();
     imageRemove();
     editPost();
+    dynamicCategoryInitialize();
 });
 
 function initialize(){
@@ -126,6 +127,14 @@ function editPost() {
             }
         });
 
+        const categorys = $('.categoryInput').map(function() {
+            return $(this).val().trim();
+        }).get().filter(category => category !== ''); // 빈 값 제거
+        // Append each category separately
+        categorys.forEach(category => {
+            formData.append('categorys', category);
+        });
+
         $.ajax({
             url: "/editPost",
             method: "post",
@@ -133,12 +142,95 @@ function editPost() {
             processData: false,
             data: formData,
             success: function () {
+                console.log("editPost-ajax-success")
                 window.location.href = "/detailPost/" + postId;
             },
-            error: function (err) {
+            fail: function (err) {
                 console.log(err);
+                console.log("editPost-ajax-failed")
                 alert("게시글 수정 중 오류가 발생했습니다.");
             }
         });
     });
 }
+
+
+
+//카테고리 컨트롤
+// 카테고리 박스 크기를 동적으로 설정
+function adjustInputWidth(input) {
+    // Create a temporary span to measure text width
+    const tempSpan = $('<span>').hide().appendTo('body');
+    tempSpan.text(input.val());
+    tempSpan.css({
+        'font-size': input.css('font-size'),
+        'font-family': input.css('font-family')
+    });
+
+    // Calculate width, limit to 200px
+    let textWidth = tempSpan.width() + 20; // Add padding
+    textWidth = Math.min(textWidth, 200);
+
+    input.css('width', textWidth + 'px');
+    tempSpan.remove();
+}
+
+// 동적으로 카테고리 박스를 추가
+function addCategoryBox() {
+    const newBox = $('<div class="categoryBox">' +
+        '<span class="removeCategory">×</span>' +
+        '<input type="text" class="categoryInput" placeholder="카테고리를 입력하세요">' +
+        '</div>');
+
+    $('#categoriesContainer').append(newBox);
+
+    // Get the new input and adjust its width
+    const newInput = newBox.find('.categoryInput');
+    newInput.focus();
+
+    // Dynamic width adjustment on input
+    newInput.on('input', function() {
+        adjustInputWidth($(this));
+    });
+
+    // Remove category functionality
+    newBox.find('.removeCategory').click(function() {
+        // Prevent removing the last category box
+        if ($('#categoriesContainer .categoryBox').length > 1) {
+            $(this).closest('.categoryBox').remove();
+        }
+    });
+}
+
+function dynamicCategoryInitialize(){
+    // 모든 카테고리 input에 대해 width 조정
+    $('.categoryInput').each(function() {
+        adjustInputWidth($(this));
+    });
+
+
+    // Remove category functionality for initial box
+    $('.removeCategory').click(function() {
+        // Prevent removing the last category box
+        if ($('#categoriesContainer .categoryBox').length > 1) {
+            $(this).closest('.categoryBox').remove();
+        }
+    });
+
+// Add new category box on Enter key in an input
+    $('#categoriesContainer').on('keydown', '.categoryInput', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent form submission
+
+            // Only add a new box if the current input has some text
+            if ($(this).val().trim() !== '') {
+                addCategoryBox();
+            }
+        }
+    });
+}
+
+
+
+
+

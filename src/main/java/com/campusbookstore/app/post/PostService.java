@@ -107,7 +107,8 @@ public class PostService {
             post.setContent(postDTO.getContent());
         if(postDTO.getMember() != null)
             post.setMember(postDTO.getMember());
-        if(postDTO.getImages() != null && !postDTO.getImages().isEmpty())
+//        if(postDTO.getImages() != null && !postDTO.getImages().isEmpty()) //editPost에서 이미지가 안불러와져서 수정해봄
+        if(postDTO.getImagesEntity() != null && !postDTO.getImagesEntity().isEmpty())
             post.setImages(postDTO.getImagesEntity());
         if (postDTO.getCreateDate() != null)
             post.setCreateDate(postDTO.getCreateDate());
@@ -179,8 +180,17 @@ public class PostService {
         //본인인지 확인
         if(post.getMember().getId() != member.getId()) return ErrorService.send(HttpStatus.FORBIDDEN.value(), "/editPost", "본인이 아닙니다.", String.class);
 
+        //카테고리 가져오기
+        List<Category> categorys = categoryRepository.findAllByPostId(postId);
+        List<String> postDTOcategorys = new ArrayList<>();
+        for(Category category : categorys)
+            postDTOcategorys.add(category.getName());
+        //DTO에 카테고리 담기
+        PostDTO postDTO = getPostDTO(post);
+        postDTO.setCategorys(postDTOcategorys);
 
-        model.addAttribute("post", post);
+        //DTO전달
+        model.addAttribute("post", postDTO);
 
         return "post/editPost";
     }
@@ -292,6 +302,19 @@ public class PostService {
         //DB수정
         Member member = memberObj.get();
         savePostAndImages(postDTO, member);
+
+        //카테고리 가져오기
+        Post post = postObj.get();
+        List<Category> categorysObj = categoryRepository.findAllByPostId(post.getId());
+        //기존 카테고리는 전부 삭제
+        categoryRepository.deleteAll(categorysObj);
+        
+        //DB에 Category객체 새롭게 저장
+        List<Category> categorys = getCategory(postDTO);
+        for(Category category : categorys) {
+            category.setPost(post);
+            categoryRepository.save(category);
+        }
 
         return ResponseEntity.status(HttpStatus.OK.value()).body("책 정보 수정 성공");
     }
