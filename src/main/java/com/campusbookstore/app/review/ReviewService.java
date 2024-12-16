@@ -81,9 +81,6 @@ public class ReviewService {
     }
 
 
-
-
-
     //리뷰목록 제공 return "post/detailPost :: #reviewList"
     @Transactional
     String reviewList(Model model, Long postId) {
