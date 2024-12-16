@@ -15,9 +15,11 @@
     <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;
     max-width: 1200px; margin: 2rem auto;padding: 0 1rem;">카테 고리</h2>
 </div>
-<!--<div class="categoryGrid" th:each="category : ${categorys}">-->
-<!--    <div class="categoryItem" th:text="${category.name}" th:title="${category.name}">전공서적</div>-->
-<!--</div>-->
+<div class="categoryGrid" th:each="category : ${categorys}">
+    <a th:href="'/category/' + ${category.name}">
+        <div class="categoryItem" th:text="${category.name}" th:title="${category.name}">전공서적</div>
+    </a>
+</div>
 
 <!-- 인기 상품 -->
 <section class="productSection">
