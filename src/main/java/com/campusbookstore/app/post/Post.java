@@ -1,5 +1,6 @@
 package com.campusbookstore.app.post;
 
+import com.campusbookstore.app.category.Category;
 import com.campusbookstore.app.image.Image;
 import com.campusbookstore.app.member.Member;
 import jakarta.persistence.*;

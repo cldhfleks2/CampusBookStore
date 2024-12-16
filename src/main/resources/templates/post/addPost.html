@@ -58,7 +58,19 @@
         <textarea class="descriptionTextarea" name="content" placeholder="책의 상태, 특이사항 등을 자세히 기재해주세요"></textarea>
     </div>
 
-    <button class="submitButton">
+
+    <div class="categorySection">
+        <label class="formLabel">카테고리</label>
+        <div id="categoriesContainer">
+            <div class="categoryBox">
+                <span class="removeCategory">×</span>
+                <input type="text" class="categoryInput" placeholder="카테고리를 입력하세요">
+            </div>
+        </div>
+    </div>
+
+
+    <button class="submitButton" id="submitPostBtn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>

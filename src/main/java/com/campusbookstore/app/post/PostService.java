@@ -1,5 +1,7 @@
 package com.campusbookstore.app.post;
 
+import com.campusbookstore.app.category.Category;
+import com.campusbookstore.app.category.CategoryRepository;
 import com.campusbookstore.app.error.ErrorService;
 import com.campusbookstore.app.image.Image;
 import com.campusbookstore.app.image.ImageDTO;
@@ -38,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +54,7 @@ public class PostService {
     private final ImageService imageService;
     private final ReportPostRepository reportPostRepository;
     private final ReportReviewRepository reportReviewRepository;
+    private final CategoryRepository categoryRepository;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -237,6 +241,17 @@ public class PostService {
             }
         }
     }
+    List<Category> getCategory(PostDTO postDTO) {
+        return Optional.ofNullable(postDTO.getCategorys())
+                .map(cats -> cats.stream()
+                        .map(categoryName -> {
+                            Category category = new Category();
+                            category.setName(categoryName);
+                            return category;
+                        })
+                        .collect(Collectors.toList()))
+                .orElse(new ArrayList<>());
+    }
     //책 등록
     @Transactional
     String addPost (PostDTO postDTO, Authentication auth) throws Exception {
@@ -245,15 +260,13 @@ public class PostService {
 
         //Member객체 가져옴
         Optional<Member> memberObj = memberRepository.findByName(name);
-        if (!memberObj.isPresent()) {
-            return ErrorService.send(
-                    HttpStatus.UNAUTHORIZED.value(),
-                    "/addPost",
-                    "사용자 정보가 존재 하지 않습니다.",
-                    String.class
-            );
-        }
-        //DB에 게시물 저장
+        if (!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/addPost", "사용자 정보가 존재 하지 않습니다.", String.class);
+
+        //DB에 Category객체 저장
+        List<Category> categorys = getCategory(postDTO);
+        for(Category category : categorys) categoryRepository.save(category);
+        
+        //DB에 Post, Image 저장
         Member member = memberObj.get();
         savePostAndImages(postDTO, member);
 

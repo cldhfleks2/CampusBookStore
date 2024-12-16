@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,4 +31,7 @@ public class PostDTO {
     private List<MultipartFile> images;
 
     private List<Image> imagesEntity;
+
+    private List<String> categorys = new ArrayList<>(); //카테고리 받기
+
 }

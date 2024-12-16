@@ -34,7 +34,7 @@ public class PostController {
 
     //책 등록
     @PostMapping("/addPost")
-    String addPost (PostDTO postDTO, Authentication auth, Model model) throws Exception {
+    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
         return postService.addPost(postDTO, auth);
     }
 
