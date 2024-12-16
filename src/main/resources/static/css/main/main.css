@@ -1,30 +1,30 @@
-.categoryGrid {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
+/* Category Bubble Styles */
+.categoryBubbles {
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 2rem auto; /* 수평 중앙 정렬 */
+    padding: 0 1rem;   /* 양쪽 여백 추가 */
+    display: flex;
+    justify-content: left;
     gap: 1rem;
+    flex-wrap: wrap;
+    caret-color: transparent; /* 커서를 투명하게 설정 */
 }
 
-.categoryItem {
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    text-align: center;
-    transition: background-color 0.3s;
+.categoryBubble {
+    padding: 0.5rem 1rem;
+    background-color: #e0e7ff;
+    border-radius: 50px;
     cursor: pointer;
-    white-space: nowrap; /* 한 줄로 표시 */
-    text-overflow: ellipsis; /* 말줄임표 추가 */
-    overflow: hidden; /* 넘치는 내용 숨김 */
+    transition: all 0.3s ease;
+    color: #1e40af;
+    font-weight: bold;
 }
 
-.categoryItem:hover {
-    background-color: #e6f2ff;
+.categoryBubble:hover {
+    transform: scale(1.4);
+    background-color: #3b82f6;
+    color: white;
 }
-
-
 
 
 
@@ -98,65 +98,127 @@
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
+    caret-color: transparent;
 }
 
 .productGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .productCard {
     background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    transition: box-shadow 0.3s;
-    width: 280px;
+    border-radius: 15px;
+    box-shadow:
+            10px 10px 20px rgba(0, 0, 0, 0.05),
+            -10px -10px 20px rgba(255, 255, 255, 0.9);
+    padding: 1.5rem;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.productCard::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+            transparent,
+            transparent,
+            transparent,
+            red,
+            orange,
+            yellow,
+            green,
+            blue,
+            indigo,
+            violet
+    );
+    animation: rotate 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.productCard:hover::before {
+    opacity: 1;
+}
+
+.productCard::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: white;
+    border-radius: 11px;
 }
 
 .productCard:hover {
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+    box-shadow:
+            15px 15px 30px rgba(0, 0, 0, 0.08),
+            -15px -15px 30px rgba(255, 255, 255, 0.95);
 }
 
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
+.productCard a {
+    position: relative;
+    z-index: 10;
+}
 
-.productDetails {
+.productImage {
+    height: 15rem;
+    margin-bottom: 1.5rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.5rem;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.productImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.productCard:hover .productImage img {
+    transform: scale(1.1);
 }
 
 .productPrice {
     color: #2563eb;
     font-weight: bold;
+    background-color: #f0f4ff;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
 }
 
-.productGrid a {
-    text-decoration: none; /* 링크의 기본 밑줄 없애기 */
-    color: inherit; /* 텍스트 색상 변경 없애기 */
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .productGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-.productGrid a:hover {
-    text-decoration: none; /* 호버시 밑줄 없애기 */
-    color: inherit; /* 호버시 텍스트 색상 변경 없애기 */
-    background: none; /* 호버시 배경색 없애기 */
+@media (max-width: 900px) {
+    .productGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.productImage {
-    height: 12rem;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-}
-
-.productImage img{
-    width: 100%;
-    height: auto;
-    max-width: 248px;
-}
-
-.tp20{
-    margin-top: 20px;
+@media (max-width: 600px) {
+    .productGrid {
+        grid-template-columns: 1fr;
+    }
 }
