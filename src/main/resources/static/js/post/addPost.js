@@ -134,10 +134,12 @@ function upload() {
             processData: false,
             data: formData,
             success: function () {
+                console.log("addPost-ajax-success")
                 window.location.href = "/main";
             },
             fail: function (err) {
                 console.log(err)
+                console.log("addPost-ajax-failed")
                 alert("게시글 작성 중 오류가 발생했습니다.");
             }
         })

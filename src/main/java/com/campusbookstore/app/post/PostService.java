@@ -205,7 +205,7 @@ public class PostService {
     }
 
     @Transactional
-    void savePostAndImages(PostDTO postDTO, Member member) throws Exception {
+    Post savePostAndImages(PostDTO postDTO, Member member) throws Exception {
         //DB수정
         Post post = convertToPost(postDTO);
         post.setMember(member);
@@ -240,6 +240,7 @@ public class PostService {
                 imageRepository.save(image);
             }
         }
+        return post;
     }
     List<Category> getCategory(PostDTO postDTO) {
         return Optional.ofNullable(postDTO.getCategorys())
@@ -254,23 +255,26 @@ public class PostService {
     }
     //책 등록
     @Transactional
-    String addPost (PostDTO postDTO, Authentication auth) throws Exception {
+    ResponseEntity<String> addPost (PostDTO postDTO, Authentication auth) throws Exception {
         //Spring SEC로 로그인 정보를 가져옴
         String name = auth.getName();
 
         //Member객체 가져옴
         Optional<Member> memberObj = memberRepository.findByName(name);
-        if (!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/addPost", "사용자 정보가 존재 하지 않습니다.", String.class);
+        if (!memberObj.isPresent()) return ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/addPost", "사용자 정보가 존재 하지 않습니다.", ResponseEntity.class);
+
+        //DB에 Post, Image 저장
+        Member member = memberObj.get();
+        Post post = savePostAndImages(postDTO, member);
 
         //DB에 Category객체 저장
         List<Category> categorys = getCategory(postDTO);
-        for(Category category : categorys) categoryRepository.save(category);
-        
-        //DB에 Post, Image 저장
-        Member member = memberObj.get();
-        savePostAndImages(postDTO, member);
+        for(Category category : categorys) {
+            category.setPost(post);
+            categoryRepository.save(category);
+        }
 
-        return "redirect:/main";
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     //책 수정 내용 DB에 수정
     @Transactional
@@ -347,8 +351,7 @@ public class PostService {
         }
     }
     //리뷰 신고
-    ResponseEntity<String> reportReview(Long reviewId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement,
-                                      Boolean misinformation, String otherReason, Authentication auth) {
+    ResponseEntity<String> reportReview(Long reviewId, Boolean inappropriateContent, Boolean spamOrAds, Boolean copyrightInfringement, Boolean misinformation, String otherReason, Authentication auth) {
         //유효성 검사
         //1. 게시물 존재 여부
         Optional<Review> reviewObj = reviewRepository.findById(reviewId);
