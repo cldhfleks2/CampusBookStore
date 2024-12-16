@@ -34,7 +34,7 @@ public class MemberController {
 
     //회원가입
     @PostMapping("/register")
-    String register(Member member) {
+    ResponseEntity<String> register(Member member) {
         return memberService.register(member);
     }
     @PostMapping("/editMypage")

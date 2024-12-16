@@ -102,6 +102,7 @@ function passwordValidation(){
     });
 }
 
+//회원가입 번호 누를때
 function submit() {
     // Form submission validation
     $('.signup-button').on('click', function(e) {
@@ -133,16 +134,19 @@ function submit() {
                     password: password,
                 },
                 success: function (data){
+                    console.log(data);
+                    alert("회원가입이 완료 되었습니다. 다시 로그인 하세요.")
                     window.location.href = "/login";
                 },
-                fail: function (data){
-                    console.log(data)
+                error: function (xhr){
+                    console.log(xhr.responseText);
+                    if(JSON.parse(xhr.responseText).message === "이름이 중복 됩니다.")
+                        alert("이름이 중복 됩니다.")
                 }
             })
         }
     });
 }
-
 
 function showError(element, message) {
     // Find the error message div for this input

@@ -11,17 +11,12 @@
 
 <div th:replace="~{ headers/header::header }"></div>
 
-<!-- 카테고리 -->
-<!--<div>-->
-<!--    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;-->
-<!--    max-width: 1200px; margin: 2rem auto;padding: 0 1rem;">카테 고리</h2>-->
-<!--</div>-->
-<!--<div class="categoryGrid">-->
-<!--    <div class="categoryItem">전공서적</div>-->
-<!--    <div class="categoryItem">교양서적</div>-->
-<!--    <div class="categoryItem">문학</div>-->
-<!--    <div class="categoryItem">취미</div>-->
-<!--    <div class="categoryItem">어학</div>-->
+<div>
+    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;
+    max-width: 1200px; margin: 2rem auto;padding: 0 1rem;">카테 고리</h2>
+</div>
+<!--<div class="categoryGrid" th:each="category : ${categorys}">-->
+<!--    <div class="categoryItem" th:text="${category.name}" th:title="${category.name}">전공서적</div>-->
 <!--</div>-->
 
 <!-- 인기 상품 -->

@@ -22,13 +22,19 @@
                     </button>
                 </form>
             </div>
-            <a href="/admin/report" sec:authorize="hasAuthority('ROLE_ADMIN')" style="margin-bottom: -7px"  title="managerpage">
+            <a href="/login" sec:authorize="isAnonymous()" style="margin-bottom: -7px"  title="login">
+                <div class="loginIcon">🔑</div>
+            </a>
+            <a href="/register" sec:authorize="isAnonymous()" style="margin-bottom: -7px"  title="register">
+                <div class="registerIcon">➕</div>
+            </a>
+            <a href="/admin/report" sec:authorize="hasAuthority('ROLE_ADMIN')" style="margin-bottom: -7px"  title="manager">
                 <div class="addIcon">🚨</div>
             </a>
             <a href="/addPost" sec:authorize="isAuthenticated()"  title="upload">
                 <div class="addIcon">📤</div>
             </a>
-            <a href="/wish" sec:authorize="isAuthenticated()"  title="mywishs">
+            <a href="/wish" sec:authorize="isAuthenticated()"  title="wishs">
                 <div class="wishIcon">🛒</div>
             </a>
             <a href="/mypage" sec:authorize="isAuthenticated()"  title="mypage">

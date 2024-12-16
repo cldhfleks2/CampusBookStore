@@ -48,7 +48,7 @@
                     <img style="max-width: 148px;" th:src="@{/uploadImage/} + ${report.post.images[0].imagePath}">
                 </td>
                 <td>
-                    <a th:href="@{/detailPost/{id}(id=${report.post.id})}">
+                    <a th:href="@{/detailPost/{id}(id=${report.post.id})}" title="클릭시 게시물로 이동">
                         <div style="font-weight: bold" th:text="${report.post.title}"></div>
                     </a>
                 </td>
@@ -108,9 +108,9 @@
                     <input type="checkbox" class="row-checkbox" th:attr="data-report-id=${report.id}">
                 </td>
                 <td>
-<!--                    <a th:href="@{/detailPost/{id}(id=${report.review.post.id})}">-->
+                    <a th:href="@{/detailPost/{id}(id=${report.review.post.id})}" title="클릭시 게시물로 이동">
                         <div style="font-weight: bold" th:text="${report.review.title}"></div>
-<!--                    </a>-->
+                    </a>
                 </td>
                 <td>
                     <div th:text="${report.review.member.name}"></div>

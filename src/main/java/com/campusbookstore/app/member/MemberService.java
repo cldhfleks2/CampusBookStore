@@ -135,13 +135,18 @@ public class MemberService {
 
     //회원가입
     @Transactional
-    String register (Member member) {
+    ResponseEntity<String> register (Member member) {
+        //이름 중복 확인
+        Optional<Member> memberObj = memberRepository.findByName(member.getName());
+        if(memberObj.isPresent()) return ErrorService.send(HttpStatus.CONFLICT.value(), "/register", "이름이 중복 됩니다.", ResponseEntity.class);
+
         //비밀번호 암호화
         String passwordEncoded = passwordEncoder.encode(member.getPassword());
         member.setPassword(passwordEncoded);
         //DB저장
         memberRepository.save(member);
-        return "redirect:/main";
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     //TODO 개인정보 수정 을 받는 곳
     //아직 미완성
