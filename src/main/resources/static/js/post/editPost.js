@@ -145,7 +145,7 @@ function editPost() {
                 console.log("editPost-ajax-success")
                 window.location.href = "/detailPost/" + postId;
             },
-            fail: function (err) {
+            error: function (err) {
                 console.log(err);
                 console.log("editPost-ajax-failed")
                 alert("게시글 수정 중 오류가 발생했습니다.");

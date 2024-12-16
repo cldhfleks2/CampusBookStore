@@ -165,13 +165,13 @@ function report() {
                 },
                 success: function (data) {
                     console.log(data);
-                    console.log("reportPost-ajax-complete")
+                    console.log("reportPost-ajax-success")
                     if(data === "이미 신고한 게시물 입니다.")
                         alert("이미 신고한 게시물 입니다.")
                     else
                         alert("게시물 신고가 접수되었습니다.")
                 },
-                fail: function (err) {
+                error: function (err) {
                     console.log(err);
                     console.log("reportPost-ajax-failed")
                 }
@@ -191,13 +191,13 @@ function report() {
                 },
                 success: function (data) {
                     console.log(data);
-                    console.log("reportReview-ajax-complete")
+                    console.log("reportReview-ajax-success")
                     if(data === "이미 신고한 댓글 입니다.")
                         alert("이미 신고한 댓글 입니다.")
                     else
                         alert("댓글 신고가 접수되었습니다.")
                 },
-                fail: function (err) {
+                error: function (err) {
                     console.log(err);
                     console.log("reportReview-ajax-failed")
                 }
@@ -217,9 +217,11 @@ function getLikeyCount(postId){
         data: {postId: postId},
         success: function (data){
            $("#likeCount").text(data); //좋아요 갯수 갱신
+            console.log("likeyCountView-ajax-failed")
         },
-        fail: function (err) {
+        error: function (err) {
             console.log(err);
+            console.log("likeyCountView-ajax-failed")
         }
     })
 }
@@ -253,13 +255,13 @@ function likeyBtn(){
                     $(".likeBtn").removeClass("fill");
                 }
                 //css도추가
-                
-                console.log("like-ajax-complete")
+
+                console.log("like-ajax-success")
                 getLikeyCount(postId); //좋아요 갯수 갱신
             },
-            fail: function (err){ //본인 게시물에 좋아요를 누르거나 등
+            error: function (err){ //본인 게시물에 좋아요를 누르거나 등
                 //note: 실패시 아무것도 하지않음
-
+                console.log(err);
                 console.log("like-ajax-failed")
             }
         })
@@ -278,9 +280,11 @@ function wishBtn(){
             data: {postId: postId, quantity: quantity},
             success: function (){
                 alert("상품을 장바구니에 담았습니다.")
-                console.log("wish-ajax-complete")
-            }, fail: function (err){
+                console.log("wish-ajax-success")
+            },
+            error: function (err){
                 console.log(err)
+                console.log("wish-ajax-failed")
             }
         })
     })
@@ -296,10 +300,11 @@ function reviewListUpdate(){
         success: function (data){
             $("#reviewSection").replaceWith(data);
             // console.log(data);
-            console.log("/reviewList ajax complete")
+            console.log("reviewViewUpdate-ajax-success")
         },
-        fail: function (err){
+        error: function (err){
             console.log(err);
+            console.log("reviewViewUpdate-ajax-failed")
             return; //실패시 리바인딩 하지 않음
         }
     })
@@ -325,9 +330,11 @@ function addReview(){
             },
             success: function (){
                 reviewListUpdate()
-                console.log("/reviewSubmit ajax complete");
-            }, fail: function (err){
+                console.log("reviewSubmit-ajax-success");
+            },
+            error: function (err){
                 console.log(err);
+                console.log("reviewSubmit-ajax-failed");
             }
 
         })
@@ -384,10 +391,11 @@ function editReviewBtn() {
                 },
                 success: function() {
                     reviewListUpdate(); // 수정 후 리뷰 목록 새로고침
-                    console.log("/editReview ajax complete");
+                    console.log("editReviewSubmit-ajax-success");
                 },
-                fail: function(err) {
+                error: function(err) {
                     console.log(err);
+                    console.log("editReviewSubmit-ajax-failed");
                     alert("리뷰 수정 중 오류가 발생했습니다.");
                 }
             });
@@ -426,11 +434,12 @@ function deleteReviewBtn() {
                     //리뷰란 갱신
                     reviewListUpdate();
 
-                    console.log("/deleteReview ajax complete");
+                    console.log("deleteReview-ajax-success");
                 },
-                fail: function(err) {
+                error: function(err) {
                     modalOFF();
                     console.log(err);
+                    console.log("deleteReview-ajax-failed");
                     alert("리뷰 삭제 중 오류가 발생했습니다.");
                 }
             });
@@ -509,12 +518,13 @@ function deleteBtn(){
                 success: function() {
                     modalOFF();
 
-                    console.log("/deletePost ajax complete");
+                    console.log("deletePost-ajax-success");
                     window.location.href = "/detailPost/" + postId;
                 },
-                fail: function(err) {
+                error: function(err) {
                     modalOFF();
                     console.log(err);
+                    console.log("deletePost-ajax-failed");
                     alert("게시물 삭제 중 오류가 발생했습니다.");
                     window.location.href = "/detailPost/" + postId;
                 }

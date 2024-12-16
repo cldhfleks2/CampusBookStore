@@ -15,6 +15,7 @@ function pageReload(searchText, currentPage){
             var dataHtml = $("<div>").append(data);
             $("#searchSection").replaceWith(dataHtml.find("#searchSection"));
             $("#searchSummary").replaceWith(dataHtml.find("#searchSummary"));
+            console.log("search-ajax-success")
         },
         error: function (err){
             console.log(err);

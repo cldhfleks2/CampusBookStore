@@ -51,7 +51,7 @@ function postViewBtns(){
                 $("#postContainer").replaceWith(dataHtml.find("#postContainer"));
                 console.log("reportPostViewReload-ajax-success");
             },
-            fail: function (err) {
+            error: function (err) {
                 console.log(err)
                 console.log("reportPostViewReload-ajax-failed");
             }
@@ -74,10 +74,10 @@ function postViewBtns(){
 
                     postViewReload();
 
-                    console.log("ignoreReportPost-ajax-complete");
+                    console.log("ignoreReportPost-ajax-success");
                     alert(`선택된 신고 ID: ${selectedReportIds.join(', ')} 를 제외합니다.`);
                 },
-                fail: function (err) {
+                error: function (err) {
                     console.log(err)
                     console.log("ignoreReportPost-ajax-failed");
                 }
@@ -103,10 +103,10 @@ function postViewBtns(){
 
                     postViewReload();
 
-                    console.log("reportPostDelete-ajax-complete");
+                    console.log("reportPostDelete-ajax-success");
                     alert(`선택된 신고 ID: ${selectedReportIds.join(', ')} 를 삭제합니다.`);
                 },
-                fail: function (err) {
+                error: function (err) {
                     console.log(err)
                     console.log("reportPostDelete-ajax-failed");
                 }
@@ -128,7 +128,7 @@ function reviewViewBtns(){
                 $("#reviewContainer").replaceWith(dataHtml.find("#reviewContainer"));
                 console.log("reportReviewViewReload-ajax-success");
             },
-            fail: function (err) {
+            error: function (err) {
                 console.log(err)
                 console.log("reportReviewViewReload-ajax-failed");
             }
@@ -151,10 +151,10 @@ function reviewViewBtns(){
 
                     reviewViewReload();
 
-                    console.log("ignoreReportReview-ajax-complete");
+                    console.log("ignoreReportReview-ajax-success");
                     alert(`선택된 신고 ID: ${selectedReportIds.join(', ')} 를 제외합니다.`);
                 },
-                fail: function (err) {
+                error: function (err) {
                     console.log(err)
                     console.log("ignoreReportReview-ajax-failed");
                 }
@@ -180,10 +180,10 @@ function reviewViewBtns(){
 
                     reviewViewReload();
 
-                    console.log("reportReviewDelete-ajax-complete");
+                    console.log("reportReviewDelete-ajax-success");
                     alert(`선택된 신고 ID: ${selectedReportIds.join(', ')} 를 삭제합니다.`);
                 },
-                fail: function (err) {
+                error: function (err) {
                     console.log(err)
                     console.log("reportReviewDelete-ajax-failed");
                 }

@@ -90,13 +90,13 @@ function deleteBtn(){
             method: "delete",
             data: {wishId: wishId},
             success: function (){
-                console.log("delete-ajax-complete")
+                console.log("delete-ajax-success")
 
                 //뷰 갱신
                 thisParents.remove();
                 // updateCartInfo();
             },
-            fail: function (err){
+            error: function (err){
                 console.log(err);
                 console.log("delete-ajax-failed")
             }
@@ -183,11 +183,11 @@ function purchaseBtn(){
                 ),
                 success: function (data){
                     console.log(data)
-                    console.log("order-ajax-complete")
+                    console.log("order-ajax-success")
                 },
-                fail: function (err){
+                error: function (err){
                     console.log(err)
-                    console.log("order-ajax-complete")
+                    console.log("order-ajax-failed")
                 }
             })
 
