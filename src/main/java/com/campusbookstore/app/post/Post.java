@@ -28,6 +28,8 @@ public class Post {
     private String author;
     private String price;
     private String content;
+    private String campus;
+    private String major;
 
     //남은 갯수
     private Long quantity;

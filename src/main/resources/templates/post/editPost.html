@@ -38,13 +38,19 @@
     <div class="formGrid">
         <div class="formGroup">
             <label class="formLabel">책 제목</label>
-            <input type="text" class="formInput" name="title" placeholder="책 제목을 입력하세요"
-                   th:value="${post.title}">
+            <input type="text" class="formInput" name="title" placeholder="책 제목을 입력하세요" th:value="${post.title}">
         </div>
         <div class="formGroup">
             <label class="formLabel">저자</label>
-            <input type="text" class="formInput" name="author" placeholder="저자명을 입력하세요"
-                   th:value="${post.author}">
+            <input type="text" class="formInput" name="author" placeholder="저자명을 입력하세요" th:value="${post.author}">
+        </div>
+        <div class="formGroup">
+            <label class="formLabel">대학교 명</label>
+            <input type="text" class="formInput" name="campus" placeholder="대학교명을 입력하세요" th:value="${post.campus}">
+        </div>
+        <div class="formGroup">
+            <label class="formLabel">학부/학과</label>
+            <input type="text" class="formInput" name="major" placeholder="학부나 학과를 입력하세요" th:value="${post.major}">
         </div>
     </div>
 

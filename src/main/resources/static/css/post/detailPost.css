@@ -45,12 +45,6 @@
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
-.sellerInfo {
-    padding: 1rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 .sellerBadge {
     background-color: #d1fae5;
     color: #064e3b;
@@ -645,7 +639,23 @@ hr {
     height: 150px; /* 원하는 높이 */
 }
 
+.campus {
+    display: flex;
+    justify-content: space-between; /* left와 right를 양쪽 끝으로 배치 */
+    font-size: 15px;
+}
 
+.left, .right {
+    display: flex; /* 내부 요소를 가로로 정렬 */
+}
+
+.left h3, .right h3 {
+    margin: 0 5px 0 0; /* h3와 p 간격 조정 */
+}
+
+.left p, .right p {
+    margin: 0; /* 기본 여백 제거 */
+}
 
 
 .remainingQuantity {

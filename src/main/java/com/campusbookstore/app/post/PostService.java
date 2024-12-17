@@ -76,6 +76,10 @@ public class PostService {
             builder.price(post.getPrice());
         if (post.getContent() != null && !post.getContent().isEmpty())
             builder.content(post.getContent());
+        if (post.getCampus() != null && !post.getCampus().isEmpty())
+            builder.campus(post.getCampus());
+        if (post.getMajor() != null && !post.getMajor().isEmpty())
+            builder.major(post.getMajor());
         if (post.getMember() != null && post.getMember().getName() != null && !post.getMember().getName().isEmpty())
             builder.member(post.getMember());
         //imagesEntity
@@ -105,6 +109,10 @@ public class PostService {
             post.setPrice(postDTO.getPrice());
         if (postDTO.getContent() != null && !postDTO.getContent().isEmpty())
             post.setContent(postDTO.getContent());
+        if (postDTO.getCampus() != null && !postDTO.getCampus().isEmpty())
+            post.setCampus(postDTO.getCampus());
+        if (postDTO.getMajor() != null && !postDTO.getMajor().isEmpty())
+            post.setMajor(postDTO.getMajor());
         if(postDTO.getMember() != null)
             post.setMember(postDTO.getMember());
 //        if(postDTO.getImages() != null && !postDTO.getImages().isEmpty()) //editPost에서 이미지가 안불러와져서 수정해봄

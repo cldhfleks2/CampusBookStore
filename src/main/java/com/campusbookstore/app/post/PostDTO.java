@@ -21,6 +21,8 @@ public class PostDTO {
     private String price;
     private String content;
     private Long quantity;
+    private String campus;
+    private String major;
 
     private LocalDateTime createDate;
     //아직 안씀

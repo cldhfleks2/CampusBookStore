@@ -34,5 +34,5 @@ public class Wish {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private Post post; //어떤 상품을 장바구니에 넣었는지
+    private Post post; //어떤 책을 장바구니에 넣었는지
 }

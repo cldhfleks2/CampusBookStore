@@ -35,7 +35,7 @@ public class Purchase {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private Post post; //어떤 상품을 주문 했는지
+    private Post post; //어떤 책을 주문 했는지
 
     //주문 존재 여부 (1:보임 0:삭제)
     private int status = 1;

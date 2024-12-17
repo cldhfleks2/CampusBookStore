@@ -49,21 +49,32 @@
             </div>
         </div>
 
-        <div class="bookInfoSection" th:data-post-id="${post.id}">
-            <h1 class="title"  th:text="${post.title}">자바의 정석</h1>
-            <hr>
-            <h3 class="font-semibold" style="margin: 10px 0;">저자</h3>
-            <p class="author text-gray-600 mb-4" th:text="${post.author}">남궁성</p>
-            <hr style="margin-top: 15px">
-            <div class="sellerInfo">
-                <div>
-                    <h3 class="font-semibold" style="margin-bottom: 10px;">판매자</h3>
-                    <p class="name text-gray-600"  th:text="${post.member.name}">판매자이름</p>
+        <div class="bookInfoSection" th:data-post-id="${post.id}" >
+            <h1 class="title" style="margin-bottom: 25px;"  th:text="${post.title}">자바의 정석</h1>
+            <hr style="margin-bottom: 10px;">
+            <div style="display: flex; font-size: 15px;">
+                <h3>저자 : </h3>
+                <p style="margin-left:30px;" th:text="${post.author}">남궁성</p>
+            </div>
+            <hr style="margin-top: 15px; margin-bottom: 10px;">
+            <div style="display: flex; font-size: 15px;">
+                <h3 style="margin-bottom: 10px;">판매자 : </h3>
+                <p style="margin-left: 52px;" th:text="${post.member.name}">판매자이름</p>
+            </div>
+            <hr style="margin-bottom: 10px;">
+            <div class="campus" style="display: flex; font-size: 15px;">
+                <div class="left">
+                    <h3 style="margin-bottom: 10px;">대학교명 : </h3>
+                    <p style="margin-left:30px;" th:text="${post.campus}">대학교이름</p>
+                </div>
+                <div class="right">
+                    <h3 style="margin-left: 78px; margin-bottom: 10px;">학부/학과 : </h3>
+                    <p style="margin-left:30px;" th:text="${post.major}">학부/학과 이름</p>
                 </div>
             </div>
             <hr style="margin-bottom: 15px">
             <div class="desc">
-                <p class="content"  th:text="${post.content}">책설명</p>
+                <p th:text="${post.content}">책설명</p>
             </div>
             <hr style="margin-bottom: 10px">
 

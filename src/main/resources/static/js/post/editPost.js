@@ -120,6 +120,8 @@ function editPost() {
         formData.append("price", $("input[name='price']").val());
         formData.append("content", $("textarea[name='content']").val());
         formData.append("quantity", $("input[name='quantity']").val());
+        formData.append("campus", $("input[name='campus']").val());
+        formData.append("major", $("input[name='major']").val());
 
         $(".image-wrapper input[type='file']").each(function() {
             if (this.files && this.files.length > 0) {

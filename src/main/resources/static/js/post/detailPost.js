@@ -279,7 +279,7 @@ function wishBtn(){
             method: "post",
             data: {postId: postId, quantity: quantity},
             success: function (){
-                alert("상품을 장바구니에 담았습니다.")
+                alert("책을 장바구니에 담았습니다.")
                 console.log("wish-ajax-success")
             },
             error: function (err){
