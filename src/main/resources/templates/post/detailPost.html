@@ -65,7 +65,16 @@
             <div class="desc">
                 <p class="content"  th:text="${post.content}">책설명</p>
             </div>
+            <hr style="margin-bottom: 10px">
 
+<!--            카테고리란-->
+            <div class="categoryBubbles" >
+                <div th:each="category : ${categorys}">
+                    <a th:href="'/category/' + ${category.name}">
+                        <div class="categoryBubble" th:text="${category.name}" th:title="${category.name}">전공서적</div>
+                    </a>
+                </div>
+            </div>
             <div class="bottom">
                 <div class="priceSection">
                     <div class="flex items-center mb-2">

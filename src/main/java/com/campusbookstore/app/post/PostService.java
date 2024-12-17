@@ -135,23 +135,27 @@ public class PostService {
         //postDTO생성
         Post post = postObj.get();
         PostDTO postDTO = getPostDTO(post);
-        
+        model.addAttribute("post", postDTO);
+
         //imageDTO생성
         List<Image> images = imageRepository.findByPostId(postId);
         List<ImageDTO> imagesDTO = new ArrayList<>();
         for(Image image : images) {
             imagesDTO.add(imageService.getImageDTO(image));
         }
-        
+        model.addAttribute("imagesDTOs", imagesDTO);
+
         //reviewDTO생성
         List<Review> reviews = reviewRepository.findAllByPostId(postId);
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
         for(Review review : reviews) {
             reviewDTOs.add(reviewService.getReviewDTO(review));
         }
-        
+        model.addAttribute("reviewDTOs", reviewDTOs);
+
         //like갯수세기
         List<Likey> likeys = likeyRepository.findAllByPostIdAndStatus(postId);
+        model.addAttribute("likeyCnt", likeys.size());
 
         //내가 좋아요를 눌렀는지 확인
         //note: 2개이상 객체가 존재하면 에러임
@@ -160,13 +164,12 @@ public class PostService {
         if(!iamlikeyObj.isEmpty() && iamlikeyObj.get(0).getStatus() == 1) { //likey객체가 존재하고 좋아요를 눌렀을때
             iamlikey = "1";
         }
-
-        //DTO전달
-        model.addAttribute("post", postDTO);
-        model.addAttribute("imagesDTOs", imagesDTO);
-        model.addAttribute("reviewDTOs", reviewDTOs);
-        model.addAttribute("likeyCnt", likeys.size());
         model.addAttribute("iamlikey", iamlikey); //0: 안좋아요   1: 좋아요
+
+        //카테고리 가져오기
+        List<Category> categorys = categoryRepository.findAllByPostId(postId);
+        model.addAttribute("categorys", categorys);
+
         return "post/detailPost";
     }
     String viewEditPost (Long postId, Authentication auth, Model model) {
@@ -210,6 +213,12 @@ public class PostService {
         model.addAttribute("posts", posts);
         model.addAttribute("keyword", keyword);
         model.addAttribute("postCnt", posts.size());
+        //카테고리 검색 : 카테고리 이름 검색
+        //키워드가 없을때(검색 페이지 처음 get할때)는 제외
+        if(keyword != ""){
+            List<Category> categorys = categoryRepository.findByKeyword(keyword);
+            model.addAttribute("categorys", categorys);
+        }
 
         return "search/search";
     }

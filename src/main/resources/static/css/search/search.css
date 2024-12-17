@@ -230,3 +230,35 @@ body {
 .pagination-next svg {
     color: #4b5563;
 }
+
+
+
+
+
+/* Category Bubble Styles */
+.categoryBubbles {
+    /*max-width: 1200px; !* 최대 너비 설정 *!*/
+    margin: 2rem auto; /* 수평 중앙 정렬 */
+    padding: 0 1rem;   /* 양쪽 여백 추가 */
+    display: flex;
+    justify-content: left;
+    gap: 1rem;
+    flex-wrap: wrap;
+    caret-color: transparent; /* 커서를 투명하게 설정 */
+}
+
+.categoryBubble {
+    padding: 0.5rem 1rem;
+    background-color: #e0e7ff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #1e40af;
+    font-weight: bold;
+}
+
+.categoryBubble:hover {
+    transform: scale(1.3);
+    background-color: #3b82f6;
+    color: white;
+}
