@@ -180,6 +180,7 @@ public class PostService {
 
         return "post/detailPost";
     }
+    @Transactional
     String viewEditPost (Long postId, Authentication auth, Model model) {
         //유효성 검사
         Optional<Post> postObj = postRepository.findById(postId);
@@ -196,8 +197,9 @@ public class PostService {
         List<String> postDTOcategorys = new ArrayList<>();
         for(Category category : categorys)
             postDTOcategorys.add(category.getName());
-        //DTO에 카테고리 담기
+        //post로 DTO 생성
         PostDTO postDTO = getPostDTO(post);
+        //DTO에 카테고리 담기
         postDTO.setCategorys(postDTOcategorys);
 
         //DTO전달

@@ -345,6 +345,7 @@ function addReview(){
 //리뷰 수정
 function editReviewBtn() {
     $(document).on("click", ".editReviewBtn", function (){
+        var postId = $(".bookDetailWrapper").data("post-id");
         var reviewId = $(this).data("review-id");
         var author = $(this).data("author-name");
         var reviewItem = $(this).closest(".reviewItem");
@@ -387,7 +388,8 @@ function editReviewBtn() {
                     id: editedId,
                     title: editedTitle,
                     author: editedAuthor,
-                    content: editedContent
+                    content: editedContent,
+                    postId: postId
                 },
                 success: function() {
                     reviewListUpdate(); // 수정 후 리뷰 목록 새로고침

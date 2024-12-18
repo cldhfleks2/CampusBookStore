@@ -13,7 +13,7 @@
 <div th:replace="~{ headers/header::header }"></div>
 
 <div class="container">
-    <div class="bookDetailWrapper" style="padding-top: 60px;">
+    <div class="bookDetailWrapper" style="padding-top: 60px;" th:data-post-id="${post.id}">
         <div class="bookImageSection">
             <div class="bookImage">
                 <!-- Image Slider Container -->
