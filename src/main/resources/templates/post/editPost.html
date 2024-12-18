@@ -29,7 +29,7 @@
         <!-- Existing Images -->
         <th:block th:each="image : ${post.imagesEntity}">
             <div class="image-wrapper">
-                <img th:src="@{/uploadImage/} + ${image.imagePath}" name="image" />
+                <img class="image" th:src="@{/uploadImage/} + ${image.imagePath}" name="image" />
                 <input type="hidden" name="uploadedFile" />
             </div>
         </th:block>

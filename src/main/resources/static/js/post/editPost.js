@@ -57,6 +57,7 @@ function displayImages(transferFiles) {
             const image = new Image();
             image.src = event.target.result;
             $(image).attr("name", "image");
+            $(image).attr("class", "image");
 
             const hiddenFileInput = $("<input>", {
                 type: "file",

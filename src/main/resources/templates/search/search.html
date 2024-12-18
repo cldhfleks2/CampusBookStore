@@ -44,15 +44,17 @@
         </div>
 
         <div class="searchResultsGrid">
-            <div class="bookCard" th:each="post : ${posts}">
-                <img class="bookImage" th:src="@{/uploadImage/} + ${post.images[0].imagePath}">
-                <div class="bookDetails">
-                    <h3 class="bookTitle" th:text="${post.title}">자바의 정석</h3>
-                    <p class="bookAuthor" th:text="${post.author}">남궁성</p>
-                    <div class="bookPriceSection">
-                        <span class="bookPrice" th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')} + ' 원'">10,000원</span>
+            <div th:each="post : ${posts}">
+                <a class="bookCard" th:href="@{/detailPost/{id}(id=${post.id})}">
+                    <img class="bookImage" th:src="@{/uploadImage/} + ${post.images[0].imagePath}">
+                    <div class="bookDetails">
+                        <h3 class="bookTitle" th:text="${post.title}">자바의 정석</h3>
+                        <p class="bookAuthor" th:text="${post.author}">남궁성</p>
+                        <div class="bookPriceSection">
+                            <span class="bookPrice" th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')} + ' 원'">10,000원</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="pagination" th:if="${postCnt > 0}" th:data-total-page="${totalPages}">
