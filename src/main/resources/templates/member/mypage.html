@@ -123,6 +123,8 @@
                         <div class="productDetails">
                             <h3 th:text="${post.title}" style="margin-bottom: 20px">책이름</h3>
                             <span style="font-weight: bold">저자 </span><p th:text="${post.author}" style="margin-bottom: 10px">작성자</p>
+                            <span style="font-weight: bold">대학교 </span><p th:text="${post.campus}" style="margin-bottom: 10px">대학교명</p>
+                            <span style="font-weight: bold">학부/학과 </span><p th:text="${post.major}" style="margin-bottom: 10px">학부/학과명</p>
                             <span style="font-weight: bold">수량 </span><p th:text="${post.quantity}" style="margin-bottom: 10px"></p>
                             <span style="font-weight: bold">판매 가격 </span><p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(post.price), 0, 'COMMA')} + ' 원'" style="color: blue;margin-bottom: 10px;">가격+원</p>
                             <span style="font-weight: bold">등록 날짜 </span><p th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 30px">작성 날짜</p>
@@ -153,6 +155,8 @@
                         <div class="productDetails">
                             <h3 th:text="${purchase.post.title}" style="margin-bottom: 20px">책이름</h3>
                             <span style="font-weight: bold">저자 </span><p th:text="${purchase.post.author}" style="margin-bottom: 10px">작성자</p>
+                            <span style="font-weight: bold">대학교 </span><p th:text="${purchase.post.campus}" style="margin-bottom: 10px">대학교명</p>
+                            <span style="font-weight: bold">학부/학과 </span><p th:text="${purchase.post.major}" style="margin-bottom: 10px">학부/학과명</p>
                             <span style="font-weight: bold">개당 판매 가격 </span><p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(purchase.post.price), 0, 'COMMA')} + ' 원'" style="margin-bottom: 10px"></p>
                             <span style="font-weight: bold">주문 수량 </span><p th:text="${purchase.quantity} + ' 개'" style="color: blue;margin-bottom: 10px;">0개</p>
                             <span style="font-weight: bold">주문 날짜 </span><p th:text="${#temporals.format(purchase.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 30px">작성 날짜</p>
@@ -182,9 +186,11 @@
                         <div class="productDetails">
                             <h3 th:text="${likey.post.title}" style="margin-bottom: 20px">책이름</h3>
                             <span style="font-weight: bold">저자 </span><p th:text="${likey.post.author}" style="margin-bottom: 10px">작성자</p>
+                            <span style="font-weight: bold">대학교 </span><p th:text="${likey.post.campus}" style="margin-bottom: 10px">대학교명</p>
+                            <span style="font-weight: bold">학부/학과 </span><p th:text="${likey.post.major}" style="margin-bottom: 10px">학부/학과명</p>
+                            <span style="font-weight: bold">개당 판매 가격 </span><p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(likey.post.price), 0, 'COMMA')} + ' 원'" style="color: blue;margin-bottom: 10px;">가격+원</p>
                             <span style="font-weight: bold">남은 수량 </span><p th:text="${likey.post.quantity}" style="margin-bottom: 10px"></p>
-                            <span style="font-weight: bold">한개당 판매 가격 </span><p th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(likey.post.price), 0, 'COMMA')} + ' 원'" style="color: blue;margin-bottom: 10px;">가격+원</p>
-                            <span style="font-weight: bold">등록 날짜 </span><p th:text="${#temporals.format(likey.post.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 30px">작성 날짜</p>
+                            <span style="font-weight: bold">상품 등록 날짜 </span><p th:text="${#temporals.format(likey.post.createDate, 'yyyy-MM-dd HH:mm')}" style="margin-bottom: 30px">작성 날짜</p>
                             <p class="productDescription" th:text="${likey.post.content}">책 설명</p>
                         </div>
                     </div>

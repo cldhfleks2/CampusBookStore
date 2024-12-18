@@ -11,8 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    //keyword와 일치하는 title과 author를 검색
-    @Query("SELECT p FROM Post p WHERE p.status = 1 AND (p.title LIKE %:keyword% OR p.author LIKE %:keyword%)")
+    //keyword와 일치하는 title, author, campus, major를 검색
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.status = 1 " +
+            "AND (p.title LIKE %:keyword% " +
+                "OR p.author LIKE %:keyword% " +
+                "OR p.campus LIKE %:keyword% " +
+                "OR p.major LIKE %:keyword%)")
     Page<Post> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     //postId로 status=1인 Post를 검색

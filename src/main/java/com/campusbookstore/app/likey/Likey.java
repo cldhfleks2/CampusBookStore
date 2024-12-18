@@ -36,5 +36,5 @@ public class Likey {
     private Member member; //어떤 유저가 찜했는지
 
     //찜한 내역 존재 여부
-    private Integer status=1;
+    private int status=1;
 }

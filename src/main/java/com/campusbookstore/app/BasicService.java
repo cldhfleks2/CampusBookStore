@@ -36,7 +36,7 @@ public class BasicService {
         model.addAttribute("popularPostDTOs", popularPostDTOs);
 
         //최근 게시물 가져오기
-        int recentPostCnt = 8;
+        int recentPostCnt = 15;
         List<Post> recentPosts = postRepository.findTopNByStatusOrderByCreateDateDesc(recentPostCnt);
         List<PostDTO> recentPostDTOs = new ArrayList<>();
         for (Post post : recentPosts)

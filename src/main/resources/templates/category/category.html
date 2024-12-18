@@ -35,10 +35,14 @@ padding: 0 1rem; margin-bottom: 20px; text-align: center;">카테고리별 책</
                 <div class="productImage">
                     <img th:src="@{/uploadImage/} + ${post.images[0].imagePath}">
                 </div>
-                <h3 class="tp20" style="font-weight: bold; margin-bottom: 10px;" th:text="${post.title}">책 제목</h3>
-                <p class="tp20" style="color: #6b7280; margin-bottom: 10px;" th:text="${post.author}">저자</p>
+                <h3 style="font-weight: bold; margin-bottom: 10px;" th:text="${post.title}">책 제목</h3>
+                <p style="color: #6b7280; margin-bottom: 5px;" th:text="${post.author}">저자</p>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <h3 style="font-weight: bold;" th:text="${post.campus}">책 제목</h3>
+                    <p style="color: #6b7280; margin-left: 30px;" th:text="${post.major}">저자</p>
+                </div>
                 <div class="productDetails">
-                    <div class="tp20" style="display: flex">
+                    <div style="display: flex">
                         <span class="productPrice" th:text="${#numbers.formatInteger(T(java.lang.Integer).parseInt(post.price), 0, 'COMMA')} + ' 원'">10,000</span>
                     </div>
                 </div>
@@ -52,10 +56,14 @@ padding: 0 1rem; margin-bottom: 20px; text-align: center;">카테고리별 책</
                     <img src="/image/blank.png">
                 </div>
                 <h3 class="tp20" style="font-weight: bold; margin-bottom: 10px;">책 제목</h3>
-                <p class="tp20" style="color: #6b7280; margin-bottom: 10px;">저자</p>
+                <p style="color: #6b7280; margin-bottom: 5px;">저자</p>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <h3 style="font-weight: bold;">한국대</h3>
+                    <p style="color: #6b7280; margin-left: 30px;">건강학부</p>
+                </div>
                 <div class="productDetails">
-                    <div class="tp20" style="display: flex">
-                        <span class="productPrice">10,000</span>
+                    <div style="display: flex">
+                        <span class="productPrice">10,000원</span>
                     </div>
                 </div>
             </a>

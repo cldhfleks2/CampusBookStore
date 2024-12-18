@@ -162,6 +162,7 @@
     max-width: 100%;
     height: auto;
     border-radius: 0.25rem;
+    padding-top: 10px;
 }
 
 .productDetails {

@@ -94,6 +94,7 @@ public class MemberService {
 
         //유저 정보 전달
         Long memberId = member.get().getId(); //현재 사용자의 id
+        System.out.println("현재 사용자 아이디  = " + memberId);
         MemberDTO memberDTO = getMemberDTO(member.get());
         memberDTO.setId(null); //필요없는 값은 가림
         model.addAttribute("member", memberDTO);
@@ -110,8 +111,7 @@ public class MemberService {
         //주문 내역 전달
         Page<Purchase> purchases = purchaseRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
         List<Purchase> purchaseList = new ArrayList<>();
-        for(Purchase purchase : purchaseList) //수량이 남은것만 추가
-            if(purchase.getPost().getQuantity() > 0)
+        for(Purchase purchase : purchases)
                 purchaseList.add(purchase);
         model.addAttribute("purchaseTotalPages", purchases.getTotalPages());
         model.addAttribute("purchaseCurrentPage", pageIdx);
@@ -120,7 +120,7 @@ public class MemberService {
         //찜한 내역 전달
         Page<Likey> likeys = likeyRepository.findAllByMemberId(memberId, PageRequest.of(pageIdx - 1, 2));
         List<Likey> likeyList = new ArrayList<>();
-        for(Likey likey : likeyList) //수량이 남은것만 추가
+        for(Likey likey : likeys) //수량이 남은것만 추가
             if(likey.getPost().getQuantity() > 0)
                 likeyList.add(likey);
         model.addAttribute("likeyTotalPages", likeys.getTotalPages());
