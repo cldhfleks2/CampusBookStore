@@ -134,6 +134,7 @@ function passwordValidation(){
     hideError($('#passwordCorrect'));
     return true;
 }
+//개인정보 수정 뷰
 function personalInfoFormSubmitBtn(){
     $(document).on("click", ".formActions button", function (e) {
         //폼 전송 이벤트 취소

@@ -21,7 +21,7 @@ public interface LikeyRepository extends JpaRepository<Likey, Long> {
     @Query("SELECT l FROM Likey l WHERE l.post.id = :postId AND l.status = 1")
     List<Likey> findAllByPostId(Long postId);
 
-    List<Likey> findByPostIdAndMemberName(Long postId, String memberName);
+    List<Likey> findAllByPostIdAndMemberName(Long postId, String memberName);
 
     //멤버아이디로 찜한 내역을 가져옴.
     @Query("SELECT l FROM Likey l WHERE l.member.id = :memberId AND l.status = 1")

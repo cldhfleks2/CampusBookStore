@@ -167,7 +167,7 @@ public class PostService {
 
         //내가 좋아요를 눌렀는지 확인
         //note: 2개이상 객체가 존재하면 에러임
-        List<Likey> iamlikeyObj = likeyRepository.findByPostIdAndMemberName(postId, auth.getName());
+        List<Likey> iamlikeyObj = likeyRepository.findAllByPostIdAndMemberName(postId, auth.getName());
         String iamlikey = "0"; //처음엔 좋아요 안누름
         if(!iamlikeyObj.isEmpty() && iamlikeyObj.get(0).getStatus() == 1) { //likey객체가 존재하고 좋아요를 눌렀을때
             iamlikey = "1";
@@ -364,7 +364,7 @@ public class PostService {
         if(!memberObj.isPresent()) ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/reportPost", "사용자 정보가 존재하지 않습니다.", ResponseEntity.class);
         Post post = postObj.get();
         Member member = memberObj.get();
-        List<ReportPost> reportPostObj = reportPostRepository.findByMemberNameAndPostId(auth.getName(), postId);
+        List<ReportPost> reportPostObj = reportPostRepository.findAllByMemberNameAndPostId(auth.getName(), postId);
         //3. 신고 내역 갯수와 status로 인한 처리
         if(reportPostObj.size() == 0){
             //3-1. 신고 내역이 없을땐 객체 생성
@@ -403,7 +403,7 @@ public class PostService {
         if(!memberObj.isPresent()) ErrorService.send(HttpStatus.UNAUTHORIZED.value(), "/reportReview", "사용자 정보가 존재하지 않습니다.", ResponseEntity.class);
         Review review = reviewObj.get();
         Member member = memberObj.get();
-        List<ReportReview> reportReviewObj = reportReviewRepository.findByMemberNameAndReviewId(auth.getName(), reviewId);
+        List<ReportReview> reportReviewObj = reportReviewRepository.findAllByMemberNameAndReviewId(auth.getName(), reviewId);
 
         //3. 신고 내역 갯수와 status로 인한 처리
         if(reportReviewObj.size() == 0){

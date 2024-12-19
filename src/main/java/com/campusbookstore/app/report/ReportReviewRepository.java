@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReportReviewRepository extends JpaRepository<ReportReview, Long> {
     //memberName과 reviewId 해당하는 모든 신고내역을 가져옴
-    List<ReportReview> findByMemberNameAndReviewId(String memberName, Long reviewId);
+    List<ReportReview> findAllByMemberNameAndReviewId(String memberName, Long reviewId);
 
 
     //status=1인 모든 신고내역을 날짜순 정렬해서 가져옴

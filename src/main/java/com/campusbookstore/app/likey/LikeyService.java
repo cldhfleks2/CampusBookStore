@@ -44,7 +44,7 @@ public class LikeyService {
 
         //이전에 좋아요를 했는지 확인
         // note : List가 2개이상 존재 한다면 에러긴해..
-        List<Likey> likeyObj = likeyRepository.findByPostIdAndMemberName(postId, auth.getName());
+        List<Likey> likeyObj = likeyRepository.findAllByPostIdAndMemberName(postId, auth.getName());
         if(likeyObj.isEmpty()) { //좋아요 기록이 없으면 DB에 최초 생성
             Likey likey = new Likey();
             likey.setPost(post);
